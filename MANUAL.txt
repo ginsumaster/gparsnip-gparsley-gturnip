@@ -1,0 +1,260 @@
+gparsnip.js gparsley.js gturnip.js README.txt
+
+---- SUMMARY:
+
+Used together, these two utilities enable you to get from this:
+  -- Misc collection of chordpro-encoded songs
+
+To this:
+  -- beautifully organized formatted song collection w/ table of contents html
+
+gparsnip -- converts a plain-text ChordPro song.pro file to a clear, concise, accurate, formatted musician-ready song sheet.
+  It generates these files:
+  song.txt  -- chord-lyrics, plain text
+  song.htm  -- chord-lyrics, web page
+  song.lyr  -- lyrics, plain text
+  song.html -- lyrics, web page
+  song.csv  -- meta-tags info of song, tab-delimited
+  song.cd1  -- list of chords used in the song, space-delimited
+
+gparsley -- generates an index web page (index.html) of your songs using a info from a csv file ( index.csv )
+
+gturnip -- utility to do chord transposes and substitutions on a song.pro file.
+
+
+---- PHILOSOPHY
+
+A large majority of similar ChordPro utilities value form over function.
+I do not. As a musician, I valued fakebook songsheets that was: clear, compact, and accurate.  That is why I used mono-spaced fonts (for accurate chord/lyrics alignment), and various other font and color choices. You may not feel the same way -- that is why you can edit the .css file and change it to your liking. I believe in computer code that is: readable (to others, not just me), modular (for organization), and extendable (for adding new features).  I chose JavaScript because it was easy to use and had powerful string manipulation routines.
+
+---- STEPS, SETUP:
+
+  1. Install node.js.
+     https://nodejs.org/en/download/
+
+  2. Learn how to open a command prompt and do basic commands.
+     Linux: cd, ls, mv, exit
+     Windows: cd, dir, ren, exit
+
+  3. Install a text editor that will generate plain-text Linux (LF) files.
+     I suggest:
+       Notepad++ (Windows): https://nodejs.org/en/download/
+       Atom (Windows, Mac, Linux): https://atom.io/
+
+  4. Copy these files to your working directory:
+     gparsnip.js
+     gparsley.js
+     0chordlyrics.css
+     0lyricsonly.css
+
+---- STEPS, SONG-CREATION:
+
+  1. Use your editor to create plain-text ChordPro-encoded files.
+     Format is: UTF-8, Linux (LF) style.
+     File extension should be .pro
+
+  2. Run gparsnip to parse/format .pro songs.
+     nodejs gparsnip song.pro
+
+  3. After you have a collection of songs converted, combine the .csv
+     files together to create one large index of songs.
+
+     Before joining all csv files, remove or rename 0gparsnip.csv (heading info)
+       Windows: ren 0garsnip.csv 0garsnip.csx
+       Linux:   mv 0garsnip.csv  0garsnip.csx
+
+      Windows:  type *.csv > index.txt
+                ren index.txt index.csv
+
+      Linux:    cat *.csv > index.txt
+                mv index.txt index.csv
+
+  4. Generate an index of all songs.
+     nodejs gparsley index "Table of Contents" "v1.0"
+
+  5. Use your web browser to open up the local file index.html.
+     Mozilla Firefox: File --> Open File --> Dialog Box
+     Google Chrome: Control-O --> Dialog Box.
+
+
+---- CHORDPro META-TAGS and INLINE DIRECTIVES
+There is one "official" ChordPro standard and several "extensions" , i.e. non-standard additions/improvements by others companies.  The reason that "extensions" were made was because the original ChordPro standard didn't have the flexibility or features to cope with developer's needs to support other devices (tablets), and uses (playing mp3 simultaneously).
+
+To be compatible with both the Standard and Extensions, I tried to use the same meta-tags and inline directives that others have already used.
+
+The gparsnip program implements a mix of Official and Super-Standards.
+This is what is implemented:
+{title:} {t:}           -- title of song
+{subtitle:} {st:} {su}  -- subtitle
+{key:} {k:}             -- musical key of song
+{time:}                 -- musical time/meter
+{ccli:}                 -- 8 digit song CCLI number
+{author:}               -- author(s) of song, separateg by semi-colons
+{copyright:}            -- copyright info, separated by semi-colons
+{comment:} {c:}         -- comment for musicians (on lyric line)
+{comment_bold:} {cb:}   -- comment, bold -- treated like regular comment
+{comment_italic:} {ci:} -- comment, italics -- treated like regular comment
+{guitar_comment:} {gc:} -- guitar comment, comments on chord line
+{soh} {eoh}             -- start of heading, end of heading -- musical passages
+{metronome:}            -- beats per minute
+{tag:}                  -- keywords for use in searching song -- used in .csv
+# -- comment lines      -- comment for song editor -- does not print
+| -- verbose chord line -- line contains chords for introduction, instrumental musical sections
+#st-comment:            -- comments to append to subtitle
+
+-- Official, Reference
+http://www.chordpro.org/chordpro/index.html
+http://www.chordpro.org/chordpro/v50.html
+
+-- Extensions, Reference
+http://linkesoft.com/songbook/chordproformat.html
+http://tenbyten.com/software/songsgen/help/HtmlHelp/frames.htm
+http://onsongapp.com/docs/features/formats/chordpro/
+
+-- PROGRAM BEHAVIOR, GENERAL
+Note: meta-tags can appear anywhere in the song.pro file.
+You do NOT have to start the file with {title:}, then {subtitle:}, etc. etc.
+Any place and any order is fine.  However, it's more readable to put meta-tags at the beginning.
+
+-- PROGRAM BEHAVIOR, #st-comment:
+#st-comment: is a special comment line designed to go on the subtitle line.
+An example is this:
+#st-comment: CCLI lyrics differ from author's recorded lyrics.  Following author's recording.
+#st-comment: good medley combo: "How Great Is Out God" & "How Great Thou Art"
+
+-- PROGRAM BEHAVIOR, Subtitle:
+The subtitle line is printed below the title line.
+It is designed to provide basic information for the musician such as key, time, ccli #, author, copyright, etc.
+The gparsnip program is designed to auto-generate a subtitle _for you_ if:
+1. a {subtitle:} is not defined in the .pro file
+2. there are sufficient meta-tags already defined: {key:}, {time:}, {ccli:}, {author:}, {copyright:}, and #st-comment:
+
+-- PROGRAM BEHAVIOR, Verbose Chord Line:
+To musically notate an musical introduction to a song is difficult.  The "verbose chord line" feature solves this.
+
+To notate this:
+| C    |  F  G  |
+
+write this in your .pro song file:
+| [C]    |  [F]  [G]  |
+
+The vertical bar must start in column 1.
+The reason the chords must be in square brackets is to allow musical programs to detect/transpose chords.
+
+-- PROGRAM BEHAVIOR, Medleys:
+In order to facilitate song medleys/mashups, gparsnip has a medley song feature.  This is how it works.
+Normally you have a song.pro file with one {title:} and one #st-comment:
+In a medley song.pro file, create multiple {title:} (up to 3), and multiple #st-comment: lines (up to 3).
+
+If 3 {title:} tags are defined, then:
+  1st {title:} is the song medley title you gave it.
+  2nd {title:} is the 1st song title.
+  3rd {title:} is the 2nd song title.
+
+If 2 {title:} tags are defined, then:
+  1st {title:} is the 1st song title
+  2nd {title:} is the 2nd song title
+  and there is no medley song title
+
+You also define up to 2 directives each of {key:}, {time:}, {ccli:}, {author:}, {copyright:} for each song.
+The first {key:} is assigned to the 1st song, and the second {key:} for the second song.
+The same is true for the other meta-tags mentioned.
+You can have up to 3 #st-comment: lines -- they are assigned to subtitles in the same order as they are found.
+
+-- PROGRAM BEHAVIOR, Title:
+If no title is given/forgotten, then the default title is "Untitled Song".
+
+-- CUSTOMIZING HTML OUTPUT
+To change the font, style, colors, etc. of the song.htm song.html web pages, edit 0chordlyrics.css and 0lyricsonly.css, respectively.
+
+
+---- TIPS: FILE FORMAT, CHARACTER ENCODING
+
+-- FILE FORMAT
+There are two dominant plain text formats: Windows and UNIX/Linux.
+In a Windows file, each line ends with two characters: Carriage Return (CR) and Linefeed (LF).
+In a UNIX/Linux style file, each line ends with one character: Linefeed (LF).
+My program requires the UNIX/Linux style with LF at the end.
+It will give a nasty error if not heeded.
+
+-- CHARACTER ENCODING
+Files must use UTF-8 encoding of characters, and characters must be printable (except for space character) --
+no control charcters (except LF) are allowed.
+The program also prefers that you not use some characters which may cause problem like: copyright,
+and smart left and right single and double apostrophes.
+
+-- TEXT EDITORS
+I endorse two text editors:
+  Notepad++, Windows-only
+  Atom, Windows, Linux, Mac
+
+---- FILE AND DIRECTORY INFO
+
+\src  source files
+   gparsnip.js      -- ChordPro parser/generator program
+   gparsley.js      -- index.html (toc) generator
+   LICENSE.txt      -- open source license info
+   README.MD        -- not implemented yet
+   README.TXT       -- update and bug fix notices
+   MANUAL.txt       -- user guide, this file
+   gparsnip-all.sh  -- Linux BASH script to run gparsnip on all *.pro files
+   gparsley-all.sh  -- Linux BASh script to generate index.html and zip up all files for ftp-ing or emailing
+   0chordlyrics.css, 0lyricsonly.css -- cascading style sheets for song.htm and song.html files, respectively
+
+\testplan
+   *.pro
+   *Z.htm  *Z.html  *Z.txt  *Z.lst  *Z.csv  *Z.cd1
+   indexZ.html
+   gp-make-testplan.sh
+   gp-regression-test-setup.sh
+   gp-regression-test.sh
+
+\example
+   *.pro
+   *.htm  *.html  *.txt  *.lst  *.csv  *.cd1
+   *.css
+   index.html
+   < copy *.js *.sh here >
+
+\songs -- a repository of songs, mine and others found on the web
+   \SUS-Songbook-of-Unusual-Size -- my personal song collection
+
+
+---- DEPLOYMENT NOTES
+
+Mozilla Firefox -- best for opening files -- File --> Open File --> Dialog Box
+
+Google Chrome -- best for printing html pages -- smaller margins than Firefox
+  -- to open file -- Control-O
+  -- FYI, extension Local Explorer - "File Manager on web browser" is helpful
+  -- you can also set you default web pages to include the index.html page
+
+---- IDEAS
+
+You can create multiple table of content index.html files.
+One organizational idea is to create one comprehensive TOC, say index.html,
+and other TOC based on songs selected for a particular day, like index-2016-08-21.html
+
+To accomplish this, you need to edit the index.csv file using Libre Office
+or Microsoft Exel.  Import the csv as a tab-delimited file.  Edit out
+the songs that you don't want.  Save the new csv file.  Then use gparsley
+to create a new index-xxx.html.
+
+
+---- MY DEVELOPMENT ENVIRONMENT
+
+-- hardware
+Dell Precision M4700
+Intel Core i7-3840QM
+32 GB RAM
+1 TB hdd
+
+-- OS
+Xubuntu 14.04.4 LTS 64-bit
+
+-- Software
+BASH terminal
+nodejs v6.4.0
+ATOM editor v1.8.0
+Mozilla Firefox 48.0
+Google Chrome 52.0.7243.116 (64-bit)
