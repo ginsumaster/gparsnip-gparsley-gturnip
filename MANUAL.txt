@@ -212,9 +212,10 @@ I endorse two text editors:
 \example
    *.pro
    *.htm  *.html  *.txt  *.lst  *.csv  *.cd1
-   *.css
    index.html
-   < copy *.js *.sh here >
+   < copy /src *.js  files here >
+   < copy /src *.sh  files here >
+   < copy /src *.css files here >
 
 \songs -- a repository of songs, mine and others found on the web
    \SUS-Songbook-of-Unusual-Size -- my personal song collection
@@ -223,6 +224,7 @@ I endorse two text editors:
 ---- DEPLOYMENT NOTES
 
 Mozilla Firefox -- best for opening files -- File --> Open File --> Dialog Box
+  -- the Zoom Page Add-On is excellent
 
 Google Chrome -- best for printing html pages -- smaller margins than Firefox
   -- to open file -- Control-O
@@ -231,9 +233,10 @@ Google Chrome -- best for printing html pages -- smaller margins than Firefox
 
 ---- IDEAS
 
-You can create multiple table of content index.html files.
+You can create multiple table of content indexX.html files.
 One organizational idea is to create one comprehensive TOC, say index.html,
 and other TOC based on songs selected for a particular day, like index-2016-08-21.html
+You can also create custom indexes based on song type: hymn, faves, ccli100, etc.
 
 To accomplish this, you need to edit the index.csv file using Libre Office
 or Microsoft Exel.  Import the csv as a tab-delimited file.  Edit out

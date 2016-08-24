@@ -4,7 +4,7 @@
 {time: 4/4}
 {ccli: 14181}
 {author: Stuart Wesley Keene Hine}
-{copyright: (C) 1949 and 1953 Stuart K. Hine Trust; (Administration: USA All rights by Capitol CMG Publishing, except print rights for USA, North, Central and South America administered by Hope Publishing. All other non USA Americas rights by the Stuart Hine Trust. Rest of World – Integritymusic.com.)}
+{copyright: (C) 1949 and 1953 Stuart K. Hine Trust; (Administration: USA All rights by Capitol CMG Publishing, except print rights for USA, North, Central and South America administered by Hope Publishing. All other non USA Americas rights by the Stuart Hine Trust. Rest of World  Integritymusic.com.)}
 
 {soh}Verse 1:{eoh}
 O Lord my [G]God  when I in [C]awesome wonder
@@ -37,5 +37,3 @@ When Christ shall come  with shout of acclamation
 And take me home  what joy shall fill my heart
 Then I shall bow  in humble adoration
 And there proclaim  my God how great Thou art
-
-#chords: [G] [GM7] [Am] [C] [C/D] [D] [D7] [Em]

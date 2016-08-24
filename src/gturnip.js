@@ -90,7 +90,7 @@ var Key_D =  [ "D",  "E",  "F#", "G",  "A",  "B",  "C#" ];
 var Key_Eb = [ "Eb", "F",  "G",  "Ab", "Bb", "C",  "D"  ];
 var Key_E =  [ "E",  "F#", "G#", "A",  "B",  "C#", "D#" ];
 var Key_F =  [ "F",  "G",  "A",  "Bb", "C",  "D",  "E"  ];
-var Key_F# = [ "F#", "G#", "A#", "B",  "C#", "D#", "E#" ];
+var Key_Fs = [ "F#", "G#", "A#", "B",  "C#", "D#", "E#" ];
 var Key_G =  [ "G",  "A",  "B",  "C",  "D",  "E",  "F#" ];
 var Key_Ab = [ "Ab", "Bb", "C",  "Db", "Eb", "F",  "G"  ];
 

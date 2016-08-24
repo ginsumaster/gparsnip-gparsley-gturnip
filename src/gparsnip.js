@@ -72,7 +72,10 @@ FEATURES:
 
 4. Extensive test plan, regression testing scripts
 
-NOTES: version 43
+NOTES: version 44
+Bpm now appears in subtitle line.
+Found bug in lyric-handling, "Above All [A]", vss 1, line 3, "man-"
+
 optional -- fix soh eoh error handling routines
 
 1. My remove_double_spaces() routine doesn't work right.  Get a runtime error.
@@ -1187,6 +1190,9 @@ function create_subtitle( buf_indx ) {
   // difference between musician's subtitle and singers is only "Key"
   if ( meta_tag_time[ buf_indx ] != "" ) meta_tag_subtitle_lyrics_only[ buf_indx ]
             += "Time: " + meta_tag_time[ buf_indx ] + "  " ;
+
+  if ( meta_tag_metronome[ buf_indx ] != "" ) meta_tag_subtitle_lyrics_only[ buf_indx ]
+            += "Bpm: " + meta_tag_metronome[ buf_indx ] + "  " ;
 
   if ( meta_tag_ccli[ buf_indx ] != "" ) meta_tag_subtitle_lyrics_only[ buf_indx ]
             += "CCLI: " + meta_tag_ccli[ buf_indx ] + "  " ;
