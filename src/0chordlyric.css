@@ -1,0 +1,105 @@
+<style>
+
+a:link {
+    color: Black;
+    text-decoration: none;
+    background-color: lightblue;
+}
+a:visited {
+    color: Black;
+    text-decoration: none;
+}
+a:hover {
+/*    color: blue;
+    text-decoration: none;*/
+    background-color: Yellow;
+}
+a:active {
+    color: Black;
+    text-decoration: none;
+}
+
+
+body  {
+        font-size: 100%;
+}
+/* h1 - song title */
+h1    { color:       DarkBlue;
+        font-family: monospace, monospace; /* 2nd monospace - vertical spacing tighter */
+        font-size:   1.6em;
+        font-weight: bold; /* bold words are wider than normal words */
+        margin:      0px 0px 0px 0px;
+        line-height: 100%;
+        white-space: pre;
+}
+/* h2 - song subtitle line, aka credits */
+h2    {
+        color:       Black;
+        font-family: monospace, monospace;
+        font-size:   0.875em;
+        font-weight: bold; /* bold words are wider than normal words */
+        margin:      0px 0px 0px 0px;
+        line-height: 100%;
+        white-space: pre;
+}
+/* h3 - lyric line -- musical passage, i.e. Intro, Chorus, Verse, Bridge */
+h3    { color:       Blue;
+        font-family: monospace, monospace;
+        font-size:   1.2em;
+        font-weight: bold; /* bold words are wider than normal words */
+        margin:      0px 0px 0px 0px;
+        line-height: 100%;
+        white-space: pre;
+        background-color: AliceBlue;
+}
+/* h4 - lyric line -- highlighted text {soh} {eoh}; comments {comments:} */
+h4    { color:       Red;
+        font-family: monospace, monospace;
+        font-size:   1.2em;
+        font-weight: normal; /* bold words are wider than normal words */
+        margin:      0px 0px 0px 0px;
+        line-height: 100%;
+        white-space: pre;
+        display:     inline-block;  /* lyric line has both p, h4  */
+}
+/* h5 - chord line -- {guitar-comments} guitar comments */
+h5    {
+        color:       Red;
+        font-family: monospace, monospace;
+        font-size:   1.2em;
+        font-weight: normal; /* bold words are wider than normal words */
+        margin:      0px 0px 0px 0px;
+        line-height: 100%;
+        white-space: pre;
+        display:     inline-block; /* chord line has both: h5, h6 */
+}
+/* h6 - chord line - chords */
+h6    {
+        color:       DarkBlue;
+        font-family: monospace, monospace;
+        font-size:   1.2em; /* if set to 0em, then chords disappear */
+        font-weight: normal;
+        margin:      0px 0px 0px 0px;
+        line-height: 100%;
+        white-space: pre;
+        display:     inline-block; /* chord line has both: h5, h6 */
+}
+/* p - lyrics line - lyrics */
+p     { color:       Black;
+        font-family: monospace, monospace;
+        font-size:   1.2em;
+        font-weight: normal;
+        margin:      0px 0px 0px 0px;
+        white-space: pre;
+        display:     inline-block; /* lyric line has both p, h4  */
+}
+</style>
+
+<!-- courier
+andale mono
+courier new
+monaco
+lucida console
+monospace}
+https://developer.mozilla.org/en-US/docs/Web/CSS/white-space
+-->

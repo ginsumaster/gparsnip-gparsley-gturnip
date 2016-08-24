@@ -1,0 +1,45 @@
+{title:He is Faithful}
+{key:E}
+[E][A]
+{gc:x4}
+
+{gc:Verse}
+[E]I have heard a sound
+[A]coming on the wind
+[E]changing hearts and minds
+[A]healing brokenness
+[C#m]I feel a generation
+[A]breaking through despair
+[C#m]I hear a generation
+[A]full of faith declare
+
+{gc:Pre-chorus}
+[B]and our [C#m]song, it will [A]be
+[B]out of the dar[C#m]kness, we will [A]rise and sing
+{soc}
+[E]he is faithful, [A]he is glorious and
+[C#m]he is Jesus, and[A] all my hope is in Him
+[E]he is freedom, h[A]e is healing right now, [C#m]he is hope and joy, [A]love and peace and life
+{eoc}
+
+{gc:Verse 2}
+[E]I have seen a light
+[A]like the break of dawn
+[E]giving blind men sight
+[A]letting lame men walk
+[C#m]I see a generation
+[A]with resurrection life
+[C#m]we are a generation
+[A]filled with the power of Christ
+
+{gc:Bridge}
+[C#m]He has p[A]aid the highest p[E]rice[B]
+[C#m]he has p[A]roven his great l[E]ove for [B]us
+[C#m]we will [A]praise him with o[E]ur lives[B]
+[C#m]and proc[A]laim our love for[E] him[(B)]
+
+{gc:Last ending chord:}
+[E]
+
+{c:Katie Torwalt & Bryan Torwalt}
+{c:(c) Jesus Culture}

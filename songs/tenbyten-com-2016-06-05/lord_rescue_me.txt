@@ -1,0 +1,53 @@
+{title: Lord, Rescue Me}
+# Imported by com.tenbyten.ChordproEditor 0.9
+{key: G}
+{soc}
+[G]Lord[C], rescue me[Em][D]
+[G]Oh Lo[C]rd, rescue me[Em][D]
+{eoc}
+
+[G]May I sing this holy song?[C]
+[Em]Let my words be true[D]
+[G]All I have I leave behind[C]
+I f[Em]ollow after you[D]
+
+{soc}
+[G]Lord[C], rescue me[Em][D]
+[G]Oh Lo[C]rd, rescue me[Em][D]
+{eoc}
+
+[G]Lead me to your promised land[C]
+[Em]Guide me from above[D]
+[G]Pull me from the avalanche[C]
+[Em]Draw me from the flood[D]
+
+{soc}
+Lord, rescue me
+Oh Lord, rescue me
+{eoc}
+
+I'm fal[C]ling to my knees,[Cm/Eb]
+Where the earth[G] and sea do meet[D]
+I [C]lift my hands to praise your name[Cm/Eb]
+[G]Oh Lor[C]d, rescue me[Em][D]
+{soc}
+Lord, rescue me
+Oh Lord, rescue me
+{eoc}
+
+[G]Wash me in your sacred stream[C]
+[Em]Let your mercies spill[D]
+[G]Grant my heart your lasting peac[C]e
+[Em]Let it be your will[D]
+
+{soc}
+Lord, rescue me
+Oh Lord, rescue me
+{eoc}
+
+May I sing this holy song?
+Let my words be true
+All I have I leave behind
+I follow after you
+{artist: Michael J. Pritzl}
+{copyright: (c)2003 Honeyblushing Songs/Northern Music Publishing}
