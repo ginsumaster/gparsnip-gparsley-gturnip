@@ -1,12 +1,12 @@
 {title: All Hail King Jesus}
-{key:C}
+{key: C,D}
 {time: 4/4}
 {ccli: 12877}
 {author: Dave Mondy}
 {copyright: (C) 1981 Dayspring Music}
 #st-comment: CCLI diff: vss 2(and) added
 
-{soh}Verse 1{eoh}
+{soh}Verse 1 #-- Key of C{eoh}
 [C] All hail King Jesus [G]
 All hail E[F]mmanu[C]el
 King of [Am]kings, and Lord of [Fm7]lords
@@ -17,15 +17,7 @@ Bright Morning [Dm]Star [G]
 I'm going to [F]praise Him [Fm/Ab]
 And for[C]evermore, [F]I will [Gsus]reign with [C]Him
 
-{title: All Hail King Jesus}
-{key:D}
-{time: 4/4}
-{ccli: 12877}
-{author: Dave Mondy}
-{copyright: (C) 1981 Dayspring Music}
-#st-comment: CCLI diff: vss 2(and) added
-
-{soh}Verse 1{eoh}
+{soh}Verse 1 #-- Key of D{eoh}
 [D] All hail King Jesus [A]
 All hail Em[G]manu[D]el
 King of [Bm]kings, and Lord of [Gm7]lords

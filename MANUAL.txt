@@ -164,6 +164,44 @@ You can have up to 3 #st-comment: lines -- they are assigned to subtitles in the
 -- PROGRAM BEHAVIOR, Title:
 If no title is given/forgotten, then the default title is "Untitled Song".
 
+-- PROGRAM BEHAVIOR,  Musical Passage Inline Comment
+
+There are some instances where:
+  1. You have a short song but in many keys, like "Alleluia".
+  2. You have a song which has a key change
+
+You can now have key change information in musical section headings, e.g.
+  1. "Alleluia":
+     {soh}Verse 1 #-- Key of C{eoh}
+     ..
+     {soh}Verse 1 #-- Key of D{eoh}
+
+     In chord-lyrics, prints:
+       Verse 1 -- Key of C
+       ..
+       Verse 1 -- Key of D
+
+     In lyrics-only, prints:
+       Verse 1
+       ..
+       Verse 1
+
+  2. Key changes
+     {soh}Chorus #-- Key of C{eoh}
+
+     {soh}Verse 4 #-- Key of D{eoh}
+
+     In chord-lyrics, prints:
+       Chorus -- Key of C
+       ..
+       Verse 4 -- Key of D
+
+     In lyrics-only, prints:
+       Chorus
+       ..
+       Verse 4
+
+
 -- CUSTOMIZING HTML OUTPUT
 To change the font, style, colors, etc. of the song.htm song.html web pages, edit 0chordlyrics.css and 0lyricsonly.css, respectively.
 

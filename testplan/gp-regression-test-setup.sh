@@ -107,6 +107,13 @@ mv gp-notitle.html gp-notitleZ.html
 mv gp-notitle.csv gp-notitleZ.csv
 mv gp-notitle.cd1 gp-notitleZ.cd1
 #
+mv gp-soh-hash.txt gp-soh-hashZ.txt
+mv gp-soh-hash.lst gp-soh-hashZ.lst
+mv gp-soh-hash.htm gp-soh-hashZ.htm
+mv gp-soh-hash.html gp-soh-hashZ.html
+mv gp-soh-hash.csv gp-soh-hashZ.csv
+mv gp-soh-hash.cd1 gp-soh-hashZ.cd1
+#
 mv gp-transpose1-NEW.pro  gp-transpose1-NEWZ.pro
 mv gp-transpose2-NEW.pro  gp-transpose2-NEWZ.pro
 mv gp-transpose3-NEW.pro  gp-transpose3-NEWZ.pro

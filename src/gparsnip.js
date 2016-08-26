@@ -69,6 +69,20 @@ FEATURES:
      1. .csv file is for .xls creation and TOC (index.html) generation.
      2. .cd1 file for utility to transpose/substitute chords
   f. Medley song handling -- 2 songs, 2-3 titles, 2-3 subtitles
+  g. musical passage inline comment: e.g.
+     {soh}Verse 3 #-- Key of C{soh}
+     ..
+     {soh}Verse 4 #-- Key of D{soh}
+
+     In chord-lyrics, prints:
+     Verse 3 -- Key of C
+     ..
+     Verse 4 -- Key of D
+
+     In lyrics-only, prints:
+     Verse 3
+     ..
+     Verse 4
 
 4. Extensive test plan, regression testing scripts
 
@@ -840,6 +854,7 @@ function remove_double_spaces( txt_line ) {
 function output_lines() {
   // combine chord and lyric lines into final output stream
   var tmp_str = "" ;
+  var hash_pos = 0; // .. out_line_lyric.indexOf( "#" )
 
 if ( DEBUGGING_MODE2 ) console.log( "output_lines()" );
 
@@ -855,26 +870,56 @@ if ( DEBUGGING_MODE2 ) console.log( "output_lines()" );
     if ( out_line_lyric.length == 0 ) // no chord, no lyric -- do nothing
       {}
     else { // no chord, have lyric
-      out_buffer_chord_lyric[ song_index ] +=
-                                                 out_line_lyric         + "\n" ;
-       out_buffer_lyrics_only[ song_index ] +=
+/*      out_buffer_chord_lyric[ song_index ] +=    out_line_lyric         + "\n" ;
+      out_buffer_lyrics_only[ song_index ] +=
                    trim_leading_trailing_spaces( out_line_lyrics_only ) + "\n" ;
-
+*/
       // check to see if this is a musical heading section
       if (    ( meta_tag_soh_count == 1 ) && ( meta_tag_eoh_count == 1 )
            && (   in_line_last_soh_index == 0 )
-           && ( ( in_line_last_eoh_index + 1 ) == in_line_length ) ) {
-         out_buffer_html_chord_lyric[ song_index ] +=
+           && ( ( in_line_last_eoh_index + 1 ) == in_line_length ) ) { // yes
+
+         hash_pos = out_line_lyric.indexOf( "#" );
+
+         if ( hash_pos == -1 ) { // no case of e.g.: Verse 3 #-- To Key of D
+           out_buffer_html_chord_lyric[ song_index ] +=
                                            "<h3>" + out_line_lyric + "</h3>\n" ;
-         out_buffer_html_lyrics_only[ song_index ] +=
+           out_buffer_html_lyrics_only[ song_index ] +=
                                            "<h3>" + out_line_lyric + "</h3>\n" ;
-      } else { // regular highlighted section
+           out_buffer_chord_lyric[ song_index ] +=    out_line_lyric         + "\n" ;
+           out_buffer_lyrics_only[ song_index ] +=
+                        trim_leading_trailing_spaces( out_line_lyrics_only ) + "\n" ;
+           }
+         else { // yes case of e.g.: Verse 3 #-- To Key of D
+           out_buffer_html_chord_lyric[ song_index ] += "<h3>"
+             + out_line_lyric.substring( 0, hash_pos ) // e.g. Verse 3 -- To Key of D
+             + out_line_lyric.substring( hash_pos + 1 ) // omit #
+                                                      + "</h3>\n" ;
+           out_buffer_html_lyrics_only[ song_index ] += "<h3>"
+             +  trim_leading_trailing_spaces(          // e.g. Verse 3
+                  out_line_lyric.substring( 0, hash_pos ) )
+                                                      + "</h3>\n" ;
+
+           out_buffer_chord_lyric[ song_index ] += // e.g.: Verse 3 -- To Key of D
+               out_line_lyric.substring( 0, hash_pos )
+             + out_line_lyric.substring( hash_pos + 1 ) + "\n" ;
+
+           hash_pos = out_line_lyrics_only.indexOf( "#" );
+           out_buffer_lyrics_only[ song_index ] += // e.g.: Verse 3
+             trim_leading_trailing_spaces( out_line_lyrics_only.substring( 0, hash_pos ) ) + "\n" ;
+
+         }
+      } else { // no - regular highlighted section
         out_buffer_html_chord_lyric[ song_index ] +=
                                       out_line_html_lyric       + "</p><br>\n" ;
         out_buffer_html_lyrics_only[ song_index ] +=
                                       out_line_html_lyrics_only + "</p><br>\n" ;
+
+        out_buffer_chord_lyric[ song_index ] +=    out_line_lyric         + "\n" ;
+        out_buffer_lyrics_only[ song_index ] +=
+                     trim_leading_trailing_spaces( out_line_lyrics_only ) + "\n" ;
       }
-    }
+    } // if meta_tag_eoh_count ..
   else
     if ( out_line_lyric.length == 0 ) { // have chord, no lyric
       out_buffer_chord_lyric[ song_index ]     += out_line_chord + "\n" ;

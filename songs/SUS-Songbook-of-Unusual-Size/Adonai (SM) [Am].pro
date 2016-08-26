@@ -1,4 +1,4 @@
-{title: Adonai (SM) [Am]}
+{title: Adonai (SM)}
 {key: Am}
 {ccli: 4488637}
 {author: Lee Black, Paul Wilbur, Steve Merkel}

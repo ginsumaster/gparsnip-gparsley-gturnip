@@ -17,6 +17,7 @@ nodejs gparsnip gp-medley3
 nodejs gparsnip gp-medley4
 nodejs gparsnip gp-medley5
 nodejs gparsnip gp-notitle
+nodejs gparsnip gp-soh-hash
 nodejs gturnip  gp-transpose1
 nodejs gturnip  gp-transpose2
 nodejs gturnip  gp-transpose3

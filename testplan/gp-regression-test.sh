@@ -91,6 +91,13 @@ diff gp-notitle.html gp-notitleZ.html
 diff gp-notitle.csv gp-notitleZ.csv
 diff gp-notitle.cd1 gp-notitleZ.cd1
 #
+diff gp-soh-hash.txt gp-soh-hashZ.txt
+diff gp-soh-hash.lst gp-soh-hashZ.lst
+diff gp-soh-hash.htm gp-soh-hashZ.htm
+diff gp-soh-hash.html gp-soh-hashZ.html
+diff gp-soh-hash.csv gp-soh-hashZ.csv
+diff gp-soh-hash.cd1 gp-soh-hashZ.cd1
+#
 echo gp-transpose
 diff gp-transpose1-NEW.pro gp-transpose1-NEWZ.pro
 diff gp-transpose2-NEW.pro gp-transpose2-NEWZ.pro

@@ -47,9 +47,13 @@ h3    { color:       Blue;
         font-family: monospace, monospace;
         font-size:   1.2em;
         font-weight: bold; /* bold words are wider than normal words */
+/*        font-weight: normal; /* bold words are wider than normal words */
         margin:      0px 0px 0px 0px;
         line-height: 100%;
         white-space: pre;
+        text-align:  left;
+        text-indent: 55px;
+        font-style:  italic;
         background-color: AliceBlue;
 }
 /* h4 - lyric line -- highlighted text {soh} {eoh}; comments {comments:} */

@@ -211,7 +211,7 @@ function generate_song_html() {
         + '<p> <a href="' + song_filename_noext + '.txt" target=newtab>txt</a> </p> '
         + '<p> <a href="' + song_filename_noext + '.lst" target=newtab>lst</a> </p> '
         + '<p> <a href="' + song_filename_noext + '.pro" target=newtab>pro</a> </p> '
-        + '<p> <a href="' + song_filename_noext + '.htm" target=newtab>' + song_key + '</a> </p>\n'
+        + '<p> <a href="' + song_filename_noext + '.htm" target=newtab>' + song_key + '</a> </p>'
         + '<p> <a href="' + song_filename_noext + '.htm" target=newtab>'
 //        + song_filename_noext + "</a> </p><br>\n" ;
         + song_title + "</a> </p><br>\n" ;
