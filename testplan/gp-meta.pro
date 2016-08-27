@@ -4,7 +4,7 @@
 # v0.9
 # bad meta-tags should be ignored completely
 # however, they do serve as delimiters when parsing
----------------------------------------gp-meta
+{title:---------------------------------------gp-meta}
 -----------------------------------------------------------------------Test 01
 [A]Alpha [B]Bravo {meta-tag-here:foo}
 

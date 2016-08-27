@@ -2,7 +2,7 @@
 # TESTS - verbose chord line
 # i.e. a line that starts with "|" and only has chords in it.
 #
----------------------------------------gp-verbose
+{title:---------------------------------------gp-verbose}
 -----------------------------------------------------------------------Test 01
 | [A]     | [B]     |
 

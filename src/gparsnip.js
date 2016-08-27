@@ -183,6 +183,7 @@ const PARSE_META_TAG_COMMENT        = 11;
 const PARSE_META_TAG_GUITAR_COMMENT = 12;
 var   last_parse_mode_flag          = PARSE_UNDEFINED;
 var   last_parse_string_length      = -1;
+var   process_lyric_exit_set_last_parse_mode = PARSE_UNDEFINED;
 
 var j = 0;  // length of current musical chord being processed, no brackets
 
@@ -329,22 +330,28 @@ if ( DEBUGGING_MODE2 )  console.log( "process_line() -- parsing mode is:", parse
       case PARSE_LYRIC :
         if ( in_line[ i ] == "{" ) { process_lyric();
                                      last_parse_mode = PARSE_LYRIC;
+                                     last_parse_mode_flag = process_lyric_exit_set_last_parse_mode;
                                      last_parse_string_length = parse_string.length;
                                      parse_mode      = PARSE_META_TAG;
                                      parse_string    = "";               i++;
         } else
-        if ( in_line[ i ] == "[" ) {
-                                     process_lyric();
+        if ( in_line[ i ] == "[" ) { process_lyric();
                                      last_parse_mode = PARSE_LYRIC;
+                                     last_parse_mode_flag = process_lyric_exit_set_last_parse_mode;
                                      last_parse_string_length = parse_string.length;
                                      parse_mode      = PARSE_CHORD;
                                      parse_string    = "";               i++;
         } else {
                                      parse_string += in_line[ i ];
+// can't do last_parse_mode = PARSE_LYRIC_SPACE or PARSE_LYRIC_NON_SPACE
+// here -- premature, because neet do read current/correct value of
+// last_parse_mode inside process_lyric() first
                                      if ( in_line[ i ] == " " )
-                                        last_parse_mode_flag = PARSE_LYRIC_SPACE;
+                                        process_lyric_exit_set_last_parse_mode
+                                          = PARSE_LYRIC_SPACE;
                                      else
-                                        last_parse_mode_flag = PARSE_LYRIC_NON_SPACE;
+                                        process_lyric_exit_set_last_parse_mode
+                                          = PARSE_LYRIC_NON_SPACE;
                                      i++;
         }
         break;
@@ -551,17 +558,17 @@ console.log( "process_lyric() last_parse_mode_flag:", last_parse_mode_flag ); }
   switch ( last_parse_mode ) {
 
     case PARSE_META_TAG :
-      if ( parse_string[ 0 ] == " " ) { // have to even-up chord line and lyric line
-        spacey_string = space_string( out_line_chord.length
-                                    - out_line_lyric.length );
-        out_line_lyric            += spacey_string + parse_string;
-        out_line_html_lyric       += spacey_string + parse_string;
-        out_line_lyrics_only      +=                 parse_string;
-        out_line_html_lyrics_only +=                 parse_string;
+        spacey_string = space_string( parse_string.length );
 
-        out_line_chord      += parse_string;
-        out_line_html_chord += parse_string;
-      }
+        out_line_chord            += spacey_string;
+        out_line_lyric            += parse_string;
+
+        out_line_html_chord       += spacey_string;
+        out_line_html_lyric       += parse_string;
+
+        out_line_lyrics_only      += parse_string;
+        out_line_html_lyrics_only += parse_string;
+
       break;
 
     case PARSE_CHORD :
@@ -610,68 +617,61 @@ console.log( "*/----------------- process_lyric()" );  }
 } // function
 
 ////////////////////////////////////////////////////////////////////////////////
+function even_up_chord_lyric_lines() {
+  var chord_lyric_length_delta = out_line_chord.length - out_line_lyric.length;
+
+  if ( chord_lyric_length_delta > 0 ) {
+    spacey_string        = space_string( chord_lyric_length_delta );
+    out_line_lyric      += spacey_string;
+    out_line_html_lyric += spacey_string;
+  } else
+  if ( chord_lyric_length_delta < 0 ) {
+    spacey_string        = space_string( Math.abs( chord_lyric_length_delta ) );
+    out_line_chord      += spacey_string;
+    out_line_html_chord += spacey_string;
+  }
+
+} // function
+
+////////////////////////////////////////////////////////////////////////////////
 function process_meta_tag_guitar_comment() {
 // meta-tag -- guitar comment
-  var spacey_string = "";
+  var spacey_string = space_string( meta_tag_argument.length );
 
-  switch ( last_parse_mode ) {
+  even_up_chord_lyric_lines();
 
-    case PARSE_CHORD :
-      out_line_chord      +=               meta_tag_argument;
-      out_line_html_chord += "</h6><h5>" + meta_tag_argument + "</h5><h6>" ;
-      break;
+  out_line_chord      +=               meta_tag_argument;
+  out_line_lyric      +=               spacey_string;
 
-    case PARSE_UNDEFINED :
-    case PARSE_META_TAG :
-    case PARSE_LYRIC :
-      if ( last_parse_mode_flag == PARSE_LYRIC_SPACE ) {
-        spacey_string = space_string(   out_line_lyric.length
-                                      - out_line_chord.length );
-        out_line_chord      += spacey_string + meta_tag_argument;
-        out_line_html_chord +=
-                 "</h6><h5>" + spacey_string + meta_tag_argument + "</h5><h6>" ;
-      } else
-      if ( last_parse_mode_flag == PARSE_LYRIC_NON_SPACE ) {
-        spacey_string = space_string(  out_line_lyric.length
-                                     - out_line_chord.length );
-
-        out_line_chord      += spacey_string + meta_tag_argument;
-        out_line_html_chord +=
-                 "</h6><h5>" + spacey_string + meta_tag_argument + "</h5><h6>" ;
-       } else {
-         out_line_chord      +=               meta_tag_argument;
-         out_line_html_chord += "</h6><h5>" + meta_tag_argument + "</h5><h6>" ;
-       }
-
-      break;
-    default :
-
-  } // switch
+  out_line_html_chord += "</h6><h5>" + meta_tag_argument + "</h5><h6>" ;
+  out_line_html_lyric +=               spacey_string;
 
   last_parse_mode          = PARSE_META_TAG;
   last_parse_mode_flag     = PARSE_META_TAG_GUITAR_COMMENT;
   last_parse_string_length = parse_string.length;
+// since gc is a chord-only meta-tag, lyrics-only text/html is not added to
 } // function
 
 ////////////////////////////////////////////////////////////////////////////////
 function process_meta_tag_comment() {
 // meta-tag -- inline comment
-  var k = 0;
-  var spacey_string = "";
+  var spacey_string = space_string( meta_tag_argument.length );
 
 if ( DEBUGGING_MODE2 )  console.log( "process_meta_tag_comment()" );
 
-  out_line_lyric                   += meta_tag_argument;
+  even_up_chord_lyric_lines();
+
+  out_line_chord      +=               spacey_string;
+  out_line_lyric      +=               meta_tag_argument;
+
+  out_line_html_chord +=               spacey_string;
   out_line_html_lyric += "</p><h4>" + meta_tag_argument + "</h4><p>" ;
-
-  spacey_string = space_string( out_line_lyric.length - out_line_chord.length );
-
-  out_line_chord      += spacey_string;
-  out_line_html_chord += spacey_string;
 
   last_parse_mode          = PARSE_META_TAG;
   last_parse_mode_flag     = PARSE_META_TAG_COMMENT;
   last_parse_string_length = parse_string.length;
+// since meta_tag_comment is a lyric-line musician only comment,
+// lyrics-only text/html is not added to
 }
 
 ////////////////////////////////////////////////////////////////////////////////

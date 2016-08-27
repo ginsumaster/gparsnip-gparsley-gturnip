@@ -7,7 +7,7 @@
 # no printing in lyrics-only and lyrics-only-html versions
 #
 # in chord-lyrics-html version, comment words are in different color.
----------------------------------------gp-gc
+{title:---------------------------------------gp-gc}
 -----------------------------------------------------------------------Test 01
 {gc:T:} [A]Alpha [B]Bravo
 
@@ -54,10 +54,10 @@
 # comment1 A    comment2
 #          Alpha
 -----------------------------------------------------------------------Test 10
-{gc:comment1} [A] Alpha Bravo [C]{gc:comment2}
+{gc:comment1} [A] bravo charlie [D]{gc:comment2}
 
-# comment1 A              C  comment2
-#             Alpha Bravo
+# comment1 A                D  comment2
+#             bravo charlie
 -----------------------------------------------------------------------Test 11
 [A]Alpha [B] {gc:comment1} [C]{gc:comment2}
 
@@ -88,3 +88,18 @@
 
 # A     comment1B  C  comment2  D  E    F
 # Alpha                            Echo Foxtrot
+-----------------------------------------------------------------------Test 17
+{gc:comment1}alpha [B]Bravo
+
+# comment1       B
+#          alpha Bravo
+-----------------------------------------------------------------------Test 18
+{gc:comment1} alpha [B]Bravo
+
+# comment1        B
+#           alpha Bravo
+-----------------------------------------------------------------------Test 19
+{gc:comment1} alph[A]A [B]Bravo
+
+# comment1      A  B
+#           alphA  Bravo

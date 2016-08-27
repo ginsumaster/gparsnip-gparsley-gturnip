@@ -10,7 +10,7 @@
 [A]Father into Your courts I will [E]enter
 Maker of [F#m]heaven and [Bm]earth
 I tremble in Your [E7sus]holy presence
-[A]Glory glory in Your sanctuary
+[A]Glory glory in Your sanct[E]uary
 Splendor and [F#]majesty [Bm]Lord
 Before You all [E7sus]life adores You
 

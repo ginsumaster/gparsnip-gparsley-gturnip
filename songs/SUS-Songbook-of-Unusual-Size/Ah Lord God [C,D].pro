@@ -1,10 +1,10 @@
 {title: Ah Lord God}
-{key: C}
+{key: C,D}
 {ccli: 17896}
 {author: Kay Chance}
 {copyright: (C) 1976 Kay Chance}
 
-{soh}Verse 1{eoh}
+{soh}Verse 1 #-- Key of C{eoh}
 [C]Ah Lord God, [F]Thou hast made the [C]heavens
 And the [C]earth, by [F]Thy great [G]power
 [C]Ah Lord God, [F]Thou hast made the [C]heavens
@@ -18,13 +18,7 @@ And [C]mighty in deed, (mighty in deed)
 [C]Nothing, [Am]nothing, [Dm]absolutely [G]nothing
 [C]Nothing is too [G]difficult for [C]Thee
 
-{title: Ah Lord God}
-{key: D}
-{ccli: 17896}
-{author: Kay Chance}
-{copyright: (C) 1976 Kay Chance}
-
-{soh}Verse 1{eoh}
+{soh}Verse 1 #-- Key of D{eoh}
 [D]Ah Lord God, [G]Thou hast made the [D]heavens
 And the [D]earth, by [G]Thy great [A]power
 [D]Ah Lord God, [G]Thou hast made the [D]heavens

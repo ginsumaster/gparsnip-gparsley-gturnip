@@ -7,7 +7,7 @@
 # no printing in lyrics-only and lyrics-only-html versions
 #
 # in chord-lyrics-html version, comment words are in different color.
----------------------------------------gp-c
+{title:---------------------------------------gp-c}
 -----------------------------------------------------------------------Test 01
 [A]Alpha{comment:comment1}
 
@@ -108,3 +108,23 @@
 
 # A     BMaj13  C   DMaj13  E
 # Alpha comment1    comment2
+-----------------------------------------------------------------------Test 21
+{c:comment1}alpha [B]Bravo
+
+#               B
+# comment1alpha Bravo
+-----------------------------------------------------------------------Test 22
+{c:comment1} alpha [B]Bravo
+
+#                B
+# comment1 alpha Bravo
+-----------------------------------------------------------------------Test 23
+{c:comment1} alph[A]a [B]Bravo
+
+#              A  B
+# comment1 alphA  Bravo
+-----------------------------------------------------------------------Test 23
+[A]Al{c:comment1}pha [B]Bravo
+
+# A           B
+# Al comment1 Bravo

@@ -5,7 +5,7 @@
 # 3. in html output, if line starts with soh -- then entire line
 #    is considered a musical passage and has highlighting and
 #    special background color.
----------------------------------------gp-soh
+{title:---------------------------------------gp-soh}
 -----------------------------------------------------------------------Test 01
 {soh}Chorus:{eoh}
 [A]Alpha [B]Bravo [C]Charlie
