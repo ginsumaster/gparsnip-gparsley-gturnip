@@ -56,16 +56,18 @@ Features to add:
 done error-checking process.argv, input file
 done key of song displayed
 done if click on TOC title, then download zip of website
+done jump to line made just below subtitle
+done if click on alphabet heading, jumps to top of web page
+done fixed underline problem in 0chordlyric.css
 numeric song titles, do numeric sort
 Unicode
 
 */
 var fs                    = require( 'fs' ); // read from filesystem
-//var in_file_noext         = process.argv[ 2 ] ;
 var in_file               = process.argv[ 2 ] + ".csv" ;
 var in_file_buffer_length = 0;
 
-var in_file_buffer        = "" ;    // CSV, tab-separated, Linux LF (\n) format
+var in_file_buffer        = [];    // CSV, tab-separated, Linux LF (\n) format
 var in_file_buffer_index  = 0;
 var in_file_buffer_length = 0;
 
@@ -73,22 +75,19 @@ var song_info_line        = "" ;
 var song_array            = [];
 
 const TOC_TITLE_DEFAULT   = "Songbook Table of Contents" ;
-//const TOC_SUBTITLE_DEFAULT = "2016" ;
 var TOC_SUBTITLE_DEFAULT  = new Date();
 var toc_title             = process.argv[ 3 ] ;
 var toc_subtitle          = process.argv[ 4 ] ;
-//var out_file_html         = process.argv[ 2 ] + ".html" ;
-//var out_file_html         = "index.html" ;
 const OUT_FILE_HTML       = "index.html" ; // table of contents
-const OUT_FILE_ZIP        = "index.zip" ; // user can download entire website
+const OUT_FILE_ZIP        = "index.zip" ;  // user can download entire website
 
 const OUT_FILE_HTML_CSS   = "0chordlyric.css" ;  // chord+lyrics css file
 var html = [
   "<!DOCTYPE html>\n<html>\n<head>\n<meta charset=\"UTF-8\">\n<link rel=\"stylesheet\" type=\"text/css\" href=\"" ,
-  "\">\n<style>\n</style>\n\n<title>" ,
+  "\">\n<style>\n<!--\na{text-decoration: none}\n-->\n</style>\n\n<title>" ,
   "</title>\n</head>\n\n<body>\n<h1><a href=\"0index.zip\" target=newtab>" ,
   "</a></h1>\n\n<h2>" ,
-  "</h2>\n" ,
+  "</h2><a name=\"0\"></a>\n" ,
   "\n\n</body>\n\n</html>\n"
 ];
 
@@ -125,12 +124,20 @@ if ( fs.existsSync( in_file ) ) { //csv source file
 
 ////////////////////////////////////////////////////////////////////////////////
 function generate_song_html() {
-  var out_file_buffer = html[ 0 ] + OUT_FILE_HTML_CSS
-                      + html[ 1 ] + toc_title
-                      + html[ 2 ] + toc_title
-                      + html[ 3 ] + toc_subtitle
-                      + html[ 4 ] ;
-  var song_array_length = song_array.length;
+  var out_file_buffer = [   html[ 0 ] + OUT_FILE_HTML_CSS
+                          + html[ 1 ] + toc_title
+                          + html[ 2 ] + toc_title
+                          + html[ 3 ] + toc_subtitle
+                          + html[ 4 ] ,
+                          "<p>Go: " ,
+                          "" ];
+/*  [ 0 ] = beginning html, title, subtitle
+    [ 1 ] = jumpto_string
+    [ 2 ] = alphabet heading, songs, .. (repeat) .. ending html
+*/
+  var out_file_buffer_aggregate = "" ; // final out_file_buffer contents go here
+
+  var song_array_length   = song_array.length;
 
   var song_line           = "" ; // one line of csv
 
@@ -147,15 +154,11 @@ function generate_song_html() {
        "K    !" , "L    !" , "M    !" , "N    !" , "O    !" , "P    !" ,
        "Q    !" , "R    !" , "S    !" , "T    !" , "U    !" , "V    !" ,
        "W    !" , "X    !" , "Y    !" , "Z    !" , "zzzzzz" ];
- // array of booleans, same size as heading[]
+ // heading_print is array of booleans, same size as heading[]
  // if true, then print corresponding heading[], false, don't print
   var heading_print = [] ;
   var heading_index = 0;
   var heading_length = heading.length;
-
-//  var heading_index = 0;
-//  var current_heading_printed = false;
-
 
   for ( k = 0; k < heading.length; k++ ) // initialize, print no headings
     heading_print.push( false );
@@ -177,14 +180,6 @@ function generate_song_html() {
     } // while j
   } // for k
 
-/*
-  for ( j = 0; j < ( heading.length - 1 ); j++ )
-     if ( ( heading[ j ].toString() < song_array[ k ].toString() )  &&
-          ( song_array[ k ].toString() < heading[ j + 1 ].toString()  ) )
-       heading_print[ j ] = true;
-*/
-
-
   for ( k = 0; k < heading.length; k++ ) // insert headings into song database
     if ( heading_print[ k ] )
       song_array.push( heading[ k ] );
@@ -195,31 +190,42 @@ function generate_song_html() {
     song_line = song_array[ k ].toString();
 
     if ( song_line.length == 6 )
-      if ( song_line == heading[ 0 ].toString() )
-        out_file_buffer += "<h3>Misc</h3>\n" ; // print first header
-      else // print regular header
-        out_file_buffer += "<h3>" + song_line.charAt( 0 ) + "</h3>\n" ;
+      if ( song_line == heading[ 0 ].toString() ) { // special 1st heading
+          out_file_buffer[ 2 ] += "<h3> <a href=\"#0\">Misc</a></h3><a name=\"Misc\"></a>\n" ;
+          out_file_buffer[ 1 ] += "<a href=\"#Misc\">Misc</a>" ; // jump to
+        }
+      else { // print regular header
+        out_file_buffer[ 2 ] += "<h3><a href=\"#0\">  "   + song_line.charAt( 0 )
+                             +  "  </a></h3><a name=\""   + song_line.charAt( 0 )
+                             +  "\"></a>\n" ;
+
+        // make jump to
+        out_file_buffer[ 1 ] += "<a href=\"#" + song_line.charAt( 0 )
+                             +  "\"> "        + song_line.charAt( 0 ) + " </a>" ;
+      }
     else { // print info of this song
-      song_title = song_line.substring( 0, song_line.indexOf( "\t" ) );
+      song_title          = song_line.substring( 0, song_line.indexOf( "\t" ) );
       song_filename_noext = song_line.substring( song_line.lastIndexOf( "\t" ) );
 
       song_key_tmp = song_line.substring( song_line.indexOf( "\t" ) + 1 );
-      song_key = song_key_tmp.substring( 0, song_key_tmp.indexOf( "\t" ) );
+      song_key  = song_key_tmp.substring( 0, song_key_tmp.indexOf( "\t" ) );
 
-      out_file_buffer +=
-          '<p> <a href="' + song_filename_noext + '.html" target=newtab>lyr</a> </p> '
-        + '<p> <a href="' + song_filename_noext + '.txt" target=newtab>txt</a> </p> '
-        + '<p> <a href="' + song_filename_noext + '.lst" target=newtab>lst</a> </p> '
-        + '<p> <a href="' + song_filename_noext + '.pro" target=newtab>pro</a> </p> '
-        + '<p> <a href="' + song_filename_noext + '.htm" target=newtab>' + song_key + '</a> </p>'
-        + '<p> <a href="' + song_filename_noext + '.htm" target=newtab>'
-//        + song_filename_noext + "</a> </p><br>\n" ;
-        + song_title + "</a> </p><br>\n" ;
+      out_file_buffer[ 2 ] +=
+       '<p><a href="' + song_filename_noext + '.html" target=newtab> lyr </a>'
+        + '<a href="' + song_filename_noext + '.txt"  target=newtab> txt </a>'
+        + '<a href="' + song_filename_noext + '.lst"  target=newtab> lst </a>'
+        + '<a href="' + song_filename_noext + '.pro"  target=newtab> pro </a>'
+        + '<a href="' + song_filename_noext + '.htm"  target=newtab> ' + song_key + '  </a>'
+        + '<a href="' + song_filename_noext + '.htm"  target=newtab>'
+        + song_title + '</a></p><br>\n' ;
 
     } // else
 
   } // for k
 
-  out_file_buffer += html[ 5 ];
-  fs.writeFileSync( OUT_FILE_HTML, out_file_buffer );
+  out_file_buffer[ 1 ] += "</p>\n" ; // jump to string line, complete
+  out_file_buffer[ 2 ] += html[ 5 ]; // rest of html page, complete
+  out_file_buffer_aggregate = out_file_buffer[ 0 ] + out_file_buffer[ 1 ] + out_file_buffer[ 2 ];
+
+  fs.writeFileSync( OUT_FILE_HTML, out_file_buffer_aggregate );
 } // function

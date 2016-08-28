@@ -1,21 +1,21 @@
 <style>
 
 a:link {
-    color: Black;
+    color: blue;
     text-decoration: none;
     background-color: lightblue;
 }
 a:visited {
-    color: Black;
+    color: blue;
     text-decoration: none;
 }
 a:hover {
-/*    color: blue;
-    text-decoration: none;*/
+    color: blue;
+    text-decoration: none;
     background-color: Yellow;
 }
 a:active {
-    color: Black;
+    color: blue;
     text-decoration: none;
 }
 
@@ -52,7 +52,7 @@ h3    { color:       Blue;
         line-height: 100%;
         white-space: pre;
         text-align:  left;
-        text-indent: 55px;
+        text-indent: 30px;
         font-style:  italic;
         background-color: AliceBlue;
 }
