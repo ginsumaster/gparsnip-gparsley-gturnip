@@ -6,6 +6,21 @@ SUMMARY: Program takes a ChordPro -encoded plain text file
 
 PHILOSOPHY: Do it (W)RIGHT, Do it Once
 
+CURRENT VERSION:
+ls
+song.pro
+song.pro
+  #chord: [C] [Dm] [Em] [F] [G] [Am]
+  #chord-new: [D] [Em] [F#m] [G] [A] [Bm]
+nodejs gturnip song.pro
+ls
+song.pro
+song-new.pro
+
+
+
+NEW VERSION:
+
 TO RUN:
 # ls
 song.pro  song.cd1  song.cd2
