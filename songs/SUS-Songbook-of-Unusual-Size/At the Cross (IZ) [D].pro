@@ -1,4 +1,4 @@
-{title: At the Cross [IW]}
+{title: At the Cross (IW)}
 {key: D}
 {time: 4/4}
 {ccli: 29499}
