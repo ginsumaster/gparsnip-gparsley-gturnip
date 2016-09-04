@@ -86,7 +86,15 @@ FEATURES:
 
 4. Extensive test plan, regression testing scripts
 
-NOTES: version 44
+NOTES:
+v 45:
+* modified test_input_buffer();
+Before program continued on bad input.
+Now program aborts on control characters (bad),
+and continues on double-byte (ok), but gives warning when doing so.
+* rewrite of title, subtitle routines to handle medleys better: 3 songs, 4 titles
+
+v 44:
 Bpm now appears in subtitle line.
 Found bug in lyric-handling, "Above All [A]", vss 1, line 3, "man-"
 
@@ -124,20 +132,20 @@ var in_line_length        = 0;   // in_line.length
 
 ////////////////////////////////////////////////////////////////////////////////
 // increments w/ each meta_tag_title found: range: 0,1,2 -- out_buffer_XX
-var song_index = 0;
+var song_index = -1;
 
 ////////////////////////////////////////////////////////////////////////////////
 // output -- .txt -- processed chord over lyrics plain text file
 const DEFAULT_SONG_TITLE    = "Untitled Song" ;
 var out_file_chord_lyrics   = process.argv[ 2 ] + ".txt" ; // chord+lyrics file
-var out_buffer_chord_lyric = [ "" , "" , "" , "" ]; // ALL out_line_chord and out_line_lyric into here
+var out_buffer_chord_lyric  = [ "" , "" , "" , "" ]; // ALL out_line_chord and out_line_lyric into here
 var out_line_chord          = "" ;          // 1 line -- output chord line
 var out_line_lyric          = "" ;          // 1 line -- output lyric line
 
 ////////////////////////////////////////////////////////////////////////////////
 // output -- .lst -- processed lyrics-only plain text file
 var out_file_lyrics        = process.argv[ 2 ] + ".lst" ; // lyric-only file
-var out_buffer_lyrics_only = [ "" , "" , "" , ""]; // buffer -- lyrics only version of chordpro file
+var out_buffer_lyrics_only = [ "" , "" , "" , "" ]; // buffer -- lyrics only version of chordpro file
 var out_line_lyrics_only   = "" ; // lyrics-only line
 var skip_lyrics_only_line_processing = false;
 
@@ -145,11 +153,13 @@ var skip_lyrics_only_line_processing = false;
 // output -- .htm -- processed chord over lyrics html w/ css
 var html = [
   "<!DOCTYPE html>\n<html>\n<head>\n<meta charset=\"UTF-8\">\n<link rel=\"stylesheet\" type=\"text/css\" href=\"" ,
-  "\">\n<style>\n</style>\n\n<title>" ,
-  "</title>\n</head>\n\n<body>\n<h1>" ,
-  "</h1>\n\n<h2>" ,
+  "\">\n<style>\n</style>\n<title>" ,
+  "</title>\n</head>\n<body>\n\n" , //\n<h1>" ,
+  "</h1>\n<h2>" ,
   "</h2>\n" ,
-  "\n\n</body>\n\n</html>\n"
+  "\n</body>\n</html>\n" ,
+  "<h1><i>" ,
+  "</i></h1>\n"
 ];
 const OUT_FILE_HTML_CSS           = "0chordlyric.css" ;  // chord+lyrics css file
 var   out_file_html               = process.argv[ 2 ] + ".htm" ; // chord+lyrics html ver
@@ -189,19 +199,21 @@ var j = 0;  // length of current musical chord being processed, no brackets
 
 ////////////////////////////////////////////////////////////////////////////////
 // meta-tag data arrays and vars
-var meta_tag_title                = [] ; // 3 max
-var meta_tag_subtitle             = [] ; // 2 max
+const MAX_TITLES_SUBTITLES        = 4; // medley title plus 3 songs
+var meta_tag_title                = []; //[ "", "", "", "" ] ;
+var meta_tag_subtitle             = [ "", "", "", "" ] ;
 // lyrics-only version of subtitle omits some info from standard subtitle
-var meta_tag_subtitle_lyrics_only = [] ; // 2 max
-var meta_tag_key                  = [] ; // 2 max
-var meta_tag_time                 = [] ; // 2 max
-var meta_tag_ccli                 = [] ; // 2 max
-var meta_tag_author               = [] ; // 2 max
-var meta_tag_copyright            = [] ; // 2 max
-var meta_tag_first_copyright      = [ "" , "" ] ; // 2 max -- created from copyright
+var meta_tag_subtitle_lyrics_only = [ "", "", "", "" ] ;
+var meta_tag_key                  = [ "", "", "", "" ] ;
+var meta_tag_time                 = [ "", "", "", "" ] ;
+var meta_tag_metronome            = [ "", "", "", "" ] ; // bpm
+var meta_tag_ccli                 = [ "", "", "", "" ] ;
+var meta_tag_author               = [ "", "", "", "" ] ;
+var meta_tag_copyright            = [ "", "", "", "" ] ;
+var meta_tag_first_copyright      = [ "", "", "", "" ] ; // created from copyright
 // new meta_tags for CSV/database compilation
-var meta_tag_metronome            = [] ; // bpm
-var meta_tag_tag                  = [] ; // search strings
+var meta_tag_tag                  = [ "", "", "", "" ] ; // search strings
+var hashtag_st_comment            = [ "", "", "", "" ] ; // comments for subtitle line
 
                                     // meta-tag processing
 var meta_tag_term             = "" ;
@@ -217,13 +229,9 @@ var in_line_last_eoh_index   = -1; // last position of last found {soh}
 ////////////////////////////////////////////////////////////////////////////////
 // CSV-database vars
 const CSV_FORMAT_FILE        = "0gparsnip.csv" ;  // chord+lyrics css file
-const CSV_FORMAT = "title\tkey\ttime\tccli\tauthor\tcopyright\tmetronome\ttag\tfilename\n" ;
+const CSV_FORMAT = "title\tkey\ttime\tmetronome\tccli\tauthor\tcopyright\ttag\tfilename\n" ;
 
 var out_file_csv = process.argv[ 2 ] + ".csv" ;
-
-////////////////////////////////////////////////////////////////////////////////
-// meta-tag processing for #chords: #chords-new: #st-comment
-var comment_st_comment = [] ;  // comments for subtitle only, 3 max
 
 ////////////////////////////////////////////////////////////////////////////////
 var chord_list          = [] ; // keep track of all chords used in song
@@ -249,11 +257,11 @@ if ( fix_filenames() ) {
           in_file_buffer_index++ )
       if ( in_file_buffer[ in_file_buffer_index ] == "\n" ) {
 
-        in_line_length = in_line.length;
+        in_line_length             = in_line.length;
 
-        out_line_chord       = "" ;
-        out_line_lyric       = "" ;
-        out_line_lyrics_only = "" ;
+        out_line_chord             = "" ;
+        out_line_lyric             = "" ;
+        out_line_lyrics_only       = "" ;
 
         out_line_html_chord        = "<h6>" ;
         out_line_html_lyric        = " <p>" ;
@@ -269,9 +277,9 @@ if ( fix_filenames() ) {
       } // if in_file_buffer
       else
          in_line += in_file_buffer[ in_file_buffer_index ];
-  } // if test_input_buffer
 
-  output_results();
+    output_results();
+  } // if test_input_buffer
 
 } // if fix_filenames
 
@@ -381,9 +389,19 @@ if ( DEBUGGING_MODE2 )  console.log( "process_line() -- parsing mode is:", parse
 } // function
 
 ////////////////////////////////////////////////////////////////////////////////
+function check_song_index() {
+  if ( song_index < 0 ) {
+    song_index = 0;
+    meta_tag_title.push( DEFAULT_SONG_TITLE );
+  }
+} // function
+
+////////////////////////////////////////////////////////////////////////////////
 function process_blank_line() {
 // nothing in current line -- in_line string empty
-  out_buffer_chord_lyric[ song_index ]     += "\n" ;
+  check_song_index();
+
+  out_buffer_chord_lyric[ song_index ]      += "\n" ;
   out_buffer_lyrics_only[ song_index ]      += "\n" ;
   out_buffer_html_chord_lyric[ song_index ] += "<br>\n";
   out_buffer_html_lyrics_only[ song_index ] += "<br>\n";
@@ -397,9 +415,11 @@ function process_comment_line() {
   var comment_term     = in_line.slice( 1, colon_pos );
   var comment_argument = trim_leading_spaces( in_line.slice( colon_pos + 1 ) );
 
-  if ( ( colon_pos == 11 ) && ( comment_term == "st-comment") )
-    comment_st_comment.push( comment_argument );
-}
+  if ( ( colon_pos == 11 ) && ( comment_term == "st-comment") ) {
+    check_song_index();
+    hashtag_st_comment[ song_index ] = comment_argument;
+  }
+} // function
 
 ////////////////////////////////////////////////////////////////////////////////
 function process_verbose_chord_line() {
@@ -450,20 +470,52 @@ console.log( "process_meta_tag() -- meta_tag_term:", meta_tag_term, "*" );
 console.log( "process_meta_tag() -- argument   is:", meta_tag_argument, "*" );
 console.log( "process_meta_tag()    arg length is:", meta_tag_argument.length ); }
 
+  switch ( meta_tag_term ) { // in case user adds meta-tags before title
+    case "subtitle:"  :
+    case "st:"        :
+    case "su:"        :
+    case "key:"       :
+    case "k:"         :
+    case "time:"      :
+    case "metronome:" :
+    case "ccli:"      :
+    case "author:"    :
+    case "copyright:" :
+    case "tag:"       :    check_song_index();
+/*                         break;
+    case "comment:"        :
+    case "c:"              :
+    case "comment_bold:"   :
+    case "cb:"             :
+    case "comment_italic:" :
+    case "ci:"             :
+    case "guitar_comment:" :
+    case "gc:"             :
+    case "soh"             :
+    case "eoh"             :
+    case "title:"          :
+    case "t:"              : */
+    default: {} // unrecognized meta-tag, no processing, no mod parse flags */
+  } // switch
+
   switch ( meta_tag_term ) {
     case "title:"    :
-    case "t:"        :  meta_tag_title.push( meta_tag_argument_trimmed );
-                        song_index++ ; // select next buffer for chord/lyrics
+    case "t:"        :  if ( meta_tag_title.length < MAX_TITLES_SUBTITLES ) {
+                          song_index++ ; // select next buffer for chord/lyrics
+                          meta_tag_title.push( meta_tag_argument_trimmed );
+                        }
                         break;
     case "subtitle:"  :
     case "st:"        :
-    case "su:"        :  meta_tag_subtitle.push( meta_tag_argument_trimmed );  break;
+    case "su:"        :  meta_tag_subtitle[ song_index ]  = meta_tag_argument_trimmed;  break;
     case "key:"       :
-    case "k:"         :  meta_tag_key.push( meta_tag_argument_trimmed );       break;
-    case "time:"      :  meta_tag_time.push( meta_tag_argument_trimmed );      break;
-    case "ccli:"      :  meta_tag_ccli.push( meta_tag_argument_trimmed );      break;
-    case "author:"    :  meta_tag_author.push( meta_tag_argument_trimmed );    break;
-    case "copyright:" :  meta_tag_copyright.push( meta_tag_argument_trimmed ); break;
+    case "k:"         :  meta_tag_key[ song_index ]       = meta_tag_argument_trimmed;  break;
+    case "time:"      :  meta_tag_time[ song_index ]      = meta_tag_argument_trimmed;  break;
+    case "metronome:" :  meta_tag_metronome[ song_index ] = meta_tag_argument_trimmed;  break;
+    case "ccli:"      :  meta_tag_ccli[ song_index ]      = meta_tag_argument_trimmed;  break;
+    case "author:"    :  meta_tag_author[ song_index ]    = meta_tag_argument_trimmed;  break;
+    case "copyright:" :  meta_tag_copyright[ song_index ] = meta_tag_argument_trimmed;  break;
+    case "tag:"       :  meta_tag_tag[ song_index ]       = meta_tag_argument_trimmed;  break;
 
     case "comment:"        :
     case "c:"              :
@@ -478,9 +530,6 @@ console.log( "process_meta_tag()    arg length is:", meta_tag_argument.length );
     case "soh"             :  process_meta_tag_soh();            break;
     case "eoh"             :  process_meta_tag_eoh();            break;
 
-    case "metronome:" :  meta_tag_metronome.push( meta_tag_argument_trimmed ); break;
-
-    case "tag:"       :  meta_tag_tag.push( meta_tag_argument_trimmed );       break;
     default: {} // unrecognized meta-tag, no processing, no mod parse flags
   } // switch
 
@@ -630,7 +679,6 @@ function even_up_chord_lyric_lines() {
     out_line_chord      += spacey_string;
     out_line_html_chord += spacey_string;
   }
-
 } // function
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -702,9 +750,9 @@ normally call:     nodejs gparsnip FILE
 now can also call: nodejs gparsnip FILE.pro
 returns true or false (input file is found)
 */
-  var in_file_string = process.argv[ 2 ] ;
+  var in_file_string    = process.argv[ 2 ] ;
   var in_file_name_full = "" ;
-  var dot_pos = in_file_string.indexOf( "." );
+  var dot_pos           = in_file_string.indexOf( "." );
 
   if ( ( in_file_string == "--help" ) || ( in_file_string == "" ) ) {
     console.log( "Usage: gparsnip FILE" );
@@ -747,39 +795,39 @@ returns true or false (input file is found)
 ////////////////////////////////////////////////////////////////////////////////
 function test_input_buffer() {
 // test in_file_buffer.  Only allowed characters are LF and [space .. tilde]
-  var charcode = 0;   // decimal character code of input character
-  var give_warning = false;
-/* not sure which code is easier to understand or faster
-  for ( in_file_buffer_index = 0; in_file_buffer_index < in_file_buffer_length;
-        in_file_buffer_index++ )
-   if ( VALID_SUBSET_UTF8_CHARS.search( in_file_buffer[ in_file_buffer_index ] ) < 0 )
-      return false;
-   if ( ( VALID_SUBSET_UTF8_CHARS.indexOf( in_file_buffer[ in_file_buffer_index ] ) ) < 0 )
-      return false;
-   return true;
-*/
+  var charcode      = 0;   // decimal character code of input character
+  var warning_level = 1; // -1 -- bad, abort; 0 -- warning; 1 -- fantastic, no problems
+
   for ( in_file_buffer_index = 0; in_file_buffer_index < in_file_buffer_length;
         in_file_buffer_index++ ) {
     charcode = in_file_buffer.charCodeAt( in_file_buffer_index );
 
     if ( charcode < 10 )
-      give_warning = true;   // control codes
+      warning_level = -1;   // control codes
     else if ( charcode == 10 )
            {} // okay, LF
          else if ( charcode < 32 )
-                give_warning = true;   // control codes
+                warning_level = -1;   // control codes
               else if ( charcode < 127 )
                      {} // okay, space .. tilde
                    else if ( charcode < 49824 )
-                          give_warning = true; // control codes
-                        else give_warning = true; // okay, but multi-byte char
+                          warning_level = -1; // control codes
+                        else warning_level = 0; // possibly okay, but multi-byte char
 
-    if ( give_warning ) {
+    if ( warning_level == -1 ) {
+      console.log( "Aborting -- control characters found." );
+      console.log( "Correct Format of chordpro FILE.pro: plain text, utf8, Linux LF style; char in [\" \" .. \"~\" ]" );
+      console.log( "Character is probably a flat (b), sharp(#), or smart left/right single or double quote character." );
+      console.log( "Character decimal code is:", charcode );
+      return false;
+    }
+    else
+    if ( warning_level == 0 ) {
       console.log( "Warning -- input file has possible characters which may cause problems:", in_file_pro );
       console.log( "Correct Format of chordpro FILE.pro: plain text, utf8, Linux LF style; char in [\" \" .. \"~\" ]" );
       console.log( "Character is probably a flat (b), sharp(#), or smart left/right single or double quote character." );
       console.log( "Character found has decimal code #:", charcode );
-      return true;
+      console.log( "Continuing processing");
     } // if
 
   } // for
@@ -966,194 +1014,176 @@ function output_results() {
   const SONG_1_TITLE_1   =  1; // 1 song,  1 title
   const SONG_2_TITLE_2   =  2; // 2 songs, 2 titles
   const SONG_2_TITLE_3   =  3; // 2 songs, 3 titles -- 1st one is medley title
+                               // NOT ALLOWED -- medley w/ 3 songs, 3 titles
+  const SONG_3_TITLE_4   =  4; // 3 songs, 4 titles -- 1st one is medley title
+
   var song_medley_status = meta_tag_title.length;
-  var tmp_song_medley_status = 0;
-  var k = 0;
+  var k           = 0;
+  var k_start     = 0;
   var file_buffer = ""; // do all file writes one time only
 
-  if ( song_medley_status == SONG_1_TITLE_0 ) {
-    meta_tag_title.push( DEFAULT_SONG_TITLE );
-    tmp_song_medley_status = SONG_1_TITLE_1;
-  } else
-    tmp_song_medley_status = song_medley_status;
-
-                                                 // chord list output
-  prep_chord_list();
+  prep_chord_list();                             // chord list output
   fs.writeFileSync( out_file_chord_list, final_chord_string );
 
-  prep_subtitle_tags();
+  for ( k = 0; k < song_medley_status; k++ )  // make subtitles (w/o st-comment)
+    create_subtitle( k );
 
-  switch ( song_medley_status ) {
-    case SONG_2_TITLE_3 :
-    case SONG_2_TITLE_2 : create_subtitle( 2 );
-    case SONG_1_TITLE_1 : create_subtitle( 1 );
-    case SONG_1_TITLE_0 : create_subtitle( 0 );
-    default : {}
+// ----------------------------------------------handle CSV file output
+  file_buffer = "" ;
+
+  if ( song_medley_status > SONG_2_TITLE_2 ) { // medley title
+    file_buffer =     meta_tag_title[ 0 ].toString()        + "\t"
+                    + meta_tag_key[ 0 ].toString()          + "\t"
+                    + meta_tag_time[ 0 ].toString()         + "\t"
+                    + meta_tag_metronome[ 0 ].toString()    + "\t"
+                  /*+ meta_tag_ccli[ k ].toString()*/       + "\t"
+                  /*+ meta_tag_author[ k ].toString()*/     + "\t"
+                  /*+ meta_tag_copyright[ k ].toString()*/  + "\t"
+                    + meta_tag_tag[ 0 ].toString()          + "\t"
+                    + in_file_noext                         + "\n" ;
+    k_start = 1;
   }
+  else k_start = 0;
 
-                                                 // handle CSV file output
-file_buffer = "" ;
-
-if ( song_medley_status == SONG_2_TITLE_3 ) { // medley title
-    file_buffer =     meta_tag_title[ 0 ].toString()           + "\t"
-                    + meta_tag_key[ 0 ].toString()             + "\t"
-                    + meta_tag_time[ 0 ].toString()            + "\t"
-                  /*+ meta_tag_ccli[ k ].toString()*/          + "\t"
-                  /*+ meta_tag_author[ k ].toString()*/        + "\t"
-                  /*+ meta_tag_copyright[ k ].toString()*/     + "\t"
-                    + meta_tag_metronome[ 0 ].toString()       + "\t"
-                    + meta_tag_tag[ 0 ].toString()             + "\t"
-                    + in_file_noext                            + "\n" ;
-
-    for ( k = 1; k < 3; k++ ) // song 1 and song 2
-      file_buffer +=  meta_tag_title[ k ].toString()           + "\t"
-                    + meta_tag_key[ k ].toString()             + "\t"
-                    + meta_tag_time[ k ].toString()            + "\t"
-                    + meta_tag_ccli[ k ].toString()            + "\t"
-                    + meta_tag_author[ k ].toString()          + "\t"
-                    + meta_tag_first_copyright[ k ].toString() + "\t"
-                    + meta_tag_metronome[ k ].toString()       + "\t"
-                    + meta_tag_tag[ k ].toString()             + "\t"
-                    + in_file_noext                            + "\n" ;
-  } else
-    for ( k = 0; k < tmp_song_medley_status; k++ )
-      file_buffer +=  meta_tag_title[ k ].toString()         + "\t"
-                  + meta_tag_key[ k ].toString()             + "\t"
-                  + meta_tag_time[ k ].toString()            + "\t"
-                  + meta_tag_ccli[ k ].toString()            + "\t"
-                  + meta_tag_author[ k ].toString()          + "\t"
-                  + meta_tag_first_copyright[ k ].toString() + "\t"
-                  + meta_tag_metronome[ k ].toString()       + "\t"
-                  + meta_tag_tag[ k ].toString()             + "\t"
-                  + in_file_noext                            + "\n" ;
+  for ( k = k_start; k < song_medley_status; k++ )
+    file_buffer += meta_tag_title[ k ].toString()           + "\t"
+                +  meta_tag_key[ k ].toString()             + "\t"
+                +  meta_tag_time[ k ].toString()            + "\t"
+                +  meta_tag_ccli[ k ].toString()            + "\t"
+                +  meta_tag_metronome[ k ].toString()       + "\t"
+                +  meta_tag_author[ k ].toString()          + "\t"
+                +  meta_tag_first_copyright[ k ].toString() + "\t"
+                +  meta_tag_tag[ k ].toString()             + "\t"
+                +  in_file_noext                            + "\n" ;
 
   fs.writeFileSync( out_file_csv, file_buffer );
   fs.writeFileSync( CSV_FORMAT_FILE, CSV_FORMAT );
 
-                                                 // chord-lyric text output
+// ----------------------------------------------chord-lyric text output
   file_buffer = "" ;
 
-  if ( song_medley_status == SONG_2_TITLE_3 ) {
+  if ( song_medley_status > SONG_2_TITLE_2 ) { // medley title
     file_buffer = meta_tag_title[ 0 ].toString()               + "\n" ;
 
-    if ( comment_st_comment[ 0 ].toString() != "" )
-      file_buffer +=   comment_st_comment[ 0 ].toString()      + "\n" ;
+    if ( meta_tag_subtitle[ 0 ].toString() == "" ) // medley subtitle
+      if ( hashtag_st_comment[ 0 ].toString() == "" )
+        {}
+      else
+        file_buffer += hashtag_st_comment[ 0 ].toString()      + "\n" ;
+    else
+      if ( hashtag_st_comment[ 0 ].toString() == "" )
+        file_buffer += meta_tag_subtitle[ 0 ].toString()       + "\n" ;
+      else
+        file_buffer += meta_tag_subtitle[ 0 ].toString()       + "  "
+                    +  hashtag_st_comment[ 0 ].toString() ;    + "\n" ;
+    k_start = 1;
+  }
+  else
+    k_start = 0;
 
-    for ( k = 1; k < 3; k++ )
-      file_buffer +=   meta_tag_title[ k ].toString()             + "\n"
-                     + meta_tag_subtitle[ k ].toString()          + "  "
-                     + comment_st_comment[ k ].toString()         + "\n"
-                     + out_buffer_chord_lyric[ k + 1 ].toString() ;
-  } else
-  if ( song_medley_status >= SONG_1_TITLE_1 )
-    for ( k = 0; k < tmp_song_medley_status; k++ )
-      file_buffer  +=  meta_tag_title[ k ].toString()          + "\n"
-                     + meta_tag_subtitle[ k ].toString()       + "  "
-                     + comment_st_comment[ k ].toString()      + "\n"
-                     + out_buffer_chord_lyric[ k + 1 ].toString()        ;
-  else // SONG_1_TITLE_0
-    file_buffer  +=  meta_tag_title[ 0 ].toString()          + "\n"
-                   + meta_tag_subtitle[ 0 ].toString()       + "  "
-                   + comment_st_comment[ 0 ].toString()      + "\n"
-                   + out_buffer_chord_lyric[ 0 ].toString()        ;
+  for ( k = k_start; k < song_medley_status; k++ )
+    file_buffer += meta_tag_title[ k ].toString()              + "\n"
+                +  meta_tag_subtitle[ k ].toString()           + "  "
+                +  hashtag_st_comment[ k ].toString()          + "\n"
+                +  out_buffer_chord_lyric[ k ].toString()      ;
 
   fs.writeFileSync( out_file_chord_lyrics, file_buffer );
 
-                                                 // lyric-only text output
+// ----------------------------------------------lyric-only text output
   file_buffer = "" ;
 
-  if ( song_medley_status == SONG_2_TITLE_3 ) {
+  if ( song_medley_status > SONG_2_TITLE_2 ) {             // medley title
     file_buffer = meta_tag_title[ 0 ].toString()                        + "\n" ;
 
-    if ( comment_st_comment[ 0 ].toString() != "" )
-      file_buffer += comment_st_comment[ 0 ].toString()                 + "\n" ;
+    if   ( meta_tag_subtitle_lyrics_only[ 0 ].toString() == "" ) // medley subtitle
+      if ( hashtag_st_comment[ 0 ].toString() == "" )
+        {}
+      else
+        file_buffer += hashtag_st_comment[ k ].toString()               + "\n" ;
+    else
+      if ( hashtag_st_comment[ 0 ].toString() == "" )
+        file_buffer += meta_tag_subtitle_lyrics_only[ 0 ].toString()    + "\n" ;
+      else
+        file_buffer += meta_tag_subtitle_lyrics_only[ 0 ].toString()    + "  "
+                    +  hashtag_st_comment[ 0 ].toString() ;             + "\n" ;
+    k_start = 1;
+  }
+  else
+    k_start = 0;
 
-    for ( k = 1; k < 3; k++ )
-      file_buffer +=   meta_tag_title[ k ].toString()                    + "\n"
-                     + meta_tag_subtitle_lyrics_only[ k - 1 ].toString() + "  "
-                     + comment_st_comment[ k ].toString()                + "\n"
-                     + out_buffer_lyrics_only[ k + 1 ].toString()        ;
-  } else
-  if ( song_medley_status >= SONG_1_TITLE_1 )  // SONG_1_TITLE_1 or SONG_2_TITLE_2
-    for ( k = 0; k < song_medley_status; k++ )
-      file_buffer +=   meta_tag_title[ k ].toString()                + "\n"
-                     + meta_tag_subtitle_lyrics_only[ k ].toString() + "  "
-                     + comment_st_comment[ k ].toString()            + "\n"
-                     + out_buffer_lyrics_only[ k + 1 ].toString()              ;
-  else // SONG_1_TITLE_0
-  file_buffer +=   meta_tag_title[ 0 ].toString()                + "\n"
-                 + meta_tag_subtitle_lyrics_only[ 0 ].toString() + "  "
-                 + comment_st_comment[ 0 ].toString()            + "\n"
-                 + out_buffer_lyrics_only[ 0 ].toString()              ;
-
+  for ( k = k_start; k < song_medley_status; k++ )
+    file_buffer += meta_tag_title[ k ].toString()                       + "\n"
+                +  meta_tag_subtitle_lyrics_only[ k ].toString()        + "  "
+                +  hashtag_st_comment[ k ].toString()                   + "\n"
+                +  out_buffer_lyrics_only[ k ].toString()               ;
 
   fs.writeFileSync( out_file_lyrics, file_buffer );
 
-                                                 // chord-lyric html output
+// ----------------------------------------------chord-lyric html output
   file_buffer = html[ 0 ] + OUT_FILE_HTML_CSS
-              + html[ 1 ] + meta_tag_title[ 0 ].toString() + "\n" ;
+              + html[ 1 ] + meta_tag_title[ 0 ].toString() + html[ 2 ];
 
-  if ( song_medley_status == SONG_2_TITLE_3 ) {
-    file_buffer +=
-      html[ 2 ] + "<i>" + meta_tag_title[ 0 ].toString() + "</i>" + "</h1>\n" ;
+  meta_tag_subtitle[ 0 ] = trim_leading_trailing_spaces( meta_tag_subtitle[ 0 ].toString() );
 
-    if ( comment_st_comment[ 0 ].toString() != "" )
-      file_buffer += "<h2>"+ comment_st_comment[ 0 ].toString()    + "</h2>\n" ;
+  if ( song_medley_status > SONG_2_TITLE_2 ) {             // medley title
+    file_buffer += html[ 6 ] + meta_tag_title[ 0 ].toString() + html[ 7 ];
 
-    for ( k = 1; k < 3; k++ )
-      file_buffer +=
-            html[ 2 ] + meta_tag_title[ k ].toString()                  + "\n"
-          + html[ 3 ] + meta_tag_subtitle[ k - 1].toString()            + "  "
-                      + comment_st_comment[ k ].toString()
-          + html[ 4 ] + out_buffer_html_chord_lyric[ k + 1 ].toString()       ;
-  } else
-  if ( song_medley_status >= SONG_1_TITLE_1 )  // SONG_1_TITLE_1 or SONG_2_TITLE_2
-    for ( k = 0; k < song_medley_status; k++ )
-      file_buffer +=
-            html[ 2 ] + meta_tag_title[ k ].toString()              + "\n"
-          + html[ 3 ] + meta_tag_subtitle[ k ].toString()           + "  "
-                      + comment_st_comment[ k ].toString()
-          + html[ 4 ] + out_buffer_html_chord_lyric[ k + 1 ].toString()       ;
-  else // SONG_1_TITLE_0
-    file_buffer +=
-          html[ 2 ] + meta_tag_title[ 0 ].toString()              + "\n"
-        + html[ 3 ] + meta_tag_subtitle[ 0 ].toString()           + "  "
-                    + comment_st_comment[ 0 ].toString()
-        + html[ 4 ] + out_buffer_html_chord_lyric[ 0 ].toString()       ;
+    if   ( meta_tag_subtitle[ 0 ].toString() == "" )         // medley subtitle
+      if ( hashtag_st_comment[ 0 ].toString() == "" )
+        {}
+      else
+        file_buffer += "<h2>" + hashtag_st_comment[ 0 ].toString() + "</h2>\n\n" ;
+    else
+      if ( hashtag_st_comment[ 0 ].toString() == "" )
+        file_buffer += "<h2>" + meta_tag_subtitle[ 0 ].toString() + "</h2>\n\n" ;
+      else
+        file_buffer += html[ 3 ] + meta_tag_subtitle[ 0 ].toString()
+                    +  "  "      + hashtag_st_comment[ 0 ].toString()
+                    + "</h2>\n\n" ;
+    k_start = 1;
+  }
+  else
+    k_start = 0;
+
+  for ( k = k_start; k < song_medley_status; k++ )
+    file_buffer += "<h1>"    + meta_tag_title[ k ].toString()
+                +  html[ 3 ] + meta_tag_subtitle[ k ].toString()
+                +  "  "      + hashtag_st_comment[ k ].toString()
+                +  html[ 4 ] + out_buffer_html_chord_lyric[ k ].toString() ;
 
   fs.writeFileSync( out_file_html, file_buffer + html[ 5 ].toString() );
 
-                                                 // lyric-only html output
+// ----------------------------------------------lyric-only html output
   file_buffer = html[ 0 ] + OUT_FILE_HTML_LYRICS_ONLY_CSS
-              + html[ 1 ] + meta_tag_title[ 0 ].toString() + "\n" ;
+              + html[ 1 ] + meta_tag_title[ 0 ].toString() + html[ 2 ];
 
-  if ( song_medley_status == SONG_2_TITLE_3 ) {
+  meta_tag_subtitle_lyrics_only[ 0 ] = trim_leading_trailing_spaces( meta_tag_subtitle_lyrics_only[ 0 ].toString() );
+
+  if ( song_medley_status > SONG_2_TITLE_2 ) {             // medley title
     file_buffer +=
-                html[ 2 ] + meta_tag_title[ 0 ].toString()         + "</h1>\n" ;
+      html[ 6 ] + meta_tag_title[ 0 ].toString() + html[ 7 ];
 
-    if ( comment_st_comment[ 0 ].toString() != "" )
-      file_buffer += "<h2>"+ comment_st_comment[ 0 ].toString()    + "</h2>\n" ;
+    if   ( meta_tag_subtitle_lyrics_only[ 0 ].toString() == "" ) // medley subtitle
+      if ( hashtag_st_comment[ 0 ].toString() == "" )
+        {}
+      else
+        file_buffer += "<h2>" + hashtag_st_comment[ 0 ].toString() + "</h2>\n\n" ;
+    else
+      if ( hashtag_st_comment[ 0 ].toString() == "" )
+        file_buffer += "<h2>" + meta_tag_subtitle_lyrics_only[ 0 ].toString() + "</h2>\n\n" ;
+      else
+        file_buffer += "<h2>" + meta_tag_subtitle_lyrics_only[ 0 ].toString()
+                    +  "  "   + hashtag_st_comment[ 0 ].toString() + "</h2>\n\n" ;
+    k_start = 1;
+  }
+  else
+    k_start = 0;
 
-    for ( k = 1; k < 3; k++ )
-      file_buffer +=
-            html[ 2 ] + meta_tag_title[ k ].toString()                    + "\n"
-          + html[ 3 ] + meta_tag_subtitle_lyrics_only[ k - 1 ].toString() + "  "
-                      + comment_st_comment[ k ].toString()                + "\n"
-          + html[ 4 ] + out_buffer_html_lyrics_only[ k ].toString()       ;
-  } else
-  if ( song_medley_status >= SONG_1_TITLE_1 )  // SONG_1_TITLE_1 or SONG_2_TITLE_2
-    for ( k = 0; k < song_medley_status; k++ )
-      file_buffer +=
-          html[ 2 ] + meta_tag_title[ k ].toString()                + "\n"
-        + html[ 3 ] + meta_tag_subtitle_lyrics_only[ k ].toString() + "  "
-                    + comment_st_comment[ k ].toString()            + "\n"
-        + html[ 4 ] + out_buffer_html_lyrics_only[ k + 1 ].toString()         ;
-  else // SONG_1_TITLE_0
-  file_buffer +=
-      html[ 2 ] + meta_tag_title[ 0 ].toString()                + "\n"
-    + html[ 3 ] + meta_tag_subtitle_lyrics_only[ 0 ].toString() + "  "
-                + comment_st_comment[ 0 ].toString()            + "\n"
-    + html[ 4 ] + out_buffer_html_lyrics_only[ 0 ].toString()         ;
+  for ( k = k_start; k < song_medley_status; k++ )
+    file_buffer += "<h1>"    + meta_tag_title[ k ].toString()
+                +  html[ 3 ] + meta_tag_subtitle_lyrics_only[ k ].toString()
+                +  "  "      + hashtag_st_comment[ k ].toString()
+                +  html[ 4 ] + out_buffer_html_lyrics_only[ k ].toString() ;
 
   fs.writeFileSync( out_file_html_lyrics_only, file_buffer + html[ 5 ].toString() );
 } // function
@@ -1161,11 +1191,11 @@ if ( song_medley_status == SONG_2_TITLE_3 ) { // medley title
 ////////////////////////////////////////////////////////////////////////////////
 function prep_chord_list() {
 // make final chord list by eliminating duplicates found in chord list
-  var final_chord_list = [];
+  var final_chord_list  = [];
   var chord_list_length = chord_list.length;
-  var a_chord    = "" ;
-  var last_chord = "" ;
-  var k = 0;
+  var a_chord           = "" ;
+  var last_chord        = "" ;
+  var k                 = 0;
 
   chord_list.sort();
 
@@ -1186,33 +1216,7 @@ function prep_chord_list() {
     final_chord_string += final_chord_list[ k ].toString() + " " ;
 
 if ( DEBUGGING_MODE2 )  console.log( final_chord_string );
-
 } // function
-
-////////////////////////////////////////////////////////////////////////////////
-function prep_subtitle_tags() {
-  // all title, subtitle, and subtitle-related strings must not be undefined
-  var k = 0;
-
-  for ( k = meta_tag_subtitle.length; k < 3; k++ )
-    meta_tag_subtitle.push( "" );
-
-  for ( k = meta_tag_subtitle_lyrics_only.length; k < 3; k++ )
-    meta_tag_subtitle_lyrics_only.push( "" );
-
-  // normally only 2 subtitle comments -- one for each song.
-  // if have 3, then first one is for medley title
-  for ( k = comment_st_comment.length; k < 4; k++ )
-    comment_st_comment.push( "" );
-
-  for ( k = meta_tag_key.length;       k < 3; k++ )  meta_tag_key.push( "" );
-  for ( k = meta_tag_time.length;      k < 3; k++ )  meta_tag_time.push( "" );
-  for ( k = meta_tag_ccli.length;      k < 3; k++ )  meta_tag_ccli.push( "" );
-  for ( k = meta_tag_author.length;    k < 3; k++ )  meta_tag_author.push( "" );
-  for ( k = meta_tag_copyright.length; k < 3; k++ )  meta_tag_copyright.push( "" );
-  for ( k = meta_tag_metronome.length; k < 3; k++ )  meta_tag_metronome.push( "" );
-  for ( k = meta_tag_tag.length;       k < 3; k++ )  meta_tag_tag.push( "" );
-}
 
 ////////////////////////////////////////////////////////////////////////////////
 function create_subtitle( buf_indx ) {
@@ -1222,30 +1226,34 @@ function create_subtitle( buf_indx ) {
   var copyright_str   = meta_tag_copyright[ buf_indx ].toString();
   var semicolon_index = copyright_str.indexOf( ";" );  // index first semicolon
 
-  if ( semicolon_index >= 0 )
-    first_copyright = meta_tag_copyright[ buf_indx ].toString().slice( 0, semicolon_index );
-  else
-    first_copyright = meta_tag_copyright[ buf_indx ]; // only one copyright holder
+  if ( meta_tag_subtitle[ buf_indx ] == "" ) {
+      if ( semicolon_index >= 0 )
+        first_copyright = meta_tag_copyright[ buf_indx ].toString().slice( 0, semicolon_index );
+      else
+        first_copyright = meta_tag_copyright[ buf_indx ]; // only one copyright holder
 
-  meta_tag_first_copyright[ buf_indx ] = first_copyright ;
+      meta_tag_first_copyright[ buf_indx ] = first_copyright ;
 
-  if ( meta_tag_key[ buf_indx ] != "" )  meta_tag_subtitle[ buf_indx ]
-            += "Key: " + meta_tag_key[ buf_indx ] + "  " ;
+      if ( meta_tag_key[ buf_indx ] != "" )  meta_tag_subtitle[ buf_indx ]
+                += "Key: " + meta_tag_key[ buf_indx ] + "  " ;
 
-  // difference between musician's subtitle and singers is only "Key"
-  if ( meta_tag_time[ buf_indx ] != "" ) meta_tag_subtitle_lyrics_only[ buf_indx ]
-            += "Time: " + meta_tag_time[ buf_indx ] + "  " ;
+      // difference between musician's subtitle and singers is only "Key"
+      if ( meta_tag_time[ buf_indx ] != "" ) meta_tag_subtitle_lyrics_only[ buf_indx ]
+                += "Time: " + meta_tag_time[ buf_indx ] + "  " ;
 
-  if ( meta_tag_metronome[ buf_indx ] != "" ) meta_tag_subtitle_lyrics_only[ buf_indx ]
-            += "Bpm: " + meta_tag_metronome[ buf_indx ] + "  " ;
+      if ( meta_tag_metronome[ buf_indx ] != "" ) meta_tag_subtitle_lyrics_only[ buf_indx ]
+                += "Bpm: " + meta_tag_metronome[ buf_indx ] + "  " ;
 
-  if ( meta_tag_ccli[ buf_indx ] != "" ) meta_tag_subtitle_lyrics_only[ buf_indx ]
-            += "CCLI: " + meta_tag_ccli[ buf_indx ] + "  " ;
+      if ( meta_tag_ccli[ buf_indx ] != "" ) meta_tag_subtitle_lyrics_only[ buf_indx ]
+                += "CCLI: " + meta_tag_ccli[ buf_indx ] + "  " ;
 
-  if ( meta_tag_author[ buf_indx ] != "" ) meta_tag_subtitle_lyrics_only[ buf_indx ]
-                     += meta_tag_author[ buf_indx ] ;
+      if ( meta_tag_author[ buf_indx ] != "" ) meta_tag_subtitle_lyrics_only[ buf_indx ]
+                         += meta_tag_author[ buf_indx ] ;
 
-  meta_tag_subtitle_lyrics_only[ buf_indx ] += "  " + first_copyright ;
-  meta_tag_subtitle[ buf_indx ] += meta_tag_subtitle_lyrics_only[ buf_indx ] ;
+      meta_tag_subtitle_lyrics_only[ buf_indx ] += "  " + first_copyright ;
+      meta_tag_subtitle[ buf_indx ] += meta_tag_subtitle_lyrics_only[ buf_indx ] ;
+  }
+  else // user used {susbitle:} -- meta_tag_subtitle[ ] already set
+     meta_tag_subtitle_lyrics_only[ buf_indx ] = meta_tag_subtitle[ buf_indx ];
 
 } // function
