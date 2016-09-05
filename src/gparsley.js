@@ -45,6 +45,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 NOTES:
+2016-09-05
+modified key column to have individual letters in each column
+
 2016-09-04
 modified key column to maintain min space of 9 characters.
 
@@ -95,8 +98,15 @@ var html = [
 
 const CSV_FORMAT = "title\tkey\ttime\tccli\tauthor\tcopyright\tmetronome\ttag\tfilename\n" ;
 
+// mode 1 -- few comments; mode 2 -- heavy comments
+//var DEBUGGING_MODE1 = true;
+var DEBUGGING_MODE1 = false;
+//var DEBUGGING_MODE2 = true;
+var DEBUGGING_MODE2 = false;
+
 ////////////////////////////////////////////////////////////////////////////////
 // Main program here
+
 if ( fs.existsSync( in_file ) ) { //csv source file
   in_file_buffer = fs.readFileSync( in_file, 'utf8' ); // critical utf8 parameter
   in_file_buffer_length = in_file_buffer.length;
@@ -162,7 +172,7 @@ function generate_song_html() {
   var heading_index = 0;
   var heading_length = heading.length;
   var i = 0;
-  const KEY_MAX_LENGTH = 9;
+  const KEY_MAX_LENGTH = 10;
 
   for ( k = 0; k < heading.length; k++ ) // initialize, print no headings
     heading_print.push( false );
@@ -214,20 +224,16 @@ function generate_song_html() {
       song_key_tmp = song_line.substring( song_line.indexOf( "\t" ) + 1 );
       song_key  = song_key_tmp.substring( 0, song_key_tmp.indexOf( "\t" ) );
 
-      for ( i = song_key.length; i < KEY_MAX_LENGTH; i++ )
-        song_key = song_key + " ";
+      song_key = generate_song_key( song_key );
 
       out_file_buffer[ 2 ] +=
        '<p><a href="' + song_filename_noext + '.html" target=newtab> lyr </a>'
         + '<a href="' + song_filename_noext + '.txt"  target=newtab> txt </a>'
         + '<a href="' + song_filename_noext + '.lst"  target=newtab> lst </a>'
         + '<a href="' + song_filename_noext + '.pro"  target=newtab> pro </a>'
-        + '<a href="' + song_filename_noext + '.htm"  target=newtab> ' + song_key + ' </a>'
-        + '<a href="' + song_filename_noext + '.htm"  target=newtab>'
-        + song_title + '</a></p><br>\n' ;
-
+        + '<a href="' + song_filename_noext + '.htm"  target=newtab>' + song_key
+        + " " + song_title + '</a></p><br>\n' ;
     } // else
-
   } // for k
 
   out_file_buffer[ 1 ] += "</p>\n" ; // jump to string line, complete
@@ -236,3 +242,119 @@ function generate_song_html() {
 
   fs.writeFileSync( OUT_FILE_HTML, out_file_buffer_aggregate );
 } // function
+
+////////////////////////////////////////////////////////////////////////////////
+function generate_song_key( old_song_key ) {
+  var Major_Scale =          [ 'A',   'B',   'C',  'D',  'E',   'F',  'G'  ];
+  var Relative_Minor_Scale = [ 'F#m', 'G#m', 'Am', 'Bm', 'C#m', 'Dm', 'Em' ];
+  var Minor_Scale =          [ 'Am',  'Bm',  'Cm', 'Dm', 'Em',  'Fm', 'Gm' ];
+
+  var Major_Scale_TF =       [ false, false, false, false, false, false, false ];
+  var Minor_Scale_TF =       [ false, false, false, false, false, false, false ];
+
+  const SONG_KEY_CHARACTER_LENGTH = 8;
+  const KEYS_IN_SCALE      = 7; // "A" .. "G"
+
+  const SCALE_UNDETERMINED = -1;
+  const SCALE_MAJOR        =  0;
+  const SCALE_MINOR        =  1;
+  const SCALE_VERBOSE      =  2;
+
+  var scale_to_print = SCALE_UNDETERMINED;
+  var song_key_str   = "";
+  var displaying_minor_key = false;
+
+  var i = 0;
+  var j = 0;
+  var k = 0;
+  var max_i = old_song_key.length;
+
+  do {
+
+    j = 0;
+    do {
+
+      if ( old_song_key[ i ].toString() == Major_Scale[ j ].toString() )
+        if ( ( i + 1 ) < max_i )
+          if ( old_song_key[ i + 1 ].toString() == "m" ) {
+            for ( k = 0; k < KEYS_IN_SCALE; k++ )
+              if ( old_song_key[ i ].toString() == Major_Scale[ k ].toString() )
+                {  // minor key found
+                  Minor_Scale_TF[ k ] = true;
+                  scale_to_print = SCALE_MINOR;
+                }
+              else {}
+          }
+          else
+            for ( k = 0; k < KEYS_IN_SCALE; k++ )
+              if ( old_song_key[ i ].toString() == Major_Scale[ k ].toString() )
+                { // major key found
+                  Major_Scale_TF[ k ] = true;
+                  if ( scale_to_print == SCALE_UNDETERMINED )
+                    scale_to_print = SCALE_MAJOR;
+                }
+              else {}
+        else
+          if ( ( i + 1 ) == max_i ) // key string is: "A" or "..A"
+            for ( k = 0; k < KEYS_IN_SCALE; k++ )
+              if ( old_song_key[ i ].toString() == Major_Scale[ k ].toString() )
+                { // major key found
+                  Major_Scale_TF[ k ] = true;
+                  if ( scale_to_print == SCALE_UNDETERMINED )
+                    scale_to_print = SCALE_MAJOR;
+                }
+              else {}
+          else {}
+      else {}
+
+      j++;
+    }
+    while ( j < KEYS_IN_SCALE );
+
+    i++;
+  }
+  while ( i < max_i );
+
+if ( DEBUGGING_MODE2 ) {
+  console.log( "M:", Major_Scale_TF );
+  console.log( "m:", Minor_Scale_TF );
+  console.log( "scale to print:", scale_to_print );
+}
+
+  switch ( scale_to_print ) {
+
+    case SCALE_MAJOR :
+      for ( k = 0; k < KEYS_IN_SCALE; k++ )
+        if ( Major_Scale_TF[ k ] == true )
+          song_key_str += Major_Scale[ k ].toString();
+        else
+          song_key_str += " " ;
+      break;
+
+    case SCALE_MINOR :
+      for ( k = 0; k < KEYS_IN_SCALE; k++ )
+        if ( Minor_Scale_TF[ k ] == true ) {
+          song_key_str += Minor_Scale[ k ].toString();
+          displaying_minor_key = true;
+        }
+        else
+          if ( displaying_minor_key )
+            displaying_minor_key = false;
+          else
+            song_key_str += " " ;
+      break;
+
+    case SCALE_UNDETERMINED : song_key_str = "       " ; break; // feature not used
+
+    case SCALE_VERBOSE : song_key_str = old_song_key; // feature not implemented
+                         for ( k = ( SONG_KEY_CHARACTER_LENGTH - old_song_key.length );
+                               k < SONG_KEY_CHARACTER_LENGTH; k++ )
+                            song_key_str += " ";
+    default: break;
+
+  } // switch
+
+   return( song_key_str );
+
+if ( DEBUGGING_MODE2 ) console.log( "song_key_str:", song_key_str, "*" );
+}
