@@ -87,6 +87,12 @@ FEATURES:
 4. Extensive test plan, regression testing scripts
 
 NOTES:
+v 2016-09-04
+fixed test_input_buffer() function:
+problem -- if read warning character, then messeage repeated.
+fixed -- on exit of for loop, then give warning message.
+feature add -- test_input_buffer() gives filename of problem pro file.
+
 v 45:
 * modified test_input_buffer();
 Before program continued on bad input.
@@ -815,22 +821,24 @@ function test_input_buffer() {
                         else warning_level = 0; // possibly okay, but multi-byte char
 
     if ( warning_level == -1 ) {
+      console.log ( "File: ", in_file_pro );
       console.log( "Aborting -- control characters found." );
       console.log( "Correct Format of chordpro FILE.pro: plain text, utf8, Linux LF style; char in [\" \" .. \"~\" ]" );
       console.log( "Character is probably a flat (b), sharp(#), or smart left/right single or double quote character." );
       console.log( "Character decimal code is:", charcode );
       return false;
     }
-    else
-    if ( warning_level == 0 ) {
-      console.log( "Warning -- input file has possible characters which may cause problems:", in_file_pro );
-      console.log( "Correct Format of chordpro FILE.pro: plain text, utf8, Linux LF style; char in [\" \" .. \"~\" ]" );
-      console.log( "Character is probably a flat (b), sharp(#), or smart left/right single or double quote character." );
-      console.log( "Character found has decimal code #:", charcode );
-      console.log( "Continuing processing");
-    } // if
-
   } // for
+
+  if ( warning_level == 0 ) {
+    console.log ( "File: ", in_file_pro );
+    console.log( "Warning -- input file has possible characters which may cause problems:", in_file_pro );
+    console.log( "Correct Format of chordpro FILE.pro: plain text, utf8, Linux LF style; char in [\" \" .. \"~\" ]" );
+    console.log( "Character is probably a flat (b), sharp(#), or smart left/right single or double quote character." );
+    console.log( "Character found has decimal code #:", charcode );
+    console.log( "Continuing processing");
+  } // if
+
   return true;
 }
 

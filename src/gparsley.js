@@ -45,6 +45,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 NOTES:
+2016-09-04
+modified key column to maintain min space of 9 characters.
 
 ALGORITHM:
 1. read command line arguments, test for fitness
@@ -159,6 +161,8 @@ function generate_song_html() {
   var heading_print = [] ;
   var heading_index = 0;
   var heading_length = heading.length;
+  var i = 0;
+  const KEY_MAX_LENGTH = 9;
 
   for ( k = 0; k < heading.length; k++ ) // initialize, print no headings
     heading_print.push( false );
@@ -210,12 +214,15 @@ function generate_song_html() {
       song_key_tmp = song_line.substring( song_line.indexOf( "\t" ) + 1 );
       song_key  = song_key_tmp.substring( 0, song_key_tmp.indexOf( "\t" ) );
 
+      for ( i = song_key.length; i < KEY_MAX_LENGTH; i++ )
+        song_key = song_key + " ";
+
       out_file_buffer[ 2 ] +=
        '<p><a href="' + song_filename_noext + '.html" target=newtab> lyr </a>'
         + '<a href="' + song_filename_noext + '.txt"  target=newtab> txt </a>'
         + '<a href="' + song_filename_noext + '.lst"  target=newtab> lst </a>'
         + '<a href="' + song_filename_noext + '.pro"  target=newtab> pro </a>'
-        + '<a href="' + song_filename_noext + '.htm"  target=newtab> ' + song_key + '  </a>'
+        + '<a href="' + song_filename_noext + '.htm"  target=newtab> ' + song_key + ' </a>'
         + '<a href="' + song_filename_noext + '.htm"  target=newtab>'
         + song_title + '</a></p><br>\n' ;
 

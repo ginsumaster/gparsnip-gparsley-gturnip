@@ -1,45 +1,35 @@
-{title: Medley Test 5}
+{title: Medley Test 5 - 3 songs, 4 titles, user medley subtitle, st-comment}
+{subtitle: Wonderful combo!}
+#st-comment: Play Chopsticks!
 {title: Song 1}
 {key: A}
 {time: 4/4}
-#st-comment: Play both songs
-
+{ccli: 11111111}
+{author: Author 1A, Author 1B}
+{copyright: (C) 2001 CopyrightA Music; (Admin. by CopyrightA Publ)}
+#st-comment: Play soulfully!
 {soh}Verse 1:{eoh}
 [A]Alpha [B]Bravo [C]Charlie
 [D]Del[A]Ta [E]Echo [F]Foxtrot [G]Gol[F]f
-{copyright: (C) 2000 CopyrightA Music; (Admin. by CopyrightA Publ)}
-{key: B}
-
-{soh}Pre-Chorus:{eoh}
-[A]Alpha [B]Bravo [C]Charlie
-{soh}Chorus 1:{eoh}
-{soc}
-{time: 5/4}
-[D]Del[A]Ta [E]Echo [F]Foxtrot [G]Gol[F]f
-[A]Alpha [B]Bravo [C]Charlie
-{eoc}
-{author: Author 1A, Author 1B}
-{copyright: (C) 2001 CopyrightB Music; (Admin. by CopyrightB Publ)}
 
 {title: Song 2}
-{ccli: 11111111}
-#st-comment: Play soulfully!
-
+{key: B}
+{time: 5/4}
+{ccli: 22222222}
+{author: Author 2A, Author 2B}
+{copyright: (C) 2002 CopyrightB Music; (Admin. by CopyrightB Publ)}
+#st-comment: Play with blinding speed!
 {soh}Verse 2:{eoh}
 [A]Alpha [B]Bravo [C]Charlie
 [D]Del[A]Ta [E]Echo [F]Foxtrot [G]Gol[F]f
-{author: Author 2A, Author 2B}
 
+{title: Song 3}
+{key: C}
+{time: 6/4}
+{ccli: 33333333}
+{author: Author 3A, Author 3B}
+{copyright: (C) 2003 CopyrightC Music; (Admin. by CopyrightC Publ)}
+#st-comment: Play play play!
 {soh}Verse 3:{eoh}
 [A]Alpha [B]Bravo [C]Charlie
 [D]Del[A]Ta [E]Echo [F]Foxtrot [G]Gol[F]f
-
-{soh}Bridge:{eoh}
-{soc}
-[D]Del[A]Ta [E]Echo [F]Foxtrot [G]Gol[F]f
-[A]Alpha [B]Bravo [C]Charlie
-{eoc}
-
-{ccli: 22222222}
-#chords: [A] [B] [C] [D] [E] [F] [G]
-#st-comment: Play with blinding speed!
