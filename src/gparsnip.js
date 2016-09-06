@@ -87,6 +87,9 @@ FEATURES:
 4. Extensive test plan, regression testing scripts
 
 NOTES:
+v 2016-09-05
+chords were space-delimited, now using "|"
+
 v 2016-09-04
 fixed test_input_buffer() function:
 problem -- if read warning character, then messeage repeated.
@@ -240,8 +243,9 @@ const CSV_FORMAT = "title\tkey\ttime\tmetronome\tccli\tauthor\tcopyright\ttag\tf
 var out_file_csv = process.argv[ 2 ] + ".csv" ;
 
 ////////////////////////////////////////////////////////////////////////////////
+const CHORD_DELIMITER = "|"
 var chord_list          = [] ; // keep track of all chords used in song
-var final_chord_string  = "" ; // list of chords used, space-delimited, no [ ]
+var final_chord_string  = CHORD_DELIMITER ; // list of chords used, "|" delimited
 var out_file_chord_list = process.argv[ 2 ] + ".cd1" ;
 
 // mode 1 -- few comments; mode 2 -- heavy comments
@@ -1165,23 +1169,27 @@ function output_results() {
   file_buffer = html[ 0 ] + OUT_FILE_HTML_LYRICS_ONLY_CSS
               + html[ 1 ] + meta_tag_title[ 0 ].toString() + html[ 2 ];
 
-  meta_tag_subtitle_lyrics_only[ 0 ] = trim_leading_trailing_spaces( meta_tag_subtitle_lyrics_only[ 0 ].toString() );
+  meta_tag_subtitle_lyrics_only[ 0 ] =
+  trim_leading_trailing_spaces( meta_tag_subtitle_lyrics_only[ 0 ].toString() );
 
-  if ( song_medley_status > SONG_2_TITLE_2 ) {             // medley title
+  if ( song_medley_status > SONG_2_TITLE_2 ) { // medley title
     file_buffer +=
       html[ 6 ] + meta_tag_title[ 0 ].toString() + html[ 7 ];
 
-    if   ( meta_tag_subtitle_lyrics_only[ 0 ].toString() == "" ) // medley subtitle
+    if   ( meta_tag_subtitle_lyrics_only[ 0 ].toString() == "" ) // medley subt
       if ( hashtag_st_comment[ 0 ].toString() == "" )
         {}
       else
-        file_buffer += "<h2>" + hashtag_st_comment[ 0 ].toString() + "</h2>\n\n" ;
+        file_buffer += "<h2>" + hashtag_st_comment[ 0 ].toString()
+                    +  "</h2>\n\n" ;
     else
       if ( hashtag_st_comment[ 0 ].toString() == "" )
-        file_buffer += "<h2>" + meta_tag_subtitle_lyrics_only[ 0 ].toString() + "</h2>\n\n" ;
+        file_buffer += "<h2>" +  meta_tag_subtitle_lyrics_only[ 0 ].toString()
+                    + "</h2>\n\n" ;
       else
         file_buffer += "<h2>" + meta_tag_subtitle_lyrics_only[ 0 ].toString()
-                    +  "  "   + hashtag_st_comment[ 0 ].toString() + "</h2>\n\n" ;
+                    +  "  "   + hashtag_st_comment[ 0 ].toString()
+                    + "</h2>\n\n" ;
     k_start = 1;
   }
   else
@@ -1211,17 +1219,17 @@ function prep_chord_list() {
     if ( k == 0 ) {
       last_chord = chord_list[ k ].toString();
       final_chord_list.push( last_chord );
-    } else {
+      } else {
         a_chord = chord_list[ k ].toString();
         if ( last_chord < a_chord ) {
           last_chord = a_chord;
           final_chord_list.push( last_chord );
-        } // if
-    } // else
+          } // if
+      } // else
   } // for
 
   for ( k = 0; k < final_chord_list.length; k++ )
-    final_chord_string += final_chord_list[ k ].toString() + " " ;
+    final_chord_string += final_chord_list[ k ].toString() + CHORD_DELIMITER ;
 
 if ( DEBUGGING_MODE2 )  console.log( final_chord_string );
 } // function
@@ -1235,31 +1243,40 @@ function create_subtitle( buf_indx ) {
   var semicolon_index = copyright_str.indexOf( ";" );  // index first semicolon
 
   if ( meta_tag_subtitle[ buf_indx ] == "" ) {
-      if ( semicolon_index >= 0 )
-        first_copyright = meta_tag_copyright[ buf_indx ].toString().slice( 0, semicolon_index );
-      else
-        first_copyright = meta_tag_copyright[ buf_indx ]; // only one copyright holder
+    if ( semicolon_index >= 0 )
+      first_copyright =
+        meta_tag_copyright[ buf_indx ].toString().slice( 0, semicolon_index );
+    else   // only one copyright holder
+      first_copyright = meta_tag_copyright[ buf_indx ];
 
-      meta_tag_first_copyright[ buf_indx ] = first_copyright ;
+    meta_tag_first_copyright[ buf_indx ] = first_copyright ;
 
-      if ( meta_tag_key[ buf_indx ] != "" )  meta_tag_subtitle[ buf_indx ]
-                += "Key: " + meta_tag_key[ buf_indx ] + "  " ;
+    if ( meta_tag_key[ buf_indx ] != "" )
+      meta_tag_subtitle[ buf_indx ]
+                      += "Key: " + meta_tag_key[ buf_indx ] + "  " ;
 
-      // difference between musician's subtitle and singers is only "Key"
-      if ( meta_tag_time[ buf_indx ] != "" ) meta_tag_subtitle_lyrics_only[ buf_indx ]
-                += "Time: " + meta_tag_time[ buf_indx ] + "  " ;
+    // difference between musician's subtitle and singers is only "Key"
+    if ( meta_tag_time[ buf_indx ] != "" )
+      meta_tag_subtitle_lyrics_only[ buf_indx ]
+                      += "Time: " + meta_tag_time[ buf_indx ] + "  " ;
 
-      if ( meta_tag_metronome[ buf_indx ] != "" ) meta_tag_subtitle_lyrics_only[ buf_indx ]
-                += "Bpm: " + meta_tag_metronome[ buf_indx ] + "  " ;
+    if ( meta_tag_metronome[ buf_indx ] != "" )
+      meta_tag_subtitle_lyrics_only[ buf_indx ]
+                      += "Bpm: " + meta_tag_metronome[ buf_indx ] + "  " ;
 
-      if ( meta_tag_ccli[ buf_indx ] != "" ) meta_tag_subtitle_lyrics_only[ buf_indx ]
-                += "CCLI: " + meta_tag_ccli[ buf_indx ] + "  " ;
+    if ( meta_tag_ccli[ buf_indx ] != "" )
+      meta_tag_subtitle_lyrics_only[ buf_indx ]
+                      += "CCLI: " + meta_tag_ccli[ buf_indx ] + "  " ;
 
-      if ( meta_tag_author[ buf_indx ] != "" ) meta_tag_subtitle_lyrics_only[ buf_indx ]
-                         += meta_tag_author[ buf_indx ] ;
+    if ( meta_tag_author[ buf_indx ] != "" )
+      meta_tag_subtitle_lyrics_only[ buf_indx ]
+                      += meta_tag_author[ buf_indx ] ;
 
-      meta_tag_subtitle_lyrics_only[ buf_indx ] += "  " + first_copyright ;
-      meta_tag_subtitle[ buf_indx ] += meta_tag_subtitle_lyrics_only[ buf_indx ] ;
+    meta_tag_subtitle_lyrics_only[ buf_indx ]
+                      += "  " + first_copyright ;
+
+    meta_tag_subtitle[ buf_indx ]
+                      += meta_tag_subtitle_lyrics_only[ buf_indx ] ;
   }
   else // user used {susbitle:} -- meta_tag_subtitle[ ] already set
      meta_tag_subtitle_lyrics_only[ buf_indx ] = meta_tag_subtitle[ buf_indx ];
