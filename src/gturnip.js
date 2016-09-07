@@ -122,7 +122,7 @@ var delimiter_pos     = 0;   // delimiter is vertical bar/line
    2 -- pro file w/ new chords, output-ready */
 var song_buffer = [ "" , "" , "" ]; // entire song contents
 
-const MAX_J  = 50;
+//const MAX_J  = 50;
 var number_of_chord_substitutions = 0;
 var i, j     = 0;
 var st1, st2 = "" ; // substitution strings
@@ -171,9 +171,16 @@ if ( fix_filenames() ) {
       str1 = "[" + chords_old[ i ].toString() + "]" ;
       str2 =       chords_XXX[ i ].toString() ;
 
-      for ( j = 0; j < MAX_J; j++ )
+/*      for ( j = 0; j < MAX_J; j++ )
         song_buffer[ 1 ] = song_buffer[ 1 ].replace( str1, str2 );
-        // song_buffer[ 1 ].replace( /\[A\]/g, str2 );
+      // song_buffer[ 1 ].replace( /\[A\]/g, str2 ); */
+      do {
+        j = song_buffer[ 1 ].toString().indexOf( str1 );
+        if ( j >= 0 )
+          song_buffer[ 1 ] = song_buffer[ 1 ].replace( str1, str2 );
+      }
+      while ( j >= 0 );
+
     } // for i
 
     song_buffer[ 2 ] = song_buffer[ 1 ];
@@ -182,9 +189,16 @@ if ( fix_filenames() ) {
       str1 =       chords_XXX[ i ].toString() ;
       str2 = "[" + chords_new[ i ].toString() + "]" ;
 
-      for ( j = 0; j < MAX_J; j++ )
+/*      for ( j = 0; j < MAX_J; j++ )
         song_buffer[ 2 ] = song_buffer[ 2 ].replace( str1, str2 );
-        // song_buffer[ 2 ].replace( /\[A\]/g, str2 );
+//        song_buffer[ 2 ].replace( /\[A\]/g, str2 ); */
+      do {
+        j = song_buffer[ 2 ].toString().indexOf( str1 );
+        if ( j >= 0 )
+          song_buffer[ 2 ] = song_buffer[ 2 ].replace( str1, str2 );
+      }
+      while ( j >= 0 );
+
     } // for i
 
     fs.writeFileSync( out_file_pro, song_buffer[ 2 ] );
