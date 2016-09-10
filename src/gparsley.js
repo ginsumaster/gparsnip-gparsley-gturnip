@@ -45,6 +45,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 NOTES:
+2016-09-09
+song_array_sort() function added to handle toc albetization sort of
+upper- and lower- case correctly
+
 2016-09-05
 modified key column to have individual letters in each column
 
@@ -77,16 +81,16 @@ var in_file_buffer_index  = 0;
 var in_file_buffer_length = 0;
 
 var song_info_line        = "" ;
-var song_array            = [];
+var song_array            = []; // array of 1-line CSV info
 
-const TOC_TITLE_DEFAULT   = "Songbook Table of Contents" ;
-var TOC_SUBTITLE_DEFAULT  = new Date();
-var toc_title             = process.argv[ 3 ] ;
-var toc_subtitle          = process.argv[ 4 ] ;
-const OUT_FILE_HTML       = "index.html" ; // table of contents
-const OUT_FILE_ZIP        = "index.zip" ;  // user can download entire website
+const TOC_TITLE_DEFAULT    = "Songbook Table of Contents" ;
+var   TOC_SUBTITLE_DEFAULT = new Date();
+var   toc_title            = process.argv[ 3 ] ;
+var   toc_subtitle         = process.argv[ 4 ] ;
+const OUT_FILE_HTML        = "index.html" ; // table of contents
+const OUT_FILE_ZIP         = "index.zip" ;  // user can download entire website
 
-const OUT_FILE_HTML_CSS   = "0chordlyric.css" ;  // chord+lyrics css file
+const OUT_FILE_HTML_CSS    = "0chordlyric.css" ;  // chord+lyrics css file
 var html = [
   "<!DOCTYPE html>\n<html>\n<head>\n<meta charset=\"UTF-8\">\n<link rel=\"stylesheet\" type=\"text/css\" href=\"" ,
   "\">\n<style>\n<!--\na{text-decoration: none}\n-->\n</style>\n\n<title>" ,
@@ -159,8 +163,9 @@ function generate_song_html() {
 
   var song_key_tmp        = "" ;
 
-  var k;
-  var j;
+  var k; // song_array[] index 1
+  var j; // song_array[] index 2
+  // heading[] is used string comparisons against entries in song_array[]
   var heading = [ "0    !" , "A    !" , "B    !" , "C    !" , "D    !" ,
        "E    !" , "F    !" , "G    !" , "H    !" , "I    !" , "J    !" ,
        "K    !" , "L    !" , "M    !" , "N    !" , "O    !" , "P    !" ,
@@ -168,19 +173,23 @@ function generate_song_html() {
        "W    !" , "X    !" , "Y    !" , "Z    !" , "zzzzzz" ];
  // heading_print is array of booleans, same size as heading[]
  // if true, then print corresponding heading[], false, don't print
-  var heading_print = [] ;
-  var heading_index = 0;
-  var heading_length = heading.length;
-  var i = 0;
+  var heading_print    = [] ;
+  var heading_index    = 0;
+  var heading_length   = heading.length;
+  var i                = 0;
   const KEY_MAX_LENGTH = 10;
+  const HEADING_STRING_COMPARISON_LENGTH = 6; // heading[] entry lengths
 
   for ( k = 0; k < heading.length; k++ ) // initialize, print no headings
     heading_print.push( false );
 
-  song_array.sort(); // first sort is w/o headings inserted
+//  song_array.sort();
+//  song_array.sort( function( a, b ){ return a.toLowerCase() > b.toLowerCase() } );
+  song_array_sort(); // first sort is w/o headings inserted
 
-  j_lowest = 0;
-  for ( k = 0; k < song_array.length; k++ ) {// find out if heading needed
+  // find out which headings are necessary to include
+  j_lowest = 0; // used for lower bounds index
+  for ( k = 0; k < song_array.length; k++ ) {
     j = j_lowest;
 
     while ( j < ( heading_length - 1 ) ) {
@@ -194,16 +203,18 @@ function generate_song_html() {
     } // while j
   } // for k
 
-  for ( k = 0; k < heading.length; k++ ) // insert headings into song database
+  // insert headings into song_array[]
+  for ( k = 0; k < heading.length; k++ )
     if ( heading_print[ k ] )
       song_array.push( heading[ k ] );
 
-  song_array.sort();
+//  song_array.sort();
+  song_array_sort(); // second sort has headings inserted
 
   for ( k = 0; k < song_array.length; k++ ) { // remove headings
     song_line = song_array[ k ].toString();
 
-    if ( song_line.length == 6 )
+    if ( song_line.length == HEADING_STRING_COMPARISON_LENGTH )
       if ( song_line == heading[ 0 ].toString() ) { // special 1st heading
           out_file_buffer[ 2 ] += "<h3> <a href=\"#0\">Misc</a></h3><a name=\"Misc\"></a>\n" ;
           out_file_buffer[ 1 ] += "<a href=\"#Misc\">Misc</a>" ; // jump to
@@ -241,6 +252,50 @@ function generate_song_html() {
   out_file_buffer_aggregate = out_file_buffer[ 0 ] + out_file_buffer[ 1 ] + out_file_buffer[ 2 ];
 
   fs.writeFileSync( OUT_FILE_HTML, out_file_buffer_aggregate );
+} // function
+
+////////////////////////////////////////////////////////////////////////////////
+function song_array_sort() {
+/*
+problem: song_array.sort() won't handle upper-case lower-case correctly:
+e.g.: "Come Just As You Are" comes before "Come and See"
+solution/algorithm:
+1. read each song title in song_array[]
+2. make a upper-case version of title
+3. insert upper-case title before the title in song_array[]
+4. use built-in sort function
+5. remove upper-case title in each title in song_array[]
+*/
+  var song_array_length = song_array.length;
+  var i = 0; // song_array[] index
+  var csv_line        = "" ;
+  var tab_location    = -1 ;
+  var title_raw       = "" ;
+  var title_uppercase = "" ;
+
+// insert lower-case version of title into song_array[]
+  for ( i = 0; i < song_array_length; i++ ) {
+    csv_line     = song_array[ i ].toString();
+    tab_location = csv_line.indexOf( "\t" );
+
+    if ( tab_location >= 0 ) { // i.e. csv_line is NOT heading but song title
+      title_raw       = csv_line.substring( 0, tab_location );
+      title_uppercase = title_raw.toUpperCase();
+      song_array[ i ] = title_uppercase + "\t" + csv_line;
+    } // if
+  } // for
+
+  song_array.sort();
+
+// remove lower-case version of title from song_array[]
+  for ( i = 0; i < song_array_length; i++ ) {
+    csv_line     = song_array[ i ].toString();
+    tab_location = csv_line.indexOf( "\t" );
+
+    if ( tab_location >= 0 ) // i.e. csv_line is NOT heading but song title
+      song_array[ i ] = csv_line.substring( tab_location + 1 );
+  } // for
+
 } // function
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -344,12 +399,14 @@ if ( DEBUGGING_MODE2 ) {
             song_key_str += " " ;
       break;
 
-    case SCALE_UNDETERMINED : song_key_str = "       " ; break; // feature not used
+    case SCALE_UNDETERMINED :
+      song_key_str = "       " ; break; // feature not used
 
-    case SCALE_VERBOSE : song_key_str = old_song_key; // feature not implemented
-                         for ( k = ( SONG_KEY_CHARACTER_LENGTH - old_song_key.length );
-                               k < SONG_KEY_CHARACTER_LENGTH; k++ )
-                            song_key_str += " ";
+    case SCALE_VERBOSE : song_key_str = old_song_key; // feature not used
+      for ( k = ( SONG_KEY_CHARACTER_LENGTH - old_song_key.length );
+           k < SONG_KEY_CHARACTER_LENGTH; k++ )
+        song_key_str += " ";
+
     default: break;
 
   } // switch
