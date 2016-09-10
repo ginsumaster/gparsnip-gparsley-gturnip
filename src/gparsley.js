@@ -45,6 +45,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 NOTES:
+2016-09-10 CSV format changed: metronome --> tempo
+includes: {topic:} {keyword:} and {book:}
+includes: {tempo:} (interchangeable w/ {metronome:}
+
 2016-09-09
 song_array_sort() function added to handle toc albetization sort of
 upper- and lower- case correctly
@@ -100,7 +104,7 @@ var html = [
   "\n\n</body>\n\n</html>\n"
 ];
 
-const CSV_FORMAT = "title\tkey\ttime\tccli\tauthor\tcopyright\tmetronome\ttag\tfilename\n" ;
+const CSV_FORMAT = "title\tkey\ttime\ttempo\tccli\tauthor\tcopyright\ttag\ttopic\tbook\tfilename\n" ;
 
 // mode 1 -- few comments; mode 2 -- heavy comments
 //var DEBUGGING_MODE1 = true;

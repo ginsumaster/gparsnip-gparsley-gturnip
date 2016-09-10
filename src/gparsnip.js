@@ -52,7 +52,8 @@ SOFTWARE.
 FEATURES:
 1. Major meta-tags recognized:
 {title:} {subtitle:} {key:} {time:} {ccli:} {author:} {copyright:} {comment:}
-{guitar-comment:} {metronome:} {tag:} {soh} {eoh}
+{guitar-comment:} {metronome:} {tempo:} {tag:} {soh} {eoh}
+2016-09-09A: {tempo:}{footer:}{keywords:}{topic:}{book:}
 
 2. Readability algorithms instituted:
   a. Standard font is mono-spaced for better chord over lyric alignment.
@@ -87,6 +88,16 @@ FEATURES:
 4. Extensive test plan, regression testing scripts
 
 NOTES:
+v 2016-09-09A
+{tempo:} now accepted -- interchangeable w/ {metronome:}
+{footer:} now accepted -- interchangeable w/ {copyright:}
+{keywords:} {topic:} -- interchangeable, now accepted
+{book:} -- now accepted
+CSV format changed to reflect additions.  metronome wording --> tempo
+
+v 2016-09-09
+replaced user function trim_leading_trailing_spaces() w/ built-in trim() fcn
+
 v 2016-09-05
 chords were space-delimited, now using "|"
 
@@ -215,13 +226,15 @@ var meta_tag_subtitle             = [ "", "", "", "" ] ;
 var meta_tag_subtitle_lyrics_only = [ "", "", "", "" ] ;
 var meta_tag_key                  = [ "", "", "", "" ] ;
 var meta_tag_time                 = [ "", "", "", "" ] ;
-var meta_tag_metronome            = [ "", "", "", "" ] ; // bpm
+var meta_tag_tempo                = [ "", "", "", "" ] ; // {metronome:}, bpm
 var meta_tag_ccli                 = [ "", "", "", "" ] ;
 var meta_tag_author               = [ "", "", "", "" ] ;
 var meta_tag_copyright            = [ "", "", "", "" ] ;
 var meta_tag_first_copyright      = [ "", "", "", "" ] ; // created from copyright
 // new meta_tags for CSV/database compilation
 var meta_tag_tag                  = [ "", "", "", "" ] ; // search strings
+var meta_tag_topic                = [ "", "", "", "" ] ; // {keyword:}
+var meta_tag_book                 = [ "", "", "", "" ] ;
 var hashtag_st_comment            = [ "", "", "", "" ] ; // comments for subtitle line
 
                                     // meta-tag processing
@@ -230,15 +243,15 @@ var meta_tag_argument         = "" ; // everything after ":"
 var meta_tag_argument_trimmed = "" ; // as above, no leading, trailing spaces
 var meta_tag_argument_length  = -1;
                                    // variables for handling soh and eoh
-var meta_tag_soh_count        = 0;
-var meta_tag_eoh_count        = 0;
-var in_line_last_soh_index   = -1; // last position of last found {soh}
-var in_line_last_eoh_index   = -1; // last position of last found {soh}
+var meta_tag_soh_count        =  0;
+var meta_tag_eoh_count        =  0;
+var in_line_last_soh_index    = -1; // last position of last found {soh}
+var in_line_last_eoh_index    = -1; // last position of last found {soh}
 
 ////////////////////////////////////////////////////////////////////////////////
 // CSV-database vars
 const CSV_FORMAT_FILE        = "0gparsnip.csv" ;  // chord+lyrics css file
-const CSV_FORMAT = "title\tkey\ttime\tmetronome\tccli\tauthor\tcopyright\ttag\tfilename\n" ;
+const CSV_FORMAT = "title\tkey\ttime\ttempo\tccli\tauthor\tcopyright\ttag\ttopic\tbook\tfilename\n" ;
 
 var out_file_csv = process.argv[ 2 ] + ".csv" ;
 
@@ -487,11 +500,17 @@ console.log( "process_meta_tag()    arg length is:", meta_tag_argument.length );
     case "key:"       :
     case "k:"         :
     case "time:"      :
+    case "tempo:"     :
     case "metronome:" :
     case "ccli:"      :
     case "author:"    :
     case "copyright:" :
-    case "tag:"       :    check_song_index();
+    case "footer"     :
+    case "tag:"       :
+    case "topic:"     :
+    case "keyword:"   :
+    case "book:"      :
+                        check_song_index();
 /*                         break;
     case "comment:"        :
     case "c:"              :
@@ -521,11 +540,16 @@ console.log( "process_meta_tag()    arg length is:", meta_tag_argument.length );
     case "key:"       :
     case "k:"         :  meta_tag_key[ song_index ]       = meta_tag_argument_trimmed;  break;
     case "time:"      :  meta_tag_time[ song_index ]      = meta_tag_argument_trimmed;  break;
-    case "metronome:" :  meta_tag_metronome[ song_index ] = meta_tag_argument_trimmed;  break;
+    case "tempo"      :
+    case "metronome:" :  meta_tag_tempo[ song_index ]     = meta_tag_argument_trimmed;  break;
     case "ccli:"      :  meta_tag_ccli[ song_index ]      = meta_tag_argument_trimmed;  break;
     case "author:"    :  meta_tag_author[ song_index ]    = meta_tag_argument_trimmed;  break;
+    case "footer"     :
     case "copyright:" :  meta_tag_copyright[ song_index ] = meta_tag_argument_trimmed;  break;
     case "tag:"       :  meta_tag_tag[ song_index ]       = meta_tag_argument_trimmed;  break;
+    case "topic:"     :
+    case "keyword:"   :  meta_tag_topic[ song_index ]     = meta_tag_argument_trimmed;  break;
+    case "book:"      :  meta_tag_book[ song_index ]      = meta_tag_argument_trimmed;  break;
 
     case "comment:"        :
     case "c:"              :
@@ -876,11 +900,6 @@ function trim_trailing_spaces( txt_line ) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-function trim_leading_trailing_spaces( txt_line ) {
-  return trim_leading_spaces( trim_trailing_spaces( txt_line ) );
-}
-
-////////////////////////////////////////////////////////////////////////////////
 function remove_double_spaces( txt_line ) {
   // remove any instance of two spaces next to each other -- replace w/ 1 space
 
@@ -930,10 +949,8 @@ if ( DEBUGGING_MODE2 ) console.log( "output_lines()" );
     if ( out_line_lyric.length == 0 ) // no chord, no lyric -- do nothing
       {}
     else { // no chord, have lyric
-/*      out_buffer_chord_lyric[ song_index ] +=    out_line_lyric         + "\n" ;
-      out_buffer_lyrics_only[ song_index ] +=
-                   trim_leading_trailing_spaces( out_line_lyrics_only ) + "\n" ;
-*/
+/*    out_buffer_chord_lyric[ song_index ] += out_line_lyric              + "\n" ;
+      out_buffer_lyrics_only[ song_index ] += out_line_lyrics_only.trim() + "\n" ; */
       // check to see if this is a musical heading section
       if (    ( meta_tag_soh_count == 1 ) && ( meta_tag_eoh_count == 1 )
            && (   in_line_last_soh_index == 0 )
@@ -946,19 +963,16 @@ if ( DEBUGGING_MODE2 ) console.log( "output_lines()" );
                                            "<h3>" + out_line_lyric + "</h3>\n" ;
            out_buffer_html_lyrics_only[ song_index ] +=
                                            "<h3>" + out_line_lyric + "</h3>\n" ;
-           out_buffer_chord_lyric[ song_index ] +=    out_line_lyric         + "\n" ;
-           out_buffer_lyrics_only[ song_index ] +=
-                        trim_leading_trailing_spaces( out_line_lyrics_only ) + "\n" ;
+           out_buffer_chord_lyric[ song_index ] += out_line_lyric              + "\n" ;
+           out_buffer_lyrics_only[ song_index ] += out_line_lyrics_only.trim() + "\n" ;
            }
          else { // yes case of e.g.: Verse 3 #-- To Key of D
            out_buffer_html_chord_lyric[ song_index ] += "<h3>"
              + out_line_lyric.substring( 0, hash_pos ) // e.g. Verse 3 -- To Key of D
              + out_line_lyric.substring( hash_pos + 1 ) // omit #
                                                       + "</h3>\n" ;
-           out_buffer_html_lyrics_only[ song_index ] += "<h3>"
-             +  trim_leading_trailing_spaces(          // e.g. Verse 3
-                  out_line_lyric.substring( 0, hash_pos ) )
-                                                      + "</h3>\n" ;
+           out_buffer_html_lyrics_only[ song_index ] +=          "<h3>" // e.g. Verse 3
+             +  out_line_lyric.substring( 0, hash_pos ).trim() + "</h3>\n" ;
 
            out_buffer_chord_lyric[ song_index ] += // e.g.: Verse 3 -- To Key of D
                out_line_lyric.substring( 0, hash_pos )
@@ -966,7 +980,7 @@ if ( DEBUGGING_MODE2 ) console.log( "output_lines()" );
 
            hash_pos = out_line_lyrics_only.indexOf( "#" );
            out_buffer_lyrics_only[ song_index ] += // e.g.: Verse 3
-             trim_leading_trailing_spaces( out_line_lyrics_only.substring( 0, hash_pos ) ) + "\n" ;
+             out_line_lyrics_only.substring( 0, hash_pos ).trim() + "\n" ;
 
          }
       } else { // no - regular highlighted section
@@ -975,9 +989,8 @@ if ( DEBUGGING_MODE2 ) console.log( "output_lines()" );
         out_buffer_html_lyrics_only[ song_index ] +=
                                       out_line_html_lyrics_only + "</p><br>\n" ;
 
-        out_buffer_chord_lyric[ song_index ] +=    out_line_lyric         + "\n" ;
-        out_buffer_lyrics_only[ song_index ] +=
-                     trim_leading_trailing_spaces( out_line_lyrics_only ) + "\n" ;
+        out_buffer_chord_lyric[ song_index ] += out_line_lyric              + "\n" ;
+        out_buffer_lyrics_only[ song_index ] += out_line_lyrics_only.trim() + "\n" ;
       }
     } // if meta_tag_eoh_count ..
   else
@@ -991,8 +1004,7 @@ if ( DEBUGGING_MODE2 ) console.log( "output_lines()" );
     else { // have chord, have lyric
       out_buffer_chord_lyric[ song_index ] +=
                                  out_line_chord + "\n" + out_line_lyric + "\n" ;
-      out_buffer_lyrics_only[ song_index ] +=
-                   trim_leading_trailing_spaces( out_line_lyrics_only ) + "\n" ;
+      out_buffer_lyrics_only[ song_index ] += out_line_lyrics_only.trim() + "\n" ;
       out_buffer_html_chord_lyric[ song_index ] += out_line_html_chord + "</h6><br>\n"
                                                  + out_line_html_lyric + "</p><br>\n" ;
       out_buffer_html_lyrics_only[ song_index ] +=
@@ -1047,11 +1059,13 @@ function output_results() {
     file_buffer =     meta_tag_title[ 0 ].toString()        + "\t"
                     + meta_tag_key[ 0 ].toString()          + "\t"
                     + meta_tag_time[ 0 ].toString()         + "\t"
-                    + meta_tag_metronome[ 0 ].toString()    + "\t"
+                    + meta_tag_tempo[ 0 ].toString()        + "\t"
                   /*+ meta_tag_ccli[ k ].toString()*/       + "\t"
                   /*+ meta_tag_author[ k ].toString()*/     + "\t"
                   /*+ meta_tag_copyright[ k ].toString()*/  + "\t"
                     + meta_tag_tag[ 0 ].toString()          + "\t"
+                    + meta_tag_topic[ 0 ].toString()        + "\t"
+                    + meta_tag_book[ 0 ].toString()         + "\t"
                     + in_file_noext                         + "\n" ;
     k_start = 1;
   }
@@ -1062,10 +1076,12 @@ function output_results() {
                 +  meta_tag_key[ k ].toString()             + "\t"
                 +  meta_tag_time[ k ].toString()            + "\t"
                 +  meta_tag_ccli[ k ].toString()            + "\t"
-                +  meta_tag_metronome[ k ].toString()       + "\t"
+                +  meta_tag_tempo[ k ].toString()           + "\t"
                 +  meta_tag_author[ k ].toString()          + "\t"
                 +  meta_tag_first_copyright[ k ].toString() + "\t"
                 +  meta_tag_tag[ k ].toString()             + "\t"
+                +  meta_tag_topic[ k ].toString()           + "\t"
+                +  meta_tag_book[ k ].toString()            + "\t"
                 +  in_file_noext                            + "\n" ;
 
   fs.writeFileSync( out_file_csv, file_buffer );
@@ -1135,7 +1151,7 @@ function output_results() {
   file_buffer = html[ 0 ] + OUT_FILE_HTML_CSS
               + html[ 1 ] + meta_tag_title[ 0 ].toString() + html[ 2 ];
 
-  meta_tag_subtitle[ 0 ] = trim_leading_trailing_spaces( meta_tag_subtitle[ 0 ].toString() );
+  meta_tag_subtitle[ 0 ] = meta_tag_subtitle[ 0 ].toString().trim();
 
   if ( song_medley_status > SONG_2_TITLE_2 ) {             // medley title
     file_buffer += html[ 6 ] + meta_tag_title[ 0 ].toString() + html[ 7 ];
@@ -1170,7 +1186,7 @@ function output_results() {
               + html[ 1 ] + meta_tag_title[ 0 ].toString() + html[ 2 ];
 
   meta_tag_subtitle_lyrics_only[ 0 ] =
-  trim_leading_trailing_spaces( meta_tag_subtitle_lyrics_only[ 0 ].toString() );
+  meta_tag_subtitle_lyrics_only[ 0 ].toString().trim();
 
   if ( song_medley_status > SONG_2_TITLE_2 ) { // medley title
     file_buffer +=
@@ -1260,9 +1276,9 @@ function create_subtitle( buf_indx ) {
       meta_tag_subtitle_lyrics_only[ buf_indx ]
                       += "Time: " + meta_tag_time[ buf_indx ] + "  " ;
 
-    if ( meta_tag_metronome[ buf_indx ] != "" )
+    if ( meta_tag_tempo[ buf_indx ] != "" )
       meta_tag_subtitle_lyrics_only[ buf_indx ]
-                      += "Bpm: " + meta_tag_metronome[ buf_indx ] + "  " ;
+                      += "Bpm: " + meta_tag_tempo[ buf_indx ] + "  " ;
 
     if ( meta_tag_ccli[ buf_indx ] != "" )
       meta_tag_subtitle_lyrics_only[ buf_indx ]

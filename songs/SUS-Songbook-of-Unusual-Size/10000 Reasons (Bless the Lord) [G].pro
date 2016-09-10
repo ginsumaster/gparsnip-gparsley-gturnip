@@ -10,7 +10,7 @@
 Bless the [C]Lord O my [G]soul [D/F#]O my [Em]soul
 [C]Worship His [G]holy [Dsus]name [D]
 Sing like [C]never be[G]fore [C]O [D]my [Em]soul
-I'll [C]worship Your [D]holy [C/G]name [G] [C/G] [G]  To [G]Chorus  To [C]Verse
+I'll [C]worship Your [D]holy [C/G]name [G] [C/G] [G] {gc:To C: }[G] {gc:To Vss: }[C]
 {eoc}
 
 {soh}Verse 1:{eoh}
@@ -34,5 +34,3 @@ The [C]end draws [G]near and my [D]time has [Em]come
 {soh}Ending:{eoh}
 [C]Worship Your [D]holy [Em]name
 Lord I'll [C]worship Your [D]holy [G]name
-
-#chords: [C]  [C/G]  [D]  [Dsus]  [D/F#]  [Em]  [G]
