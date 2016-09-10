@@ -140,9 +140,8 @@ if ( fix_filenames() ) {
     if ( delimiter_pos >= 0 ) {
       chords_old.push(    chords_old_buffer.substring( 0, delimiter_pos ) );
       chords_old_buffer = chords_old_buffer.substring( delimiter_pos + 1 );
-    }
-  }
-  while ( delimiter_pos >= 0 );
+    } // if
+  } while ( delimiter_pos >= 0 );
 
   chords_new_buffer     = chords_new_buffer.substring( 1 ); // remove first bar
   do {
@@ -150,17 +149,15 @@ if ( fix_filenames() ) {
     if ( delimiter_pos >= 0 ) {
       chords_new.push(    chords_new_buffer.substring( 0, delimiter_pos ) );
       chords_new_buffer = chords_new_buffer.substring( delimiter_pos + 1 );
-    }
-  }
-  while ( delimiter_pos >= 0 );
+    } // if
+  } while ( delimiter_pos >= 0 );
 
   number_of_chord_substitutions = chords_old.length;
 
   if ( number_of_chord_substitutions != chords_new.length ) {
     console.log( "ERROR: cd1 and cd2 - need 1-to-1 chord matches");
     console.log( "ABORTING" );
-  }
-  else {
+  } else {
     song_buffer[ 1 ] = song_buffer[ 0 ];
 
     for ( i = 0; i < number_of_chord_substitutions; i++ )
@@ -178,8 +175,7 @@ if ( fix_filenames() ) {
         j = song_buffer[ 1 ].toString().indexOf( str1 );
         if ( j >= 0 )
           song_buffer[ 1 ] = song_buffer[ 1 ].replace( str1, str2 );
-      }
-      while ( j >= 0 );
+      } while ( j >= 0 );
 
     } // for i
 
@@ -196,8 +192,7 @@ if ( fix_filenames() ) {
         j = song_buffer[ 2 ].toString().indexOf( str1 );
         if ( j >= 0 )
           song_buffer[ 2 ] = song_buffer[ 2 ].replace( str1, str2 );
-      }
-      while ( j >= 0 );
+      } while ( j >= 0 );
 
     } // for i
 

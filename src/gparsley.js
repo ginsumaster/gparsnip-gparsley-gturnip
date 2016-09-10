@@ -74,13 +74,12 @@ done if click on alphabet heading, jumps to top of web page
 done fixed underline problem in 0chordlyric.css
 numeric song titles, do numeric sort
 Unicode
-
-*/
+*******************************************************************************/
 var fs                    = require( 'fs' ); // read from filesystem
 var in_file               = process.argv[ 2 ] + ".csv" ;
 var in_file_buffer_length = 0;
 
-var in_file_buffer        = [];    // CSV, tab-separated, Linux LF (\n) format
+var in_file_buffer        = []; // CSV, tab-separated, Linux LF (\n) format
 var in_file_buffer_index  = 0;
 var in_file_buffer_length = 0;
 
@@ -106,10 +105,9 @@ var html = [
 
 const CSV_FORMAT = "title\tkey\ttime\ttempo\tccli\tauthor\tcopyright\ttag\ttopic\tbook\tfilename\n" ;
 
-// mode 1 -- few comments; mode 2 -- heavy comments
-//var DEBUGGING_MODE1 = true;
+//var DEBUGGING_MODE1 = true; // few comments
 var DEBUGGING_MODE1 = false;
-//var DEBUGGING_MODE2 = true;
+//var DEBUGGING_MODE2 = true; // heavy comments
 var DEBUGGING_MODE2 = false;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -144,27 +142,19 @@ if ( fs.existsSync( in_file ) ) { //csv source file
 
 ////////////////////////////////////////////////////////////////////////////////
 function generate_song_html() {
-  var out_file_buffer = [   html[ 0 ] + OUT_FILE_HTML_CSS
-                          + html[ 1 ] + toc_title
-                          + html[ 2 ] + toc_title
-                          + html[ 3 ] + toc_subtitle
-                          + html[ 4 ] ,
-                          "<p>Go: " ,
-                          "" ];
-/*  [ 0 ] = beginning html, title, subtitle
-    [ 1 ] = jumpto_string
-    [ 2 ] = alphabet heading, songs, .. (repeat) .. ending html
-*/
-  var out_file_buffer_aggregate = "" ; // final out_file_buffer contents go here
-
+  var out_file_buffer = [
+          html[ 0 ] + OUT_FILE_HTML_CSS // beginning html, title, subtitle
+        + html[ 1 ] + toc_title
+        + html[ 2 ] + toc_title
+        + html[ 3 ] + toc_subtitle
+        + html[ 4 ] ,
+        "<p>Go: " ,                    // jumpto_string
+        "" ];  // alphabet heading, songs, .. (repeat) .. ending html
   var song_array_length   = song_array.length;
-
   var song_line           = "" ; // one line of csv
-
   var song_title          = "" ;
   var song_filename_noext = "" ;
   var song_key            = "" ;
-
   var song_key_tmp        = "" ;
 
   var k; // song_array[] index 1
@@ -181,13 +171,11 @@ function generate_song_html() {
   var heading_index    = 0;
   var heading_length   = heading.length;
   var i                = 0;
-  const KEY_MAX_LENGTH = 10;
   const HEADING_STRING_COMPARISON_LENGTH = 6; // heading[] entry lengths
 
   for ( k = 0; k < heading.length; k++ ) // initialize, print no headings
     heading_print.push( false );
 
-//  song_array.sort();
 //  song_array.sort( function( a, b ){ return a.toLowerCase() > b.toLowerCase() } );
   song_array_sort(); // first sort is w/o headings inserted
 
@@ -212,7 +200,6 @@ function generate_song_html() {
     if ( heading_print[ k ] )
       song_array.push( heading[ k ] );
 
-//  song_array.sort();
   song_array_sort(); // second sort has headings inserted
 
   for ( k = 0; k < song_array.length; k++ ) { // remove headings
@@ -222,13 +209,11 @@ function generate_song_html() {
       if ( song_line == heading[ 0 ].toString() ) { // special 1st heading
           out_file_buffer[ 2 ] += "<h3> <a href=\"#0\">Misc</a></h3><a name=\"Misc\"></a>\n" ;
           out_file_buffer[ 1 ] += "<a href=\"#Misc\">Misc</a>" ; // jump to
-        }
-      else { // print regular header
+      } else { // print regular header
         out_file_buffer[ 2 ] += "<h3><a href=\"#0\">  "   + song_line.charAt( 0 )
                              +  "  </a></h3><a name=\""   + song_line.charAt( 0 )
                              +  "\"></a>\n" ;
-
-        // make jump to
+        // make jump to link
         out_file_buffer[ 1 ] += "<a href=\"#" + song_line.charAt( 0 )
                              +  "\"> "        + song_line.charAt( 0 ) + " </a>" ;
       }
@@ -239,7 +224,7 @@ function generate_song_html() {
       song_key_tmp = song_line.substring( song_line.indexOf( "\t" ) + 1 );
       song_key  = song_key_tmp.substring( 0, song_key_tmp.indexOf( "\t" ) );
 
-      song_key = generate_song_key( song_key );
+      song_key = generate_song_key_string( song_key );
 
       out_file_buffer[ 2 ] +=
        '<p><a href="' + song_filename_noext + '.html" target=newtab> lyr </a>'
@@ -251,33 +236,31 @@ function generate_song_html() {
     } // else
   } // for k
 
-  out_file_buffer[ 1 ] += "</p>\n" ; // jump to string line, complete
-  out_file_buffer[ 2 ] += html[ 5 ]; // rest of html page, complete
-  out_file_buffer_aggregate = out_file_buffer[ 0 ] + out_file_buffer[ 1 ] + out_file_buffer[ 2 ];
-
-  fs.writeFileSync( OUT_FILE_HTML, out_file_buffer_aggregate );
+  fs.writeFileSync( OUT_FILE_HTML,
+      out_file_buffer[ 0 ]
+    + out_file_buffer[ 1 ] + "</p>\n"   // jump to string line, complete
+    + out_file_buffer[ 2 ] + html[ 5 ]; // rest of html page, complete;
+  );
 } // function
 
 ////////////////////////////////////////////////////////////////////////////////
 function song_array_sort() {
-/*
-problem: song_array.sort() won't handle upper-case lower-case correctly:
+/* problem: song_array.sort() won't handle upper-case lower-case correctly:
 e.g.: "Come Just As You Are" comes before "Come and See"
 solution/algorithm:
-1. read each song title in song_array[]
-2. make a upper-case version of title
-3. insert upper-case title before the title in song_array[]
-4. use built-in sort function
-5. remove upper-case title in each title in song_array[]
-*/
+  * for each song title in song_array[]
+      make a lower-case version of title
+  * insert it before the title in song_array[]
+  * use built-in sort function -- to sort on lower-case version of title
+  * remove lower-case title in each title in song_array[] */
   var song_array_length = song_array.length;
-  var i = 0; // song_array[] index
-  var csv_line        = "" ;
-  var tab_location    = -1 ;
-  var title_raw       = "" ;
-  var title_uppercase = "" ;
+  var i                 =  0 ; // song_array[] index
+  var csv_line          = "" ;
+  var tab_location      = -1 ;
+  var title_raw         = "" ;
+  var title_uppercase   = "" ;
 
-// insert lower-case version of title into song_array[]
+  // insert lower-case version of title into song_array[]
   for ( i = 0; i < song_array_length; i++ ) {
     csv_line     = song_array[ i ].toString();
     tab_location = csv_line.indexOf( "\t" );
@@ -289,9 +272,9 @@ solution/algorithm:
     } // if
   } // for
 
-  song_array.sort();
+  song_array.sort();  // sort w/ temp lower-case titles
 
-// remove lower-case version of title from song_array[]
+  // remove temp lower-case titles from song_array[]
   for ( i = 0; i < song_array_length; i++ ) {
     csv_line     = song_array[ i ].toString();
     tab_location = csv_line.indexOf( "\t" );
@@ -303,15 +286,15 @@ solution/algorithm:
 } // function
 
 ////////////////////////////////////////////////////////////////////////////////
-function generate_song_key( old_song_key ) {
-  var Major_Scale =          [ 'A',   'B',   'C',  'D',  'E',   'F',  'G'  ];
-  var Relative_Minor_Scale = [ 'F#m', 'G#m', 'Am', 'Bm', 'C#m', 'Dm', 'Em' ];
-  var Minor_Scale =          [ 'Am',  'Bm',  'Cm', 'Dm', 'Em',  'Fm', 'Gm' ];
-
+function generate_song_key_string( old_song_key ) {
+  var Major_Scale =          [ 'A',  'B',  'C',  'D',  'E',  'F',  'G'  ];
+  var Minor_Scale =          [ 'Am', 'Bm', 'Cm', 'Dm', 'Em', 'Fm', 'Gm' ];
+  // TF = True False -- key to display -- corresponding w/ A..G, Am..Gm
   var Major_Scale_TF =       [ false, false, false, false, false, false, false ];
   var Minor_Scale_TF =       [ false, false, false, false, false, false, false ];
+//  var Relative_Minor_Scale = [ 'F#m', 'G#m', 'Am', 'Bm', 'C#m', 'Dm', 'Em' ];
 
-  const SONG_KEY_CHARACTER_LENGTH = 8;
+  const SONG_KEY_CHARACTER_LENGTH = 8; // e.g. "A       " or "  C     "
   const KEYS_IN_SCALE      = 7; // "A" .. "G"
 
   const SCALE_UNDETERMINED = -1;
@@ -319,66 +302,52 @@ function generate_song_key( old_song_key ) {
   const SCALE_MINOR        =  1;
   const SCALE_VERBOSE      =  2;
 
-  var scale_to_print = SCALE_UNDETERMINED;
-  var song_key_str   = "";
-  var displaying_minor_key = false;
+  var scale_to_print       = SCALE_UNDETERMINED;
+  var song_key_str         = "";
+  var displaying_minor_key = false; // if true, then display major key string
 
-  var i = 0;
-  var j = 0;
-  var k = 0;
+  var i = 0; // index old_song_key[]
+  var j = 0; // index Major_Scale[]
+  var k = 0; // index Major_Scale[]
   var max_i = old_song_key.length;
 
   do {
-
     j = 0;
     do {
-
       if ( old_song_key[ i ].toString() == Major_Scale[ j ].toString() )
         if ( ( i + 1 ) < max_i )
           if ( old_song_key[ i + 1 ].toString() == "m" ) {
             for ( k = 0; k < KEYS_IN_SCALE; k++ )
-              if ( old_song_key[ i ].toString() == Major_Scale[ k ].toString() )
-                {  // minor key found
-                  Minor_Scale_TF[ k ] = true;
+              if ( old_song_key[ i ].toString() == Major_Scale[ k ].toString() ) {
+                  Minor_Scale_TF[ k ] = true;  // minor key found
                   scale_to_print = SCALE_MINOR;
-                }
-              else {}
-          }
-          else
+              } else {}
+          } else
             for ( k = 0; k < KEYS_IN_SCALE; k++ )
-              if ( old_song_key[ i ].toString() == Major_Scale[ k ].toString() )
-                { // major key found
-                  Major_Scale_TF[ k ] = true;
+              if ( old_song_key[ i ].toString() == Major_Scale[ k ].toString() ) {
+                  Major_Scale_TF[ k ] = true;   // major key found
                   if ( scale_to_print == SCALE_UNDETERMINED )
                     scale_to_print = SCALE_MAJOR;
-                }
-              else {}
+              } else {}
         else
           if ( ( i + 1 ) == max_i ) // key string is: "A" or "..A"
             for ( k = 0; k < KEYS_IN_SCALE; k++ )
-              if ( old_song_key[ i ].toString() == Major_Scale[ k ].toString() )
-                { // major key found
-                  Major_Scale_TF[ k ] = true;
+              if ( old_song_key[ i ].toString() == Major_Scale[ k ].toString() ) {
+                  Major_Scale_TF[ k ] = true;  // major key found
                   if ( scale_to_print == SCALE_UNDETERMINED )
                     scale_to_print = SCALE_MAJOR;
-                }
-              else {}
+              } else {}
           else {}
       else {}
 
       j++;
-    }
-    while ( j < KEYS_IN_SCALE );
-
+    } while ( j < KEYS_IN_SCALE );
     i++;
-  }
-  while ( i < max_i );
+  } while ( i < max_i );
 
-if ( DEBUGGING_MODE2 ) {
-  console.log( "M:", Major_Scale_TF );
-  console.log( "m:", Minor_Scale_TF );
-  console.log( "scale to print:", scale_to_print );
-}
+if ( DEBUGGING_MODE2 ) { console.log( "M:", Major_Scale_TF );
+                         console.log( "m:", Minor_Scale_TF );
+                         console.log( "scale to print:", scale_to_print );  }
 
   switch ( scale_to_print ) {
 
@@ -395,14 +364,13 @@ if ( DEBUGGING_MODE2 ) {
         if ( Minor_Scale_TF[ k ] == true ) {
           song_key_str += Minor_Scale[ k ].toString();
           displaying_minor_key = true;
-        }
-        else
+        } else
           if ( displaying_minor_key )
             displaying_minor_key = false;
           else
             song_key_str += " " ;
       break;
-
+/* features not used
     case SCALE_UNDETERMINED :
       song_key_str = "       " ; break; // feature not used
 
@@ -411,11 +379,10 @@ if ( DEBUGGING_MODE2 ) {
            k < SONG_KEY_CHARACTER_LENGTH; k++ )
         song_key_str += " ";
 
-    default: break;
-
+    default: break; */
   } // switch
 
-   return( song_key_str );
+  return( song_key_str );
 
 if ( DEBUGGING_MODE2 ) console.log( "song_key_str:", song_key_str, "*" );
-}
+} // function

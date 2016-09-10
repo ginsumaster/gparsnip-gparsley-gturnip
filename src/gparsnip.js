@@ -256,15 +256,14 @@ const CSV_FORMAT = "title\tkey\ttime\ttempo\tccli\tauthor\tcopyright\ttag\ttopic
 var out_file_csv = process.argv[ 2 ] + ".csv" ;
 
 ////////////////////////////////////////////////////////////////////////////////
-const CHORD_DELIMITER = "|"
+const CHORD_DELIMITER   = "|"
 var chord_list          = [] ; // keep track of all chords used in song
 var final_chord_string  = CHORD_DELIMITER ; // list of chords used, "|" delimited
 var out_file_chord_list = process.argv[ 2 ] + ".cd1" ;
 
-// mode 1 -- few comments; mode 2 -- heavy comments
-//var DEBUGGING_MODE1 = true;
+//var DEBUGGING_MODE1 = true; // few comments
 var DEBUGGING_MODE1 = false;
-//var DEBUGGING_MODE2 = true;
+//var DEBUGGING_MODE2 = true; // heavy commments
 var DEBUGGING_MODE2 = false;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -489,9 +488,9 @@ function process_meta_tag() {
   }
 
 if ( DEBUGGING_MODE2 ) {
-console.log( "process_meta_tag() -- meta_tag_term:", meta_tag_term, "*" );
-console.log( "process_meta_tag() -- argument   is:", meta_tag_argument, "*" );
-console.log( "process_meta_tag()    arg length is:", meta_tag_argument.length ); }
+  console.log( "process_meta_tag() -- meta_tag_term:", meta_tag_term, "*" );
+  console.log( "process_meta_tag() -- argument   is:", meta_tag_argument, "*" );
+  console.log( "process_meta_tag()    arg length is:", meta_tag_argument.length ); }
 
   switch ( meta_tag_term ) { // in case user adds meta-tags before title
     case "subtitle:"  :
@@ -567,13 +566,11 @@ console.log( "process_meta_tag()    arg length is:", meta_tag_argument.length );
     default: {} // unrecognized meta-tag, no processing, no mod parse flags
   } // switch
 
-if ( DEBUGGING_MODE1 ) {
-console.log( "/*----------------- process_meta_tag()" );
-console.log( out_line_chord, "##" );
-console.log( out_line_lyric, "##" );
-console.log( out_line_html_lyrics_only, "##" );
-console.log( "*/----------------- process_meta_tag()" );  }
-
+if ( DEBUGGING_MODE1 ) { console.log( "/*----------------- process_meta_tag()" );
+                         console.log( out_line_chord, "##" );
+                         console.log( out_line_lyric, "##" );
+                         console.log( out_line_html_lyrics_only, "##" );
+                         console.log( "*/----------------- process_meta_tag()" );  }
 } // function
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -641,17 +638,16 @@ console.log( "process_lyric() last_parse_mode_flag:", last_parse_mode_flag ); }
   switch ( last_parse_mode ) {
 
     case PARSE_META_TAG :
-        spacey_string = space_string( parse_string.length );
+      spacey_string = space_string( parse_string.length );
 
-        out_line_chord            += spacey_string;
-        out_line_lyric            += parse_string;
+      out_line_chord            += spacey_string;
+      out_line_lyric            += parse_string;
 
-        out_line_html_chord       += spacey_string;
-        out_line_html_lyric       += parse_string;
+      out_line_html_chord       += spacey_string;
+      out_line_html_lyric       += parse_string;
 
-        out_line_lyrics_only      += parse_string;
-        out_line_html_lyrics_only += parse_string;
-
+      out_line_lyrics_only      += parse_string;
+      out_line_html_lyrics_only += parse_string;
       break;
 
     case PARSE_CHORD :
@@ -670,12 +666,10 @@ console.log( "process_lyric() last_parse_mode_flag:", last_parse_mode_flag ); }
                                - out_line_lyric.length;
          if ( chord_lyric_line_gap > 0 )
            spacey_string = space_string( chord_lyric_line_gap );
-/*
-           if ( last_parse_mode_flag == PARSE_LYRIC_NON_SPACE )
+/*         if ( last_parse_mode_flag == PARSE_LYRIC_NON_SPACE )
              spacey_string = space_string( chord_lyric_line_gap );
            else  // last_parse_mode == PARSE_LYRIC_SPACE
-             spacey_string = "*" + space_string( chord_lyric_line_gap -1 );
-*/
+             spacey_string = "*" + space_string( chord_lyric_line_gap -1 ); */
          out_line_lyric            += spacey_string + parse_string;
          out_line_html_lyric       += spacey_string + parse_string;
          out_line_html_lyrics_only +=                 parse_string;
@@ -683,20 +677,18 @@ console.log( "process_lyric() last_parse_mode_flag:", last_parse_mode_flag ); }
       }
       break;
 
-    case PARSE_LYRIC :
+    case PARSE_LYRIC        :
     default                 :  out_line_lyric            += parse_string;
                                out_line_lyrics_only      += parse_string;
                                out_line_html_lyrics_only += parse_string;
                                out_line_html_lyric       += parse_string;
   } // switch
 
-if ( DEBUGGING_MODE1 ) {
-console.log( "/*----------------- process_lyric()" );
-console.log( out_line_chord, "##" );
-console.log( out_line_lyric, "##" );
-//console.log( out_line_html_lyrics_only, "##" );
-console.log( "*/----------------- process_lyric()" );  }
-
+if ( DEBUGGING_MODE1 ) { console.log( "/*----------------- process_lyric()" );
+                         console.log( out_line_chord, "##" );
+                         console.log( out_line_lyric, "##" );
+                       //console.log( out_line_html_lyrics_only, "##" );
+                         console.log( "*/----------------- process_lyric()" ); }
 } // function
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -716,8 +708,7 @@ function even_up_chord_lyric_lines() {
 } // function
 
 ////////////////////////////////////////////////////////////////////////////////
-function process_meta_tag_guitar_comment() {
-// meta-tag -- guitar comment
+function process_meta_tag_guitar_comment() { // meta-tag -- guitar comment
   var spacey_string = space_string( meta_tag_argument.length );
 
   even_up_chord_lyric_lines();
@@ -735,18 +726,17 @@ function process_meta_tag_guitar_comment() {
 } // function
 
 ////////////////////////////////////////////////////////////////////////////////
-function process_meta_tag_comment() {
-// meta-tag -- inline comment
+function process_meta_tag_comment() { // meta-tag -- inline comment
   var spacey_string = space_string( meta_tag_argument.length );
 
 if ( DEBUGGING_MODE2 )  console.log( "process_meta_tag_comment()" );
 
   even_up_chord_lyric_lines();
 
-  out_line_chord      +=               spacey_string;
-  out_line_lyric      +=               meta_tag_argument;
+  out_line_chord      +=              spacey_string;
+  out_line_lyric      +=              meta_tag_argument;
 
-  out_line_html_chord +=               spacey_string;
+  out_line_html_chord +=              spacey_string;
   out_line_html_lyric += "</p><h4>" + meta_tag_argument + "</h4><p>" ;
 
   last_parse_mode          = PARSE_META_TAG;
@@ -757,7 +747,7 @@ if ( DEBUGGING_MODE2 )  console.log( "process_meta_tag_comment()" );
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-function process_meta_tag_soh() {
+function process_meta_tag_soh() { // handle {soh} tag
   out_line_html_lyric       += "</p><h4>" ;
   out_line_html_lyrics_only += "</p><h4>" ;
 
@@ -768,8 +758,7 @@ function process_meta_tag_soh() {
 };
 
 ////////////////////////////////////////////////////////////////////////////////
-function process_meta_tag_eoh() {
-// handle {eoh} tag
+function process_meta_tag_eoh() { // handle {eoh} tag
   out_line_html_lyric       += "</h4><p>" ;
   out_line_html_lyrics_only += "</h4><p>" ;
 
@@ -782,8 +771,7 @@ function fix_filenames() {
 /* input filename must be FILE.pro.  However, when calling gparsnip Program
 normally call:     nodejs gparsnip FILE
 now can also call: nodejs gparsnip FILE.pro
-returns true or false (input file is found)
-*/
+returns true or false (input file is found) */
   var in_file_string    = process.argv[ 2 ] ;
   var in_file_name_full = "" ;
   var dot_pos           = in_file_string.indexOf( "." );
@@ -812,9 +800,9 @@ returns true or false (input file is found)
       out_file_chord_list       = in_file_noext + ".cd1"  ;
       return true;
     } else { // user used FILE.pro, but can't find file
-       console.log( "Can't find input file:", in_file_string );
-       return false;
-      }
+      console.log( "Can't find input file:", in_file_string );
+      return false;
+    }
   else {// user used FILE, have to test
     in_file_name_full = in_file_string + ".pro" ;
     if ( fs.existsSync( in_file_name_full ) )// file exists, all good
@@ -837,16 +825,16 @@ function test_input_buffer() {
     charcode = in_file_buffer.charCodeAt( in_file_buffer_index );
 
     if ( charcode < 10 )
-      warning_level = -1;   // control codes
+      warning_level    = -1;   // control codes
     else if ( charcode == 10 )
-           {} // okay, LF
-         else if ( charcode < 32 )
-                warning_level = -1;   // control codes
-              else if ( charcode < 127 )
-                     {} // okay, space .. tilde
-                   else if ( charcode < 49824 )
-                          warning_level = -1; // control codes
-                        else warning_level = 0; // possibly okay, but multi-byte char
+      {} // okay, LF
+    else if ( charcode < 32 )
+      warning_level    = -1;   // control codes
+    else if ( charcode < 127 )
+      {} // okay, space .. tilde
+    else if ( charcode < 49824 )
+      warning_level    = -1; // control codes
+    else warning_level = 0; // possibly okay, but multi-byte char
 
     if ( warning_level == -1 ) {
       console.log ( "File: ", in_file_pro );
@@ -871,8 +859,7 @@ function test_input_buffer() {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-function trim_leading_spaces( txt_line ) {
-// trim leading spaces from input string
+function trim_leading_spaces( txt_line ) { // trim leading spaces
   var txt_line_length = txt_line.length;
   var k;
 
@@ -886,8 +873,7 @@ function trim_leading_spaces( txt_line ) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-function trim_trailing_spaces( txt_line ) {
-  // trim trailing spaces from line
+function trim_trailing_spaces( txt_line ) { // trim trailing spaces
   var k;
   var out_txt_line = txt_line;
 
@@ -902,10 +888,7 @@ function trim_trailing_spaces( txt_line ) {
 ////////////////////////////////////////////////////////////////////////////////
 function remove_double_spaces( txt_line ) {
   // remove any instance of two spaces next to each other -- replace w/ 1 space
-
-  var out_txt_line = txt_line.replace( /\s\s/g, " " );
-
-  return out_txt_line;
+  return txt_line.replace( /\s\s/g, " " );;
 /*
   var txt_line_length = txt_line.length;
   var out_txt_line = "";
@@ -981,7 +964,6 @@ if ( DEBUGGING_MODE2 ) console.log( "output_lines()" );
            hash_pos = out_line_lyrics_only.indexOf( "#" );
            out_buffer_lyrics_only[ song_index ] += // e.g.: Verse 3
              out_line_lyrics_only.substring( 0, hash_pos ).trim() + "\n" ;
-
          }
       } else { // no - regular highlighted section
         out_buffer_html_chord_lyric[ song_index ] +=
@@ -1010,7 +992,6 @@ if ( DEBUGGING_MODE2 ) console.log( "output_lines()" );
       out_buffer_html_lyrics_only[ song_index ] +=
               trim_trailing_spaces( out_line_html_lyrics_only ) + "</p><br>\n" ;
     } // else
-
 /*
   out_buffer_lyrics_only[ song_index ] =
 //    remove_double_spaces( out_buffer_lyrics_only[ song_index ] );
@@ -1113,7 +1094,7 @@ function output_results() {
     file_buffer += meta_tag_title[ k ].toString()              + "\n"
                 +  meta_tag_subtitle[ k ].toString()           + "  "
                 +  hashtag_st_comment[ k ].toString()          + "\n"
-                +  out_buffer_chord_lyric[ k ].toString()      ;
+                +  out_buffer_chord_lyric[ k ].toString()             ;
 
   fs.writeFileSync( out_file_chord_lyrics, file_buffer );
 
@@ -1253,7 +1234,7 @@ if ( DEBUGGING_MODE2 )  console.log( final_chord_string );
 ////////////////////////////////////////////////////////////////////////////////
 function create_subtitle( buf_indx ) {
 // if subtitle is defined in input chordpro file, then do not alter,
-// otherwise create ones using other meta-data info
+// otherwise auto-generate one using other meta-data info
   var first_copyright = "" ;
   var copyright_str   = meta_tag_copyright[ buf_indx ].toString();
   var semicolon_index = copyright_str.indexOf( ";" );  // index first semicolon
@@ -1267,32 +1248,25 @@ function create_subtitle( buf_indx ) {
 
     meta_tag_first_copyright[ buf_indx ] = first_copyright ;
 
-    if ( meta_tag_key[ buf_indx ] != "" )
-      meta_tag_subtitle[ buf_indx ]
-                      += "Key: " + meta_tag_key[ buf_indx ] + "  " ;
+    if ( meta_tag_key[ buf_indx ] != "" ) meta_tag_subtitle[ buf_indx ]
+      += "Key: " + meta_tag_key[ buf_indx ] + "  " ;
 
     // difference between musician's subtitle and singers is only "Key"
-    if ( meta_tag_time[ buf_indx ] != "" )
-      meta_tag_subtitle_lyrics_only[ buf_indx ]
-                      += "Time: " + meta_tag_time[ buf_indx ] + "  " ;
+    if ( meta_tag_time[ buf_indx ] != "" ) meta_tag_subtitle_lyrics_only[ buf_indx ]
+      += "Time: " + meta_tag_time[ buf_indx ] + "  " ;
 
-    if ( meta_tag_tempo[ buf_indx ] != "" )
-      meta_tag_subtitle_lyrics_only[ buf_indx ]
-                      += "Bpm: " + meta_tag_tempo[ buf_indx ] + "  " ;
+    if ( meta_tag_tempo[ buf_indx ] != "" ) meta_tag_subtitle_lyrics_only[ buf_indx ]
+      += "Bpm: " + meta_tag_tempo[ buf_indx ] + "  " ;
 
-    if ( meta_tag_ccli[ buf_indx ] != "" )
-      meta_tag_subtitle_lyrics_only[ buf_indx ]
-                      += "CCLI: " + meta_tag_ccli[ buf_indx ] + "  " ;
+    if ( meta_tag_ccli[ buf_indx ] != "" ) meta_tag_subtitle_lyrics_only[ buf_indx ]
+      += "CCLI: " + meta_tag_ccli[ buf_indx ] + "  " ;
 
-    if ( meta_tag_author[ buf_indx ] != "" )
-      meta_tag_subtitle_lyrics_only[ buf_indx ]
-                      += meta_tag_author[ buf_indx ] ;
+    if ( meta_tag_author[ buf_indx ] != "" ) meta_tag_subtitle_lyrics_only[ buf_indx ]
+      += meta_tag_author[ buf_indx ] ;
 
-    meta_tag_subtitle_lyrics_only[ buf_indx ]
-                      += "  " + first_copyright ;
+    meta_tag_subtitle_lyrics_only[ buf_indx ] += "  " + first_copyright ;
 
-    meta_tag_subtitle[ buf_indx ]
-                      += meta_tag_subtitle_lyrics_only[ buf_indx ] ;
+    meta_tag_subtitle[ buf_indx ] += meta_tag_subtitle_lyrics_only[ buf_indx ] ;
   }
   else // user used {susbitle:} -- meta_tag_subtitle[ ] already set
      meta_tag_subtitle_lyrics_only[ buf_indx ] = meta_tag_subtitle[ buf_indx ];
