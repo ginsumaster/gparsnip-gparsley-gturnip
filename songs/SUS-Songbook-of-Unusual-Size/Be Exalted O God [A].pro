@@ -3,7 +3,7 @@
 {time: 4/4}
 {ccli: 21112}
 {author: Brent Chambers}
-{copyright: 1977 Scripture in Song}
+{copyright: (C) 1977 Scripture in Song}
 #orig key: Bb
 
 {soh}Verse 1{eoh}

@@ -239,8 +239,7 @@ function generate_song_html() {
   fs.writeFileSync( OUT_FILE_HTML,
       out_file_buffer[ 0 ]
     + out_file_buffer[ 1 ] + "</p>\n"   // jump to string line, complete
-    + out_file_buffer[ 2 ] + html[ 5 ]; // rest of html page, complete;
-  );
+    + out_file_buffer[ 2 ] + html[ 5 ] ); // rest of html page, complete;
 } // function
 
 ////////////////////////////////////////////////////////////////////////////////

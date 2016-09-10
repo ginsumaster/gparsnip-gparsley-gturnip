@@ -1,6 +1,7 @@
 {title: You Never Let Go}
 {ccli: 4674166}
 {key: B}
+{time: 4/4}
 {author: Beth Redman, Matt Redman}
 {copyright: (C) 2005 Thankyou Music; (Admin. by Capitol CMG Publishing)}
 

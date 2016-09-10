@@ -4,7 +4,7 @@
 {metronome: 82}
 {ccli: 190469}
 {author: Jim Mills, Kirk Dearman}
-{copyright: 1988 Integrity's Hosanna! Music}
+{copyright: (C) 1988 Integrity's Hosanna! Music}
 #st-comment: CCLI diff: orig version combines vss 1 and 2 into 1 chorus
 #orig key: C
 

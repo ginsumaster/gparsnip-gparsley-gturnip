@@ -3,7 +3,7 @@
 {time: 4/4}
 {ccli: 2221724}
 {author: Bob Fitts}
-{copyright: 1997 Integrity's Hosanna! Music}
+{copyright: (C) 1997 Integrity's Hosanna! Music}
 
 {soh}Verse 1{eoh}
 [A7sus] To every good [D]thing God is doing within me
