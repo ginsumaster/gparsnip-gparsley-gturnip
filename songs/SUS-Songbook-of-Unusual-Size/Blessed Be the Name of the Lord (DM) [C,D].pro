@@ -1,4 +1,4 @@
-{title: Blessed Be the Name of the Lord (Dm)}
+{title: Blessed Be the Name of the Lord (DM)}
 {key: C,D}
 {time: 4/4}
 {ccli: 14318}
