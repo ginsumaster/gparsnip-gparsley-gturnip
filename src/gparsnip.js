@@ -88,6 +88,8 @@ FEATURES:
 4. Extensive test plan, regression testing scripts
 
 NOTES:
+v 2016-09-14 bugfix for {tempo:}, a few comment additions
+
 v 2016-09-09A
 {tempo:} now accepted -- interchangeable w/ {metronome:}
 {footer:} now accepted -- interchangeable w/ {copyright:}
@@ -221,21 +223,21 @@ var j = 0;  // length of current musical chord being processed, no brackets
 // meta-tag data arrays and vars
 const MAX_TITLES_SUBTITLES        = 4; // medley title plus 3 songs
 var meta_tag_title                = []; //[ "", "", "", "" ] ;
-var meta_tag_subtitle             = [ "", "", "", "" ] ;
+var meta_tag_subtitle             = [ "", "", "", "" ] ; // {subtitle:}
 // lyrics-only version of subtitle omits some info from standard subtitle
 var meta_tag_subtitle_lyrics_only = [ "", "", "", "" ] ;
-var meta_tag_key                  = [ "", "", "", "" ] ;
-var meta_tag_time                 = [ "", "", "", "" ] ;
-var meta_tag_tempo                = [ "", "", "", "" ] ; // {metronome:}, bpm
-var meta_tag_ccli                 = [ "", "", "", "" ] ;
-var meta_tag_author               = [ "", "", "", "" ] ;
-var meta_tag_copyright            = [ "", "", "", "" ] ;
+var meta_tag_key                  = [ "", "", "", "" ] ; // {key:}
+var meta_tag_time                 = [ "", "", "", "" ] ; // {time:}
+var meta_tag_tempo                = [ "", "", "", "" ] ; // {metronome:}, {tempo:}, i.e. bpm
+var meta_tag_ccli                 = [ "", "", "", "" ] ; // {ccli:}
+var meta_tag_author               = [ "", "", "", "" ] ; // {author:}
+var meta_tag_copyright            = [ "", "", "", "" ] ; // {copyright:}
 var meta_tag_first_copyright      = [ "", "", "", "" ] ; // created from copyright
 // new meta_tags for CSV/database compilation
-var meta_tag_tag                  = [ "", "", "", "" ] ; // search strings
+var meta_tag_tag                  = [ "", "", "", "" ] ; // {tag:}
 var meta_tag_topic                = [ "", "", "", "" ] ; // {keyword:}
-var meta_tag_book                 = [ "", "", "", "" ] ;
-var hashtag_st_comment            = [ "", "", "", "" ] ; // comments for subtitle line
+var meta_tag_book                 = [ "", "", "", "" ] ; // {book:}
+var hashtag_st_comment            = [ "", "", "", "" ] ; // #st-comment:
 
                                     // meta-tag processing
 var meta_tag_term             = "" ;
@@ -508,8 +510,7 @@ if ( DEBUGGING_MODE2 ) {
     case "tag:"       :
     case "topic:"     :
     case "keyword:"   :
-    case "book:"      :
-                        check_song_index();
+    case "book:"      : check_song_index();
 /*                         break;
     case "comment:"        :
     case "c:"              :
@@ -539,7 +540,7 @@ if ( DEBUGGING_MODE2 ) {
     case "key:"       :
     case "k:"         :  meta_tag_key[ song_index ]       = meta_tag_argument_trimmed;  break;
     case "time:"      :  meta_tag_time[ song_index ]      = meta_tag_argument_trimmed;  break;
-    case "tempo"      :
+    case "tempo:"     :
     case "metronome:" :  meta_tag_tempo[ song_index ]     = meta_tag_argument_trimmed;  break;
     case "ccli:"      :  meta_tag_ccli[ song_index ]      = meta_tag_argument_trimmed;  break;
     case "author:"    :  meta_tag_author[ song_index ]    = meta_tag_argument_trimmed;  break;
