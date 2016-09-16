@@ -45,6 +45,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 NOTES:
+2016-09-15
+toc link to html song chord/lyric now has standard width
+handles song w/ multiple minor keys as Verbose
+
 2016-09-10 CSV format changed: metronome --> tempo
 includes: {topic:} {keyword:} and {book:}
 includes: {tempo:} (interchangeable w/ {metronome:}
@@ -105,6 +109,10 @@ var html = [
 
 const CSV_FORMAT = "title\tkey\ttime\ttempo\tccli\tauthor\tcopyright\ttag\ttopic\tbook\tfilename\n" ;
 
+var a_song_title                   = "";
+var a_song_title_length            = 0;
+const song_title_normalized_length = 0; // all song titles made to this length
+
 //var DEBUGGING_MODE1 = true; // few comments
 var DEBUGGING_MODE1 = false;
 //var DEBUGGING_MODE2 = true; // heavy comments
@@ -123,6 +131,13 @@ if ( fs.existsSync( in_file ) ) { //csv source file
         in_file_buffer_index++ )
     if ( in_file_buffer[ in_file_buffer_index ] == "\n" ) {
       song_array.push( song_info_line );
+
+      // find longest song w/ longest title
+      a_song_title = song_info_line.substring( 0, song_line.indexOf( "\t" ) );
+      a_song_title_length - a_song_title.length;
+      if ( a_song_title_length > song_title_normalized_length )
+        song_title_normalized_length = a_song_title_length;
+
       song_info_line = "" ;
     } else
       song_info_line += in_file_buffer[ in_file_buffer_index ];
@@ -231,8 +246,11 @@ function generate_song_html() {
         + '<a href="' + song_filename_noext + '.txt"  target=newtab> txt </a>'
         + '<a href="' + song_filename_noext + '.lst"  target=newtab> lst </a>'
         + '<a href="' + song_filename_noext + '.pro"  target=newtab> pro </a>'
-        + '<a href="' + song_filename_noext + '.htm"  target=newtab>' + song_key
-        + " " + song_title + '</a></p><br>\n' ;
+        + '<a href="' + song_filename_noext + '.htm"  target=newtab>'
+        + song_key    + " "
+        + song_title
+        + space_string( song_title_normalized_length - song_title.length )
+        + '</a></p><br>\n' ;
     } // else
   } // for k
 
@@ -293,7 +311,6 @@ function generate_song_key_string( old_song_key ) {
   var Minor_Scale_TF =       [ false, false, false, false, false, false, false ];
 //  var Relative_Minor_Scale = [ 'F#m', 'G#m', 'Am', 'Bm', 'C#m', 'Dm', 'Em' ];
 
-  const SONG_KEY_CHARACTER_LENGTH = 8; // e.g. "A       " or "  C     "
   const KEYS_IN_SCALE      = 7; // "A" .. "G"
 
   const SCALE_UNDETERMINED = -1;
@@ -304,6 +321,7 @@ function generate_song_key_string( old_song_key ) {
   var scale_to_print       = SCALE_UNDETERMINED;
   var song_key_str         = "";
   var displaying_minor_key = false; // if true, then display major key string
+  var number_of_keys_found = 0; // how many keys are in this song?
 
   var i = 0; // index old_song_key[]
   var j = 0; // index Major_Scale[]
@@ -320,21 +338,26 @@ function generate_song_key_string( old_song_key ) {
               if ( old_song_key[ i ].toString() == Major_Scale[ k ].toString() ) {
                   Minor_Scale_TF[ k ] = true;  // minor key found
                   scale_to_print = SCALE_MINOR;
+                  number_of_keys_found++ ;
               } else {}
           } else
             for ( k = 0; k < KEYS_IN_SCALE; k++ )
               if ( old_song_key[ i ].toString() == Major_Scale[ k ].toString() ) {
                   Major_Scale_TF[ k ] = true;   // major key found
-                  if ( scale_to_print == SCALE_UNDETERMINED )
+                  if ( scale_to_print == SCALE_UNDETERMINED ) {
                     scale_to_print = SCALE_MAJOR;
+                    number_of_keys_found++ ;
+                  }
               } else {}
         else
           if ( ( i + 1 ) == max_i ) // key string is: "A" or "..A"
             for ( k = 0; k < KEYS_IN_SCALE; k++ )
               if ( old_song_key[ i ].toString() == Major_Scale[ k ].toString() ) {
                   Major_Scale_TF[ k ] = true;  // major key found
-                  if ( scale_to_print == SCALE_UNDETERMINED )
+                  if ( scale_to_print == SCALE_UNDETERMINED ) {
                     scale_to_print = SCALE_MAJOR;
+                    number_of_keys_found++ ;
+                  }
               } else {}
           else {}
       else {}
@@ -359,23 +382,34 @@ if ( DEBUGGING_MODE2 ) { console.log( "M:", Major_Scale_TF );
       break;
 
     case SCALE_MINOR :
-      for ( k = 0; k < KEYS_IN_SCALE; k++ )
-        if ( Minor_Scale_TF[ k ] == true ) {
-          song_key_str += Minor_Scale[ k ].toString();
-          displaying_minor_key = true;
-        } else
-          if ( displaying_minor_key )
-            displaying_minor_key = false;
-          else
-            song_key_str += " " ;
+      if ( number_of_keys_found == 1)
+
+        for ( k = 0; k < KEYS_IN_SCALE; k++ )
+          if ( Minor_Scale_TF[ k ] == true ) {
+            song_key_str += Minor_Scale[ k ].toString();
+            displaying_minor_key = true;
+          } else
+            if ( displaying_minor_key )
+              displaying_minor_key = false;
+            else
+              song_key_str += " " ;
+
+      else { // have multiple minor keys in song -- must print verbose
+
+        for ( k = 0; k < KEYS_IN_SCALE; k++ )
+          if ( Minor_Scale_TF[ k ] == true )
+            song_key_str += Minor_Scale[ k ].toString();
+
+        song_key_str += space_string( KEYS_IN_SCALE - song_key_str.length );
+      }
       break;
 /* features not used
     case SCALE_UNDETERMINED :
       song_key_str = "       " ; break; // feature not used
 
     case SCALE_VERBOSE : song_key_str = old_song_key; // feature not used
-      for ( k = ( SONG_KEY_CHARACTER_LENGTH - old_song_key.length );
-           k < SONG_KEY_CHARACTER_LENGTH; k++ )
+      for ( k = ( KEYS_IN_SCALE - old_song_key.length );
+           k < KEYS_IN_SCALE; k++ )
         song_key_str += " ";
 
     default: break; */
@@ -385,3 +419,15 @@ if ( DEBUGGING_MODE2 ) { console.log( "M:", Major_Scale_TF );
 
 if ( DEBUGGING_MODE2 ) console.log( "song_key_str:", song_key_str, "*" );
 } // function
+
+////////////////////////////////////////////////////////////////////////////////
+function space_string( len ) {
+// input # len; return string with len # of spaces in it
+  var k;
+  var str = "";
+
+  for ( k = 0; k < len; k++ )
+    str += " ";
+
+  return str;
+}
