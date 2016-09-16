@@ -1,25 +1,26 @@
 /*******************************************************************************
-GParsley -- Table of Contents (html) Generator ( used w/ GParsnip )
+GRadish -- CSV Index Reporter
 
-SUMMARY: This program creates a web page table of contents from a song data csv
-  The song data csv is generated from combining GParsnip csv outputs.
+SUMMARY: This program creates CSV files by filtering meta-tags in 3 categories:
+1. {tag:}
+2. {keywords:} {topic:}
+3. {book:}
 
 PHILOSOPHY: Do it (W)RIGHT, Do it Once
 
 TO RUN:
 # ls
-gparsley.js  index.csv
-# nodejs gparsley index "Title" "Subtitle"
+index.csv
+# nodejs gradish
 
 INPUT:
 index.csv  all songs you want to be included in the table of contents
           ( Unix/Linux LF style, UTF-8 encoded, comma-delimited )
 
 OUTPUT:
-index.html -- TOC of all songs.  Use your web browser to open.
-
-NOTE: index.html's title will attempt to download 0index.zip --
-  zipped up version of the entire website.
+index-tag-xxxx.csv
+index-topic-yyyy.csv
+index-book-zzzz.csv
 
 LANGUAGE:  JavaScript ( requiring Nodejs )
 
@@ -45,73 +46,33 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 NOTES:
-2016-09-15
-toc link to html song chord/lyric now has standard width
-handles song w/ multiple minor keys as Verbose
-
-2016-09-10 CSV format changed: metronome --> tempo
-includes: {topic:} {keyword:} and {book:}
-includes: {tempo:} (interchangeable w/ {metronome:}
-
-2016-09-09
-song_array_sort() function added to handle toc albetization sort of
-upper- and lower- case correctly
-
-2016-09-05
-modified key column to have individual letters in each column
-
-2016-09-04
-modified key column to maintain min space of 9 characters.
-
-ALGORITHM:
-1. read command line arguments, test for fitness
-2. read in entire CSV file, test for validity
-3. sort list of songs -- works, but not elegant, regexp not used.
-4. Assemble and output htm file.
-
-Features to add:
-done error-checking process.argv, input file
-done key of song displayed
-done if click on TOC title, then download zip of website
-done jump to line made just below subtitle
-done if click on alphabet heading, jumps to top of web page
-done fixed underline problem in 0chordlyric.css
-numeric song titles, do numeric sort
-Unicode
+2016-09-10 started coding
 *******************************************************************************/
-var fs                    = require( 'fs' ); // read from filesystem
-var in_file               = process.argv[ 2 ] + ".csv" ;
-var in_file_buffer_length = 0;
+var fs                   = require( 'fs' ); // read from filesystem
+const IN_FILE_CSV        = "index.csv" ; // table of contents
+const IN_FILE_HEADER     = "index-" ;
+const IN_FILE_FOOTER     = ".csv"
+
+const CSV_FORMAT = "title\tkey\ttime\ttempo\tccli\tauthor\tcopyright\ttag\ttopic\tbook\tfilename\n" ;
 
 var in_file_buffer        = []; // CSV, tab-separated, Linux LF (\n) format
 var in_file_buffer_index  = 0;
 var in_file_buffer_length = 0;
 
+var csv_array             = []; // array of CSV lines from in_file_buffer
+var csv_array_tags        = []; // meta-tags corresponding to each csv_array[]
+var csv_array_total_entries = 0;
+
+
+
+
+
 var song_info_line        = "" ;
 var song_array            = []; // array of 1-line CSV info
 
-const TOC_TITLE_DEFAULT    = "Songbook Table of Contents" ;
-var   TOC_SUBTITLE_DEFAULT = new Date();
-var   toc_title            = process.argv[ 3 ] ;
-var   toc_subtitle         = process.argv[ 4 ] ;
 const OUT_FILE_HTML        = "index.html" ; // table of contents
-const OUT_FILE_ZIP         = "index.zip" ;  // user can download entire website
 
-const OUT_FILE_HTML_CSS    = "0chordlyric.css" ;  // chord+lyrics css file
-var html = [
-  "<!DOCTYPE html>\n<html>\n<head>\n<meta charset=\"UTF-8\">\n<link rel=\"stylesheet\" type=\"text/css\" href=\"" ,
-  "\">\n<style>\n<!--\na{text-decoration: none}\n-->\n</style>\n\n<title>" ,
-  "</title>\n</head>\n\n<body>\n<h1><a href=\"0index.zip\" target=newtab>" ,
-  "</a></h1>\n\n<h2>" ,
-  "</h2><a name=\"0\"></a>\n" ,
-  "\n\n</body>\n\n</html>\n"
-];
 
-const CSV_FORMAT = "title\tkey\ttime\ttempo\tccli\tauthor\tcopyright\ttag\ttopic\tbook\tfilename\n" ;
-
-var a_song_title                   = "";
-var a_song_title_length            = 0;
-var song_title_normalized_length   = 0; // all song titles made to this length
 
 //var DEBUGGING_MODE1 = true; // few comments
 var DEBUGGING_MODE1 = false;
@@ -131,13 +92,6 @@ if ( fs.existsSync( in_file ) ) { //csv source file
         in_file_buffer_index++ )
     if ( in_file_buffer[ in_file_buffer_index ] == "\n" ) {
       song_array.push( song_info_line );
-
-      // find longest song w/ longest title
-      a_song_title = song_info_line.substring( 0, song_info_line.indexOf( "\t" ) );
-      a_song_title_length = a_song_title.length;
-      if ( a_song_title_length > song_title_normalized_length )
-        song_title_normalized_length = a_song_title_length;
-
       song_info_line = "" ;
     } else
       song_info_line += in_file_buffer[ in_file_buffer_index ];
@@ -246,12 +200,8 @@ function generate_song_html() {
         + '<a href="' + song_filename_noext + '.txt"  target=newtab> txt </a>'
         + '<a href="' + song_filename_noext + '.lst"  target=newtab> lst </a>'
         + '<a href="' + song_filename_noext + '.pro"  target=newtab> pro </a>'
-        + '<a href="' + song_filename_noext + '.htm"  target=newtab>'
-        + song_key    + " "
-        + song_title
-        + space_string( song_title_normalized_length - song_title.length )
-//        + space_string( 43 - song_title.length )
-        + '</a></p><br>\n' ;
+        + '<a href="' + song_filename_noext + '.htm"  target=newtab>' + song_key
+        + " " + song_title + '</a></p><br>\n' ;
     } // else
   } // for k
 
@@ -312,6 +262,7 @@ function generate_song_key_string( old_song_key ) {
   var Minor_Scale_TF =       [ false, false, false, false, false, false, false ];
 //  var Relative_Minor_Scale = [ 'F#m', 'G#m', 'Am', 'Bm', 'C#m', 'Dm', 'Em' ];
 
+  const SONG_KEY_CHARACTER_LENGTH = 8; // e.g. "A       " or "  C     "
   const KEYS_IN_SCALE      = 7; // "A" .. "G"
 
   const SCALE_UNDETERMINED = -1;
@@ -322,7 +273,6 @@ function generate_song_key_string( old_song_key ) {
   var scale_to_print       = SCALE_UNDETERMINED;
   var song_key_str         = "";
   var displaying_minor_key = false; // if true, then display major key string
-  var number_of_keys_found = 0; // how many keys are in this song?
 
   var i = 0; // index old_song_key[]
   var j = 0; // index Major_Scale[]
@@ -339,26 +289,21 @@ function generate_song_key_string( old_song_key ) {
               if ( old_song_key[ i ].toString() == Major_Scale[ k ].toString() ) {
                   Minor_Scale_TF[ k ] = true;  // minor key found
                   scale_to_print = SCALE_MINOR;
-                  number_of_keys_found++ ;
               } else {}
           } else
             for ( k = 0; k < KEYS_IN_SCALE; k++ )
               if ( old_song_key[ i ].toString() == Major_Scale[ k ].toString() ) {
                   Major_Scale_TF[ k ] = true;   // major key found
-                  if ( scale_to_print == SCALE_UNDETERMINED ) {
+                  if ( scale_to_print == SCALE_UNDETERMINED )
                     scale_to_print = SCALE_MAJOR;
-                    number_of_keys_found++ ;
-                  }
               } else {}
         else
           if ( ( i + 1 ) == max_i ) // key string is: "A" or "..A"
             for ( k = 0; k < KEYS_IN_SCALE; k++ )
               if ( old_song_key[ i ].toString() == Major_Scale[ k ].toString() ) {
                   Major_Scale_TF[ k ] = true;  // major key found
-                  if ( scale_to_print == SCALE_UNDETERMINED ) {
+                  if ( scale_to_print == SCALE_UNDETERMINED )
                     scale_to_print = SCALE_MAJOR;
-                    number_of_keys_found++ ;
-                  }
               } else {}
           else {}
       else {}
@@ -383,34 +328,23 @@ if ( DEBUGGING_MODE2 ) { console.log( "M:", Major_Scale_TF );
       break;
 
     case SCALE_MINOR :
-      if ( number_of_keys_found == 1)
-
-        for ( k = 0; k < KEYS_IN_SCALE; k++ )
-          if ( Minor_Scale_TF[ k ] == true ) {
-            song_key_str += Minor_Scale[ k ].toString();
-            displaying_minor_key = true;
-          } else
-            if ( displaying_minor_key )
-              displaying_minor_key = false;
-            else
-              song_key_str += " " ;
-
-      else { // have multiple minor keys in song -- must print verbose
-
-        for ( k = 0; k < KEYS_IN_SCALE; k++ )
-          if ( Minor_Scale_TF[ k ] == true )
-            song_key_str += Minor_Scale[ k ].toString();
-
-        song_key_str += space_string( KEYS_IN_SCALE - song_key_str.length );
-      }
+      for ( k = 0; k < KEYS_IN_SCALE; k++ )
+        if ( Minor_Scale_TF[ k ] == true ) {
+          song_key_str += Minor_Scale[ k ].toString();
+          displaying_minor_key = true;
+        } else
+          if ( displaying_minor_key )
+            displaying_minor_key = false;
+          else
+            song_key_str += " " ;
       break;
 /* features not used
     case SCALE_UNDETERMINED :
       song_key_str = "       " ; break; // feature not used
 
     case SCALE_VERBOSE : song_key_str = old_song_key; // feature not used
-      for ( k = ( KEYS_IN_SCALE - old_song_key.length );
-           k < KEYS_IN_SCALE; k++ )
+      for ( k = ( SONG_KEY_CHARACTER_LENGTH - old_song_key.length );
+           k < SONG_KEY_CHARACTER_LENGTH; k++ )
         song_key_str += " ";
 
     default: break; */
@@ -420,15 +354,3 @@ if ( DEBUGGING_MODE2 ) { console.log( "M:", Major_Scale_TF );
 
 if ( DEBUGGING_MODE2 ) console.log( "song_key_str:", song_key_str, "*" );
 } // function
-
-////////////////////////////////////////////////////////////////////////////////
-function space_string( len ) {
-// input # len; return string with len # of spaces in it
-  var k;
-  var str = "";
-
-  for ( k = 0; k < len; k++ )
-    str += " ";
-
-  return str;
-}
