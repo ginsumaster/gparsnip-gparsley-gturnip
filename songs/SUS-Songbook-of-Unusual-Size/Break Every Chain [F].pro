@@ -38,5 +38,3 @@ There's power in the [Dm]name [Bb] [F]Jesus [C]
 [Dm]Je- [Bb] [F] [C]sus  [Dm]Je- [Bb] [F] [C]sus [Dm] [Bb] [F] [C]
 
 ||: [Dm] * [Bb] * | [F] * [C] * | [Dm] * [Bb] * | [F] * [C] * :|| [D5] * * * |
-
-#chords: [F] [Bb] [C] [Dm]

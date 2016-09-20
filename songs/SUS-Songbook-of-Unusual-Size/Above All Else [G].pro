@@ -6,7 +6,7 @@
 {author: Derby Dearman, Kirk Dearman}
 #st-comment: Orig key G
 
-{soh}Chorus{eoh}
+{soh}Chorus:{eoh}
 [G]You are a Mighty [F/G]Warrior
 [C/G]Dressed in armor [D]of [G]light [C/D]
 [G]Crushing the deeds of [F/G]darkness
@@ -16,7 +16,7 @@
 [G]We place You at the [F/G]highest place
 [C/E]Above all else in this [Dsus]land [D]
 
-{soh}Verse 1{eoh}
+{soh}Verse 1:{eoh}
 [G]You are ex[F/G]alted Lord, a[C/G]bove [D/G]all [G][C/D]else
 [G]We place You at the [F/G]highest place, a[C/G]bove [D/G]all [G][C/D]else
 [G]Right now where we [F/G]stand

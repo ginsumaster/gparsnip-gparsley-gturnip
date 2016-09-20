@@ -48,5 +48,3 @@ And if our God is for us  [E2] then who could ever stop us
 [B] And if our God is with us  [F#sus] then what could stand a[G#m]gainst
 [E]  [B/D#]  [F#sus] Then what could stand a[G#m]gainst  [E]  [B/D#]  [F#sus]
 {end_of_bridge}
-
-#chords: [B] [B/D#] [C#m7] [E] [E2] [E/B] [F#] [F#/A#] [F#sus] [F#sus/B] [G#m] [G#m/B] [G#m11]

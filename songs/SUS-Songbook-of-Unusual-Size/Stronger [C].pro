@@ -42,5 +42,4 @@ So let Your [F]Name be lifted higher
 [Am] Be lifted [G]higher [C/E] be lifted high[G/B]er
 {end_of_bridge}
 
-#chords: [C] [C/E] [F] [G] [G/B] [Am]
 #check: bridges against song, number of repeats

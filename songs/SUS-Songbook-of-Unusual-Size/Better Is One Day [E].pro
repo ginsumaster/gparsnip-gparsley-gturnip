@@ -41,5 +41,3 @@ Better is [A2]one day better is [Bsus]one day
 Better is [A2]one day better is [Bsus]one day
 Better is [A2]one day than thousands [Bsus]elsewhere
 {end_of_bridge}
-
-#chords: [E5] [E/G#] [F#m7] [A2] [A/C#] [B] [Bsus] [C#m7]

@@ -40,5 +40,3 @@
 
 {soh}Ending:{eoh}
 ||: [C]      |        |        |        :||
-
-#chords: [C] [C/E] [C/G] [Dm] [F] [G] [Gsus] [Am] [Am7]

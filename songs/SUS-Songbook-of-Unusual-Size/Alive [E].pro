@@ -42,5 +42,3 @@ We lift [C#m]You high[B]er
 We lift [C#m]You high[B]er lift You higher
 [C#m]Your love [E/G#]Your love [A]Your love never ending
 Oh [C#m]oh [B]oh
-
-#chords: [E/G#] [A] [B] [C#m]

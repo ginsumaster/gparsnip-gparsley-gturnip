@@ -43,5 +43,3 @@ It will be my [Gsus]joy to say [F2]Your will Your way always
 
 {soh}Ending:{eoh}
 ||: [Am7]       | * * [G/B] * | [C]         |           :||           |
-
-#chords: [C] [C2] [F2] [G] [Gsus] [G/B] [Am7]

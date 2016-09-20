@@ -11,3 +11,4 @@ rm *.lst
 rm *.csv
 rm *.cd1
 for f in *.pro ; do nodejs gparsnip "$f" ; done
+rm *.cd1

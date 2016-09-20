@@ -42,5 +42,4 @@ You're [G#m7]sending us out [F#]light in this broken [B]land
 And the [F#]word of our testi[E]mony every[B]one over[F#]come
 {end_of_bridge}
 
-#chords: [B] [E] [F#] [F#/E] [G#m] [G#m7]
 #check: verse 3 "You're" is in lyrics version, but not chord-lyrics

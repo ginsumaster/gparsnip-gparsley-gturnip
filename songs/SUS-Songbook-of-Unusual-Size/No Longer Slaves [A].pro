@@ -27,5 +27,3 @@ My fears were drowned in perfect [A]love
 You rescued me so I could [A]stand and sing
 I am a child of [A]God
 {end_of_bridge}
-
-#chords: [A] [C#m] [D] [E] [F#m]

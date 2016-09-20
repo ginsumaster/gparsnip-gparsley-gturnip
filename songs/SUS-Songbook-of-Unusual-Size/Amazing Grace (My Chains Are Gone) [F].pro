@@ -38,5 +38,3 @@ But [F]God who called me [Bb]here be[F]low
 Will be for[C/F]ever [F]mine
 Will be for[C/F]ever [F]mine
 You are for[C/F]ever [F]mine
-
-#chords: [F] [F/A] [Gm7] [Bb] [Bb/F] [Bb/D] [C7] [C/F]

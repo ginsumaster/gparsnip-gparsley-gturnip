@@ -37,5 +37,4 @@ I know He holds my life
 My future in His hand
 {end_of_bridge}
 
-#chords: [C] [F] [G] [G/B] [Am]
 #check: no chords given for Bridge

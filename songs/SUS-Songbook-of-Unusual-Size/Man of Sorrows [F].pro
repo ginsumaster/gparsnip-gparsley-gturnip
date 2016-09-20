@@ -35,5 +35,3 @@ Whom the [Dm]Son sets [Bb]free oh is [F]free in[C]deed
 {soh}Verse 4:{eoh}
 [F]See the stone is [Bb]rolled a[F]way be[Bb]hold the [F]emp[C]ty tomb
 [F]Hallelujah [Bb]God be [Dm]praised He's [Bb]risen [C]from [F]the grave
-
-#chords: [F] [Bb] [C] [C/E] [Dm]

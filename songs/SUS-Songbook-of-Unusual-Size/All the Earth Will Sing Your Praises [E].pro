@@ -6,13 +6,13 @@
 {copyright: (C) 2003 Integrity's Hosanna! Music}
 #orig key: E, F
 
-{soh}Verse 1{eoh}
+{soh}Verse 1:{eoh}
 [E5] You took. [B/E] You take our [C#m7]sins away O God
 [E5] You give. [B/E] You gave Your [C#m7]life away for us
 [A2] You came down.  You saved us [C#m7]through the cross
 [A2] Our hearts are changed, because of [Bsus]Your great love
 
-{soh}Chorus{eoh}
+{soh}Chorus:{eoh}
 [E5] You lived [/D#] You died
 [E5/C#] You said in [A2]three days You would [E5]rise
 You did [Bsus] You're a[C#m7]live [A2]

@@ -17,10 +17,10 @@ And [Am7]I'm alive be[Em]cause I'm alive in [FM9]You
 {soc}(And) it's [C]all because of [Dm7]Jesus I'm a[F2(no3)]live
 It's [C]all because the [Dm7]blood of Jesus [F2(no3)]Christ
 That [Bb]covers me and [F/A]raised this dead man's [C]life
-{soh}1st Ending{eoh}
+{soh}1st Ending:{eoh}
   It's [Bb]all because of [F/A]Jesus I'm a[F]live [C] [Gsus] [G] [C] (to Vss/Last)
   I'm a[F]live [C] I'm a[F]live [Am7]
-{soh}2nd Ending{eoh}
+{soh}2nd Ending:{eoh}
   It's [Bb]all because of [F/A]Jesus (to Br/Ch)
 {eoc}
 
@@ -29,5 +29,3 @@ That [Bb]covers me and [F/A]raised this dead man's [C]life
 [F]Ev'ry sunrise [G]sings Your [Am7]praise, the [F]universe cries [G]out Your [Dm7]praise
 I'm [F]singing freedom [G]all my [Am7]days, [Bb]now that I'm alive
 {end_of_bridge}
-
-#chords: [C] [Dm7] [Em] [F] [F2(no3)] [FM7] [FM9] [F/A] [G] [Gsus] [G/B] [Am7] [Bb]

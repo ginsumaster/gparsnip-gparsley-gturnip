@@ -38,5 +38,3 @@ I be[F]lieve [Am] that [G]Jesus Christ is [C]Lord
 [C] I believe in the resur[Dm]rection [F] when Jesus comes a[G]gain
 [Am] For I believe in the [F]Name of [G]Jesus [C]
 {end_of_chorus}
-
-#chords: [C] [C/E] [Dm] [F] [G] [Am]

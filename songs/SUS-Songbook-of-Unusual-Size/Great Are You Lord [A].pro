@@ -36,5 +36,3 @@ Our [Asus]hearts will cry these bones will sing [D2]great are You [A]Lord
 
 {soh}Ending:{eoh}
 | [D]     | [F#m7]  | [Esus]  |       | [D]     | [F#m7]  | [Esus]  |       |
-
-#chords: [A] [Asus] [D] [D2] [Esus] [F#m7]

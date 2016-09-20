@@ -30,5 +30,3 @@ So [E]teach my [B/D#]song to [F#sus]rise to [G#m7]You when temptation [B/D#]come
 And when I [E]cannot [B/D#]stand I'll [F#sus]fall on [G#m7]You [E2(no3)]Jesus You're my [F#sus]hope [B]and stay
 And when I [E]cannot [B/D#]stand I'll [F#sus]fall on [G#m7]You [E2(no3)]Jesus You're my [F#sus]hope [B]and stay
 {end_of_bridge}
-
-#chords: [B] [B/D#] [B/F#] [E] [E/G#] [E2(no3)] [F#] [F#/A#] [F#sus] [G#m7]

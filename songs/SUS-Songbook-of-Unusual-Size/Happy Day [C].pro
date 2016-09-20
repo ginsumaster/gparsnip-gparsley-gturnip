@@ -34,5 +34,4 @@ And [C]oh happy [F2]day happy [Am7]day  You [G]washed my sin away
 And [Am7]oh  what a glorious [Em]day  what a glorious [FM7]name  [C]hey
 {end_of_bridge}
 
-#chords: [C] [C/E] [Em] [F2] [FM7] [G] [Gsus] [Am7]
 #check: chorus words, 1st, 2nd ending

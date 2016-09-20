@@ -35,5 +35,3 @@ De[A]scending like a cloud You're standing with us now [D2]Lord unveil our eyes
 
 {soh}Ending:{eoh}
 [A]Oo oo oo oo
-
-#chords: [A] [A/D] [D2] [E] [F#m7] [F#m11]

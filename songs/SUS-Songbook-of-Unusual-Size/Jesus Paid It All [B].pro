@@ -38,5 +38,3 @@ Oh [B]praise the One Who [Bsus]paid my debt and [B]raised this life up [Bsus]fro
 {soh}Tag:{eoh}
 (Oh) [BM7]praise the One [BM7/D#]Who [E2]paid my debt [BM7/D#]and [C#m7]raised this [BM7/D#]life up [E2]from the [BM7/D#]dead oh    Je[B]sus
 {end_of_bridge}
-
-#chords: [B] [BM7] [BM7/D#] [Bsus] [C#m7] [E2] [F#] [G#m7]

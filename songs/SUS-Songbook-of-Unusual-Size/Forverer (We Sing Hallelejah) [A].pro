@@ -42,5 +42,3 @@ We sing halle[D]lujah the Lamb has overcome
 {soh}Ending:{eoh}
 [A] And now [E/A]death where is your [F#m7]sting our [D6]resurrected [A]King has overcome
 He's over[F#m7]come oh [A]
-
-#chords: [A] [A/C#] [Bm9] [D] [DM7] [D6] [E] [E/A] [E/G#] [F#m] [F#m7]

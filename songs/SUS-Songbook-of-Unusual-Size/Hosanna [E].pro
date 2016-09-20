@@ -40,5 +40,3 @@ Break my heart for what breaks Yours
 [E]Everything I am for Your Kingdom's cause
 As I walk from earth into eternity
 {end_of_bridge}
-
-#chords: [E] [E/G#] [F#m7] [A] [B] [C#m]

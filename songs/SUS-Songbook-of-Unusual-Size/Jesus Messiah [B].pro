@@ -29,5 +29,3 @@ All the [C#m11]glory to [B/D#]You God [E2(no3)] the Light of the [F#sus]world
 {soh}Ending:{eoh}
 [B/G#]Jesus Mes[B/F#]siah [F#sus] Lord of [E2]all
 The Lord of all the Lord of all [B]
-
-#chords: [B] [B/D#] [B/F#] [B/G#] [C#m7] [C#m11] [E2] [E2(no3)] [F#sus]

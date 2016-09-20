@@ -45,5 +45,3 @@ Death could not [E2]hold Him the grave could not [G#m7]keep Him from rising [F#s
 
 {soh}Ending:{eoh}
 O glorious [B]day [E2] glorious [B]day [E2] O glorious day
-
-#chords: [B] [B2] [B5] [C#m7] [D#m] [E] [EM7] [E2] [E6] [F#] [F#sus] [G#m] [G#m7]

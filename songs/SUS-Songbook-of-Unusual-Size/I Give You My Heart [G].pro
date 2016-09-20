@@ -27,5 +27,4 @@ Lord [C/D]have Your way in [CM7]me [D/C]
 {soh}Ending:{eoh}
 ||: [CM7]   | [D/C]   | [Bm7]   | [C/D]   :|| [G]     |
 
-#chords: [G] [Am7] [Bm7] [C] [CM7] [C/D] [D/C] [D/F#] [Em] [Em7] [FM9]
 #check Chorus end alignment of chords

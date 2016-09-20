@@ -20,5 +20,3 @@ I want more of You [F]God
 I want more of You [C]God
 (REPEAT)
 {end_of_chorus}
-
-#chords: [C] [F] [Am]

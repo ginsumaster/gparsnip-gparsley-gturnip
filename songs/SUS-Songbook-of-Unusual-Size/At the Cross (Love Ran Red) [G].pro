@@ -39,5 +39,4 @@ Comes like [D(4)]a flood comes [G/B]flow[C2]ing down
 {soh}Ending:{eoh}
 Jesus [C2]   [G]   [C2/G] [G]
 
-#chords: [G] [G/B] [Am7] [C2] [C2/G] [D] [D(4)] [D/F#] [Dsus/F#] [Em]
 #check: no copyright year

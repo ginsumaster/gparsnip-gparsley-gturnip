@@ -31,5 +31,3 @@ I [G]heard about a [Am/G]man[G]sion [G/B]He has [Am/C]built [C]for me [C/E]in [C
 And I[Em] heard about [D]the [G]streets [B7/F#]of [Em]gold [G/B]be[A]yond the crys[A9]tal [D]sea
 A[G]bout the angels [Am/G]sing[G]ing [G/B]and the [Am/C]old re[C]demp[C/E]tion [C/G]sto[G]ry
 And [Em]some sweet day [D]I'll [G]sing [B7/F#]up [Em]there [G7/B]the [Am/C]song [C]of [G/D]vic[D7]to[G]ry
-
-#chords: [G] [G/B] [G/D] [G7] [G7/B] [A] [A9] [Am/C] [Am/G] [B7/F#] [C] [C/E] [C/G] [D] [D7] [Em]

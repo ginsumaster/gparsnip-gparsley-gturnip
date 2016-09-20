@@ -49,5 +49,4 @@ To[G2]day is the [D]day [Bm7] [Asus] to[G2]day is the [D]day [Bm7] [Asus]
 To[G2]day is the [D]day
 {end_of_chorus}
 
-#chords: [D] [D2] [D/C#] [D/F#] [Em] [Em7] [G] [G2] [G2(#4)] [A] [Asus] [Bm] [Bm7] [Bm9]
 #check: chord G2(#4) is non-standard, last line of Chorus ( )[G2] )

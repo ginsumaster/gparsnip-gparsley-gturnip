@@ -56,5 +56,3 @@ But [D]I can [G]glo[D/F#]ry in its [Bm]flood
 The Lord Most [G]High [D/F#]has [A]bowed down [Bm]low
 And [Bm/A]poured on [G]me His [Em]glori[G/A]ous [Bm]love
 And [Bm/A]poured on [G]me His [Em]glori[G/A]ous [D]love
-
-#chords: [D] [D/F#] [Em] [Em/D] [F#m] [G] [G/A] [A] [Am] [Asus] [Bm] [Bm/A] [C]

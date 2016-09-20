@@ -43,5 +43,3 @@ You are [F2]faithful You are [G]faithful  {gc: To Bridge}  -- You are [Am7]faith
 [Am7] The God of angel armies [F2] is always by my side [C]
 [Am7] The God of [F2]angel armies is always by my side [C]
 {end_of_chorus}
-
-#chords: [C] [C/E] [Dm7] [F2] [G] [G/B] [Am7]

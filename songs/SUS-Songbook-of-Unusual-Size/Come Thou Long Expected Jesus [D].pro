@@ -6,7 +6,7 @@
 {author: Charles Wesley, Rowland H. Prichard}
 {copyright: Public Domain}
 
-{soh}Verse 1{eoh}
+{soh}Verse 1:{eoh}
 [D]Come Thou [Bm]long-ex[Em7]pected [A]Je[A/G]sus
 [F#m7]Born to [Bm]set Thy [Em]peo[A]ple [D]free
 [D]From our [Bm]fears and [Em7]sins re[A]lease [A/G]us
@@ -16,7 +16,7 @@
 [D]Dear de[Em7]sire of [D/F#]every [A]na[A/G]tion
 [D/F#]Joy of [G]every [D/A]long[A]ing [D]heart
 
-{soh}Verse 2{eoh}
+{soh}Verse 2:{eoh}
 [D]Born Thy [Bm]people [Em7]to de[A]li[A/G]ver
 [F#m7]Born a [Bm]Child and [Em]yet [A]a [D]King
 [D]Born to [Bm]reign in [Em7]us for[A]e[A/G]ver

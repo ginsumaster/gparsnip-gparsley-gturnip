@@ -38,5 +38,3 @@ Let us experience the [Bm7]glory of Your goodness (Lord)
 [DM7] Let us be[A/C#]come more a[Bm7]ware of Your [A/C#]Presence
 [DM7] Let us ex[A/C#]perience the [Bm7]glory of Your [A/C#]goodness [DM7](Lord) {guitar-comment:To Chorus}
 {end_of_bridge}
-
-#chords: [A] [A5] [A/C#] [Bm7] [DM7] [DM9]

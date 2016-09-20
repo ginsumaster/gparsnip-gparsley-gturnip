@@ -33,5 +33,3 @@ His [G]joy comes with the morn[D]ing
 Lai [A]lai lai lai [D]lai lai lai [F#m]lai lai lai [E]lai
 Lai [A]lai lai lai [D]lai lai lai [F#m]lai lai lai [E/G#]lai
 Lai [A]lai lai lai [D]lai lai lai [F#m]lai lai lai [E]lai lai [A]lai [D] [F#m] [E/G#]
-
-#chords: [A] [D] [E] [E/G#] [Esus] [F#m] [G]

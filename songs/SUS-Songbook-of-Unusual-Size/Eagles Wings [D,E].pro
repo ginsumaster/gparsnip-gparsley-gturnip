@@ -6,7 +6,7 @@
 {author: Reuben Morgan}
 {copyright: (C) 1998 Hillsong Publ}
 
-{soh}Verse 1: #-- Key of D{eoh}
+{soh}Verse 1:# -- Key of D{eoh}
 [Em7] Here I am [A6]waiting, a[D]bide in [A/C#]me I [G]pray [(D/F#)]
 [Em7] Here I am [A]longing for [D]You
 [Em7] Hide me in [A]Your love, [D]bring me [A/C#]to my [G/B]knees [(D/F#)]

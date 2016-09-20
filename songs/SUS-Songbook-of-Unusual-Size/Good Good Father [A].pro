@@ -38,5 +38,3 @@ You are [D2]perfect in all of Your [F#m7]ways to [E(4)]us
 [A]Peace so [Asus]unex[A5]plainable [A]I can [Asus]hardly [A5]think
 As You [D2(no3)]call me [A/C#]deeper still as You [Bm7]call me deeper still
 As You [D2(no3)]call me [A/C#]deeper still into [Bm7]love love [E(4)]love
-
-#chords: [A] [Asus] [A/C#] [A5] [Bm7] [D2] [D2(no3)] [E(4)] [F#m7]

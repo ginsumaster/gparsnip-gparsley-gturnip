@@ -42,5 +42,3 @@
 {soh}Ending:{eoh}
 | [B] * * * | [C#m7] | [G#m7] | [E] | [B] | [C#m7] | [G#m7] |  |
       Oh
-
-#chords: [B] [B/D#] [C#m7] [E] [F#] [G#m7]

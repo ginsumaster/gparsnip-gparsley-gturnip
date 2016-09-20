@@ -52,5 +52,3 @@ I have de[G#m]cid[E]ed to follow [F#]Je[G#m]sus no turning [E]back no [F#]turn[B
 I have de[B]cided to follow Jesus no turning [E]back [G#m] no turn[F#]ing back
 I have de[B]cided to follow Jesus no turning [E]back no [F#]turn[B]ing back
 {end_of_bridge}
-
-#chords: [B] [B2] [B/D#] [Bsus] [D#m] [E] [EM7] [F#] [F#/A#] [F#sus/A#] [G#m] [G#m7]

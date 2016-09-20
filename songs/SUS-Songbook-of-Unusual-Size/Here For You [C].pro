@@ -44,5 +44,3 @@ Al[Am7]mighty God of love be [F2]welcome in this place
 {soh}Ending:{eoh}
 | [C]     |       | [Am7]   | [F2]
 Be welcome in Your [C]house Lord be welcome in Your [Am7]house [F2] [C]
-
-#chords: [C] [C/E] [Dm7] [F2] [FM9] [G] [G/B] [Am7]

@@ -6,7 +6,7 @@
 {copyright: (C) 2004 GYOM Publ. Co.}
 #orig key: Am
 
-{soh}Verse 1: #--Key of Dm{eoh}
+{soh}Verse 1:# --Key of Dm{eoh}
 When the [Dm]Spirit of the Lord moves in my soul
 I will [A]dance like David [Dm]danced (X2)
 
@@ -20,7 +20,7 @@ I will [B]dance like David [Em]danced (X2)
 {soh}Chorus 1:{eoh}
 I will [Am]dance. I will [Em]dance. I will [B7]dance like David [Em]danc[E/G#]ed. (X2)
 
-{soh}Verse 1: #--Key of Fm{eoh}
+{soh}Verse 1:# --Key of Fm{eoh}
 When the [Fm]Spirit of the Lord moves in my soul
 I will [C]dance like David [Fm]danced (X2)
 

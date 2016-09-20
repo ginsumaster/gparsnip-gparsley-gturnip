@@ -31,5 +31,4 @@ In [A]awe  of the [E]One who [F#m]gave it all [D]
 I'll [A]stand  my [E]soul Lord to [F#m]You surrendered  [D]all I [A]am is [E]Yours  [F#m] {guitar-comment:To Chorus}
 {end_of_chorus}
 
-#chords: [A] [A/C#] [Bm] [Bm7] [D] [E] [F#m]
 #check: Chorus "abandoned" and "gave it all" chord D alignment

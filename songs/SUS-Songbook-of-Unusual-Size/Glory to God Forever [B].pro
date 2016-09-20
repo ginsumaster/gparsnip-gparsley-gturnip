@@ -37,5 +37,4 @@
 {soh}Ending:{eoh}
 ||: [E2(no3)] * [B] * | [F#] * [G#m7] * | [E2(no3)] * [B] * | [F#] * * * :|| [B] * * * |
 
-#chords: [B] [B/D#] [E] [E2(no3)] [EM9] [F#] [F#(4)] [F#sus] [G#m7]
 #check: chord alignments vss 1,2

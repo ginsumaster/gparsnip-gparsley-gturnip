@@ -7,7 +7,7 @@
 {copyright: (C) 1994 Mercy/Vineyard Publ}
 #orig key: Bb
 
-{soh}Verse 1: #--Key of G{eoh}
+{soh}Verse 1:# --Key of G{eoh}
 [G] Draw me close to [C/G]You, [D/G] never let me [G]go
 [D2/F#] I lay it all [C2/E]down again, [Em] to [Dsus]hear You say that [CaddD]I'm Your friend [(C6)]
 
@@ -23,7 +23,7 @@
 [G] You're [D/G]all I [C2/G]want,          [G] You're [D/F#]all I've [C2/E]ever [D]needed
 [G] You're [D/G]all I [C2/G]want, * [D/F#][Am] help me know [D]You are [G]near {gc:*T: }[Em]  {gc:C: }[C][D]
 
-{soh}Verse 1: #--Key of A{eoh}
+{soh}Verse 1:# --Key of A{eoh}
 [A] Draw me close to [D/A]You, [E/A] never let me [A]go
 [E2/G#] I lay it all [D2/F#]down again, [F#m] to [Esus]hear You say that [DaddE]I'm Your friend [(D6)]
 

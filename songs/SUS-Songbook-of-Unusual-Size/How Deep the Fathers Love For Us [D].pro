@@ -22,5 +22,3 @@ I [D]will not boast in [Em]an[D/F#]y[G]thing  no [D/F#]gifts no pow'r no [D/A]wi
 But [D]I will boast in [Em]Je[D/F#]sus [G]Christ  His [D/F#]death and resur[A]rec[D]tion
 Why should I gain from [Em]His [D/F#]re[G]ward  I [D/F#]cannot give an an[A]swer
 But [D]this I know with [Em]all [D/F#]my [G]heart  His [D/F#]wounds have paid my [A]ran[D]som [G/B] [D/A] [D] [G2]
-
-#chords: [D] [D/A] [D/F#] [Em] [G] [G2] [G/B] [A]

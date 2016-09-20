@@ -38,5 +38,3 @@ From the [F]inside [G]out Lord my soul cries [G]out (Lord) [F] {guitar-comment:L
 
 {soh}Instr 2:{eoh}
 | [F]  | [C]  | [Am]  | [G]  | [F]  | [Am]  | [G]  | [Dm]  |
-
-#chords: [F] [G] [Am] [C] [Dm]

@@ -38,5 +38,3 @@ We will [F#m]praise You [D]praise You
 There's no one like our God
 We will [D]sing [E] [F#m] [E]
 {end_of_bridge}
-
-#chords: [A] [Asus] [D] [E] [F#m]

@@ -31,5 +31,3 @@ I [A]need You to [E]pierce through the dark and [F#m]cleanse every part of [D]me
 [D] My flesh may [A]fail  [F#m] my God You [E]never will [(D)]
 (REPEAT)
 {end_of_bridge}
-
-#chords: [A] [A/C#] [Bm] [D] [E] [F#m]

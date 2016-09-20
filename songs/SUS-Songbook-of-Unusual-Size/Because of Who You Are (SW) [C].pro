@@ -5,7 +5,7 @@
 {author: Shannon Wexelberg}
 {copyright: (C) 1997 Songs Of Doxology}
 
-{soh}Verse 1{eoh}
+{soh}Verse 1:{eoh}
 Be[F6/G]cause of who You [C2]are
 I will lift my [Em/B]hands, I will lift my [Am]heart
 And [CM7/G]sing a song of [FM9]love to You
@@ -15,7 +15,7 @@ A [Em/G]living sacri[FM9]fice to You,
 Be[G2/F]cause of who You [Em7]are [C/E]
 [Eb2]Ev'rything You [Bb/D]are [Bb2][(F/G)]
 
-{soh}Chorus{eoh}
+{soh}Chorus:{eoh}
 I [G]give You all the [G/B]glory,
 I [Csus]give You all the [C2]praise
 I [G]pledge to You each [G/B]moment

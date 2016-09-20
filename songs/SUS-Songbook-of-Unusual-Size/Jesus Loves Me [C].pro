@@ -44,5 +44,3 @@ With healing hands that [G(4)/B]bear the scars
 [C](..me) He [Am7]loves me He loves me [F2] He loves me He is [Gsus]for [G] [C]me
 [C](..me) My [Am7]God it's amazing [F2]oh Jesus [Gsus]loves [G] [C]me
 {end_of_chorus}
-
-#chords: [C] [C/G] [F2] [FM7] [G] [G(4)] [G(4)/B] [Gsus] [Am7]

@@ -36,5 +36,3 @@ God is [B/D#]for us He has [F#]open arms He will never [G#m]fail us [F#] He will
 
 {soh}Ending:{eoh}
 For the [G#m]Lord our [F#]God is [E]able for the [G#m]Lord our [F#]God is [E]able [B]
-
-#chords: [B] [B/D#] [E] [F#] [G#m]

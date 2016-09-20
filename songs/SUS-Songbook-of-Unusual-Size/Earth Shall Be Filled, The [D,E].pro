@@ -6,7 +6,7 @@
 {copyright: (C) 1990 Integrity's Hosanna! Music}
 #orig key: F
 
-{soh}Verse 1: #-- Key of D{eoh}
+{soh}Verse 1:# -- Key of D{eoh}
 [Em7]Lifting up a [A]standard for the [Dsus]na[D]tions [Bm7]
 To [Em7]demonstrate the [A]purpose of His [D]kingdom [/F#]
 His [G]people [A]una[D]shamed [G/B]to pro[A/C#]claim His [B/D#]name

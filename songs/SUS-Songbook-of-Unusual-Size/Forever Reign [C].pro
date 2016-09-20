@@ -37,5 +37,3 @@ You are [G/B]God You are God of all else I'm letting go [C]
 [C] Jesus [G] Jesus [F] {guitar-comment:To Chorus/Last time}
 (REPEAT 4X)
 {end_of_bridge}
-
-#chords: [C] [F] [G] [G/B] [G/C] [Am]

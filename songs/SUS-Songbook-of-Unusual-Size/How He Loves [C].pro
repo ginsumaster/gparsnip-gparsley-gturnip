@@ -32,5 +32,3 @@ So [C]Heaven meets earth like a sloppy wet (Alt Lyrics: unforeseen) kiss
 And my [F2/A]heart turns violently inside of my chest
 I [Gsus]don't have time to maintain these regrets
 When I [F2]think about the way that
-
-#chords: [C] [Dm7/A] [F] [F2] [F2/A] [FM7] [G] [Gsus] [Am]

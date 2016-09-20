@@ -23,5 +23,3 @@
 {soh}Verse 3:{eoh}
 [D] Filled with wonder [Am7] awestruck wonder [C] at the mention of Your name [G]
 [D] Jesus Your name is power [Am7] breath and living water [C] such a marv'lous myster[G]y  yeah
-
-#chords: [D] [G] [Am7] [Bm] [C]

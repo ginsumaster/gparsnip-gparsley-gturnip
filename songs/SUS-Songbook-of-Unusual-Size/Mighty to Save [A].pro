@@ -34,5 +34,3 @@ He rose and [D]conquered the grave [A]  Jesus [F#m]conquered the grave [E]
 [D] Shine your light and [A] let the whole world [E] see  we're [F#m]singing
 [D] For the glory [A] of the risen [E] King
 {end_of_bridge}
-
-#chords: [A] [D] [E] [F#m]

@@ -37,5 +37,3 @@ My [D]debt is [A]paid there's [E]nothing that can [F#m]separate my [D]heart from
 
 {soh}Ending:{eoh}
 Your [DM7]love  [A]  [E]  [F#m7]
-
-#chords: [A] [A5] [D] [D2] [DM7] [E] [F#m] [F#m7]

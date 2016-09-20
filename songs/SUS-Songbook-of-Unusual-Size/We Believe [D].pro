@@ -43,5 +43,4 @@ We be[Bm7]lieve we be[D/F#]lieve
 He's coming back a[D]gain [Asus]
 He's coming back a[Bm7]gain we be[G2]lieve we believe
 
-#chords: [D] [D/F#] [G] [G/D] [G2] [Asus] [Bm7]
 #check: no year in copyright

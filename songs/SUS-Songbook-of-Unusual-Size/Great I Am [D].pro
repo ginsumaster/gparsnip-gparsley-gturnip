@@ -30,5 +30,3 @@ I wanna see [Em7]dry bones [A/C#]living a[D]gain singing as [Em7]one
 The great I [G]Am the great I [D]Am [A]
 The great I [Bm]Am the great I [G]Am the great I [D]Am [A]
 {end_of_bridge}
-
-#chords: [D] [Em7] [G] [A] [A/C#] [Asus] [Bm] [Bm7]

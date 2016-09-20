@@ -45,5 +45,3 @@ No [D/F#]power of [G]hell no [D/F#]scheme of [Asus]man [A]
 Can [D/F#]ever [G]pluck me [Bm7]from His [Asus]hand [A]
 Till He re[D]turns or [G]calls me [A]home
 [D/F#]Here in the [G]power [D/F#]of [Em7]Christ [G/A] I'll [D]stand [Am7] [Em7] [D] [Dsus] [D]
-
-#chords: [D] [D/F#] [Dsus] [Em7] [G] [G/A] [A] [Am7] [Asus] [Bm7]

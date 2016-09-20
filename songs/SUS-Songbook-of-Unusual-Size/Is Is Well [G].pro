@@ -38,5 +38,3 @@ It is [C2]well with [D]my [Em] soul   it [G/B]is [C2]well with [D]my [Em] soul
 It [G/B]is [C2]well with [D]my [Em] soul   it is [C2]well it is [Dsus]well [D]with my [Em] soul
 (Repeat)
 It is [C2]well it is [Dsus]well [D]with my [Em] soul  it [G/B]is [C2]well it is [Dsus]well [D]with my [G] soul
-
-#chords: [G] [G/B] [C] [C2] [C2(no3)] [D] [D(4)] [Dsus] [Em] [Em7]

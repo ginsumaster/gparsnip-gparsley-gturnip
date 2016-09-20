@@ -38,5 +38,3 @@ Singing [F2/A]O [Bb2]death [Dm7]where is your [Csus]sting [F2/A]O [Bb2]hell [Dm7
 
 {soh}Ending:{eoh}
 [FM9]  [BbM9]  [FM9]  [BbM9] [(FM9)]
-
-#chords: [F2] [F2/A] [FM9] [(FM9)] [FM9/A] [Bb2] [BbM9] [C(4)] [Csus] [Dm7] [Db(4)]

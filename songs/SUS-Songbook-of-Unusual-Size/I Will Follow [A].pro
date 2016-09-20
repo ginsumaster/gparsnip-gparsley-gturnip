@@ -45,5 +45,3 @@ All I [A2]need in You a[D]lone in You a[E(4)]lone
 {soh}Ending:{eoh}
 ([F#m7]You) Yeah [D2] I will follow [A]You yeah [E(4)]
 I will follow [F#m7]You yeah [D2] I will follow [A]You yeah [E(4)]
-
-#chords: [A] [A2] [A/E] [D] [D2] [DM9] [D/F#] [E] [E(4)] [E/G#] [F#m] [F#m7]

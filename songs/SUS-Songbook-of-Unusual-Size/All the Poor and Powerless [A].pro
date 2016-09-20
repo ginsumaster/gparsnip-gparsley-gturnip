@@ -43,5 +43,3 @@ And [Esus]we will cry out hallelujah
 [F#m]We will sing out hallelujah
 [D5]And shout [A/D] [D5]yeah [A/D]
 {eoc}
-
-#chords: [A] [A/D] [Bm] [D] [D5] [E] [Esus] [F#m] [G]

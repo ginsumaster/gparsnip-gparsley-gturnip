@@ -47,5 +47,3 @@ Your [BM7]praise will ever be on my [A(4)]lips ever be on my lips
 
 {soh}Ending:{eoh}
 ||: [GM7] * * * | [D] * * * | [Bm7] * * * | [A] * * * :||
-
-#chords: [D] [Em7] [F#m7] [G] [GM7] [A] [A(4)] [Asus] [Bm7] [Bm9]

@@ -67,5 +67,3 @@ And my [A]faith will be made stronger in the [Em]presence of my Saviour
 
 {soh}Ending:{eoh}
 ||: [Bm]  [A/C#] | [D]      | [A]      | [Bm]     | [D]      | [G6]     :||
-
-#chords: [D] [D/F#] [Em] [G] [G6] [G6/A] [A] [A/C#] [Bm]

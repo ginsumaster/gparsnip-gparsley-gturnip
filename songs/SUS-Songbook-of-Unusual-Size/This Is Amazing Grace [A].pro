@@ -49,5 +49,4 @@ Oh [F#m] Jesus I sing for [E] all that You've done for [A]me
 | [A]       |         | [D2(no3)] |
 All that You've done for [A]me   D2(no3)   [A]
 
-#chords: [A] [D] [D2(no3)] [E] [F#m]
 #check: ending -- don't have measure markers on last line

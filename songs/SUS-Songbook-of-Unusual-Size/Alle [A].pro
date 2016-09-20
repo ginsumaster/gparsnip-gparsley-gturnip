@@ -6,17 +6,17 @@
 {copyright: (C) 1997 Ross King}
 #orig key: G
 
-{soh}Intro{soh}
+{soh}Intro:{eoh}
 [E][B][A] {gc:x4}
 
-{soh}Verse 1{soh}
+{soh}Verse 1:{eoh}
 May the [E]path that I [B]walk be the [A]path of righteous[B]ness
 May the [E]words of my [B]mouth give You [A]praise [B]
 Let my [E]heart be Your [B]home and a [A]place of holi[B]ness
 I [A]worship You in [B]love
 I [A/F#]lift You, lift You [B]up
 
-{soh}Chorus{soh}
+{soh}Chorus:{eoh}
 (Singin') [E]alle alle[A]luiah
 To the [C#m]Father to the [B]Lord [A]
 [E]Alle alle[A]luiah

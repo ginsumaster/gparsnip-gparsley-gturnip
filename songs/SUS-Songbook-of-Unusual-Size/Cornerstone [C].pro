@@ -38,5 +38,4 @@
 [Am] Dressed in His righteous[Am/G]ness alone
 [F] Faultless [G]stand before [C] the throne
 
-#chords: [C] [C/E] [Csus] [F] [G] [Am] [Am/G]
 #check: (C/E) in Chorus

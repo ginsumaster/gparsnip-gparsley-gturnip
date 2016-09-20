@@ -32,5 +32,3 @@ Oh lead [Em9]me   [G]lead me [A]to the [Bm]cross
 To Your [D]heart [GM7] [A]   to Your [D]heart [G] [A]
 Lead me to Your [D]heart [GM7] [A]   lead me to Your [D]heart [G] [A]
 {end_of_bridge}
-
-#chords: [D] [Em7] [Em9] [F#m7/A] [G] [GM7] [A] [Asus] [Bm]

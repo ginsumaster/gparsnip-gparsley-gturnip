@@ -48,5 +48,3 @@ There's [C]joy for the morning O [F]sinner be [C]still
 | [FM7] * * * | [G] * * * | [Am] * * * | [G] * * * |
 Come as you [FM7]are [G]
 Come as you [FM7]are come as you are
-
-#chords: [C] [F] [FM7] [G] [G/B] [Gsus] [Am]

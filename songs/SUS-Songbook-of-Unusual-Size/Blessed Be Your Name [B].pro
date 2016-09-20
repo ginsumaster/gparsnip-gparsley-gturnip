@@ -36,5 +36,3 @@ Though there's [B]pain in the [F#]offering bless[E]ed be Your name
 You [B]give and take a[F#]way You [G#m7]give and take a[E]way
 My [B]heart will choose to [F#]say Lord [G#m7]blessed be Your [E]name
 {end_of_bridge}
-
-#chords: [B] [E] [F#] [G#m7]

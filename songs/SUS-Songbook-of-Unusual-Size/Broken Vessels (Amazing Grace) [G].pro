@@ -40,5 +40,3 @@ Was [Em]blind but now I [C]see
 
 {soh}Instr:{eoh}
 | [Em] * * * | [G] * * * | [Em] * * * | [G] * * * |
-
-#chords: [G] [C] [D] [Em]

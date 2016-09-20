@@ -50,5 +50,3 @@ You [G]made us for much [D]more than this a[G]wake the kingdom [D]seed in us
 {soh}Ending:{eoh}
 | [D] * [Asus] * | [D] * [Asus] * | [D] * [Asus] * | [D] * * * |
 (..pray)
-
-#chords: [D] [G] [G2] [A] [A(4)] [Asus] [Bm7]

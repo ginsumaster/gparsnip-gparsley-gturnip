@@ -48,6 +48,5 @@ You are amazing God
 [A]You see the depths of our hearts and You love us the [C#m7]same
 [G#m]You are amazing [A6]God  [E] {guitar-comment: or }[C#m]
 
-#chords: [E] [F#m7] [F#M7] [G#m] [G#M] [G#M/F#] [A] [A6] [B] [B/D#] [C#m] [C#m7]
 #check: [F#M7] chords -- replace w/ D2?
 #check: interlude chords at end
