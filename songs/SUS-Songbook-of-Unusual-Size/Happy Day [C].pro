@@ -5,11 +5,14 @@
 {author: Ben Cantelon; Tim Hughes}
 {copyright: (C) 2006 Thankyou Music; (Admin. by Capitol CMG Publishing)}
 
+{soh}Intro:{eoh}
+[C][F][Am][F]    [C][F][Am][F]
+
 {soh}Verse 1:{eoh}
 [C] The greatest day in history [F2] death is beaten You have rescued me
 [Am7] Sing it out Jesus is a[F2]live
-[C] The empty cross the empty grave [F2] Life eternal You have won the day
-[Am7] shout it out Jesus is a[F2]live  He's a[Gsus]live
+[C] The empty cross the empty grave [F2] life eternal You have won the day
+[Am7] Shout it out Jesus is a[F2]live  He's a[Gsus]live
 
 {soh}Chorus:{eoh}
 {start_of_chorus}

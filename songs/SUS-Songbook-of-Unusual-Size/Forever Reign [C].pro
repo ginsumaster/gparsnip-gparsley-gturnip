@@ -11,6 +11,7 @@ You are [G/B]love You are love on display for all to see
 You are [C]light You are light when the darkness closes in
 You are [G/B]hope You are hope You have covered all my sin [C]
 
+# G  C/D  B  C
 {soh}Verse 2:{eoh}
 You are [C]peace You are peace when my fear is crippling
 You are [G/B]true You are true even in my wandering
@@ -19,10 +20,10 @@ You are [G/B]life You are life in You death has lost its sting [C]
 
 {soh}Chorus:{eoh}
 {start_of_chorus}
-(Oh) I'm running to Your [G/C]arms I'm running to Your [Am]arms
-The riches of Your love will always be e[F]nough
-Nothing com[Am]pares to [G]Your em[F]brace Light of the [Am]World for[G]ever [F]reign
-{guitar-comment:                                                            [C] To Chorus/Ending}
+[C](Oh) I'm running to Your [G/C]arms I'm running to Your [Am]arms
+The riches of Your love will [G]always be e[F]nough
+Nothing com[Am]pares to [G]Your em[F]brace. Light of the [Am]World for[G]ever [F]reign
+                                                 {gc:To Chorus/Ending:} [C]
 {end_of_chorus}
 
 {soh}Verse 3:{eoh}
@@ -34,6 +35,6 @@ You are [G/B]God You are God of all else I'm letting go [C]
 {Bridge/Ending:}
 {start_of_bridge}
 [Am] My heart will sing [F] no other Name
-[C] Jesus [G] Jesus [F] {guitar-comment:To Chorus/Last time}
+[C] Jesus [G] Jesus {gc:To Chorus/Last time: }[F]
 (REPEAT 4X)
 {end_of_bridge}
