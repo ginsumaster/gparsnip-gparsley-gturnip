@@ -88,6 +88,8 @@ FEATURES:
 4. Extensive test plan, regression testing scripts
 
 NOTES:
+v 2016-09-23 even_up_chord_lyric_lines(), forgot to declare spacey_string var
+var fs = require('fs'); --> const fs ..
 v 2016-09-14 bugfix for {tempo:}, a few comment additions
 
 v 2016-09-09A
@@ -142,7 +144,7 @@ const VALID_SUBSET_UTF8_CHARS =
 *******************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////
 // input -- .pro file -- chordpro formatted plain text file
-var fs                    = require( 'fs' ); // read from filesystem
+const fs                  = require( 'fs' ); // read from filesystem
 var in_file_noext         = process.argv[ 2 ] ;
 var in_file_pro           = process.argv[ 2 ] + ".pro" ; //chordpro source file
 var in_file_buffer        = "" ;  // input chordpro file, entire contents
@@ -695,6 +697,7 @@ if ( DEBUGGING_MODE1 ) { console.log( "/*----------------- process_lyric()" );
 ////////////////////////////////////////////////////////////////////////////////
 function even_up_chord_lyric_lines() {
   var chord_lyric_length_delta = out_line_chord.length - out_line_lyric.length;
+  var spacey_string = "";
 
   if ( chord_lyric_length_delta > 0 ) {
     spacey_string        = space_string( chord_lyric_length_delta );
