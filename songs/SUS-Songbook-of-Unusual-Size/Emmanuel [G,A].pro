@@ -1,5 +1,6 @@
 {title: Emmanuel}
 {key: G,A}
+{time: 4/4}
 {ccli: 12949}
 {author: Bob McGee}
 {copyright: (C) 1976 C.A. Music}

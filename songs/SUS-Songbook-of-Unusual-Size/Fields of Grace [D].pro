@@ -1,6 +1,6 @@
 {title: Fields of Grace}
 {key: D}
-{tempo: 4/4}
+{time: 4/4}
 {ccli: 2795638}
 {author: Darrell Evans}
 {copyright: (C) 2002 Integrity's Hosanna! Music}

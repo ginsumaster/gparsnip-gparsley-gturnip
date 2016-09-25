@@ -1,5 +1,6 @@
 {title: Adonai (SM)}
 {key: Am}
+{time: 4/4}
 {ccli: 4488637}
 {author: Lee Black, Paul Wilbur, Steve Merkel}
 {copyright: (C) 2005 Integrity's Hosanna! Music}

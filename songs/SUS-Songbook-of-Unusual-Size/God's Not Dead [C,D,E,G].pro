@@ -1,5 +1,6 @@
 {title: God's Not Dead}
 {key: C,D,E,G}
+{time: 4/4}
 {ccli: CCLI Unknown}
 {author: Author Unknown}
 {copyright: Copyright Unknown}

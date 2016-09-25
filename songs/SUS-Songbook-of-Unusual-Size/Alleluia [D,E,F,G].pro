@@ -1,5 +1,6 @@
 {title: Alleluia}
 {key:D,E,F,G}
+{time: 4/4}
 {ccli: 16811}
 {author: Jerry Sinclair, Dwight Erich}
 {copyright: (C) 1972 Manna Music, Inc.}

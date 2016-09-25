@@ -1,9 +1,9 @@
 {title: Darkness to Dancing}
 {key: F}
 {time: 4/4}
-{ccli: Unknown CCLI #}
-{author: Unknown Author}
-{copyright: Unknown Copyright}
+{ccli: CCLI Unknown}
+{author: Author Unknown}
+{copyright: Copyright Unknown}
 
 {soh}Verse 1:{eoh}
 [F] He turned my [Dm]darkness to [Gm]dancing

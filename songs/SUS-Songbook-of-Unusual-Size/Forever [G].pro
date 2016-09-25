@@ -4,7 +4,7 @@
 {tempo: 128}
 {ccli: 3148428}
 {author: Chris Tomlin}
-{ccli: (C) 2001 Worshiptogether.com songs}
+{copyright: (C) 2001 Worshiptogether.com songs}
 #st-comment:CCLI diff:  phrase "sing praise" x4 moved from vss to pre-chorus instead.  Ending added.
 
 {soh}Verse 1:{eoh}
