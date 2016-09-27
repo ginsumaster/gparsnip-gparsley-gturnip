@@ -1,4 +1,4 @@
-{title: Hosanna}
+{title: Hosanna (MR)}
 {key: E}
 {time: 4/4}
 {ccli: 4785835}
