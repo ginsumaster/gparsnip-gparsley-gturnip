@@ -10,9 +10,9 @@ mv 0gparsnip.csv 0gparsnip.csx
 rm index.csv
 cat *.csv > index.csx
 cp index.csx index.csv
-nodejs gparsley index "eSongbook of Unusual Size" "v0.353"
+nodejs gparsley index "eSongbook of Unusual Size" "v0.361"
 zip 0index.zip *.htm *.html *.txt *.lst *.pro 0chordlyric.css 0lyricsonly.css index.html
 #rm *.htm *.html *.txt *.lst *.cd1 *.csv
-rm *.csv
+#rm *.csv
 mv 0gparsnip.csx 0gparsnip.csv
 mv index.csx index.csv
