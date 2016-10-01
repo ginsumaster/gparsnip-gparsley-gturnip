@@ -1,5 +1,5 @@
 {title: Victory In Jesus}
-#comment: orig, hard}
+#orig, hard
 {key: G}
 {time: 4/4}
 {ccli: 1259}

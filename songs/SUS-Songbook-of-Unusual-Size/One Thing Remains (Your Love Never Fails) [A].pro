@@ -1,10 +1,10 @@
 {title: One Thing Remains (Your Love Never Fails)}
 {key: A}
-#Original Key: Bb}
 {time: 4/4}
 {ccli: 5508444}
 {author: Brian Johnson; Christa Black Gifford; Jeremy Riddle}
 {copyright: (C) 2010 ChristaJoy Music Publishing; (Admin. by Bethel Music Publishing); Mercy / Vineyard Publishing (Admin. by Vineyard Music USA); Bethel Music Publishing}
+#orig key: Bb
 
 {soh}Verse 1:{eoh}
 [DM7]Higher than the [A]mountains that I [E]face

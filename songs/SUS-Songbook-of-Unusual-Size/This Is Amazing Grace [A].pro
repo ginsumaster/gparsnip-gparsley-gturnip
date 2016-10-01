@@ -1,10 +1,10 @@
 {title: This is Amazing Grace}
 {key: A}
-#Original Key: Bb}
 {time: 4/4}
 {ccli: 6333821}
 {author: Jeremy Riddle; Josh Farro; Phil Wickham}
 {copyright: (C) 2012 Phil Wickham Music; (Admin. by Music Services, Inc.); Seems Like Music (Admin. by Music Services, Inc.); Sing My Songs (Admin. by Music Services, Inc.); WB Music Corp. (Admin. by Word Music Group, Inc.); Bethel Music Publishing}
+#org key: Bb
 
 {soh}Verse 1:{eoh}
 [A] Who breaks the power  of sin and darkness

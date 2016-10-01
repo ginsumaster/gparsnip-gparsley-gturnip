@@ -1,10 +1,10 @@
 {title: Open Up the Heavens}
 {key: A}
-#Original Key: Bb}
 {time: 4/4}
 {ccli: 6304702}
 {author: Andi Rozier; James McDonald; Jason Ingram; Meredith Andrews; Stuart Garrard}
 {copyright: (C) 2012 Word Music, LLC; (a div. of Word Music Group, Inc.); All Essential Music (Admin. by Essential Music Publishing LLC); HBC Worship Music (Admin. by Essential Music Publishing LLC); Open Hands Music (Admin. by Essential Music Publishing LLC); So Essential Tunes (Admin. by Essential Music Publishing LLC); Stugio Music Publishing (Admin. by Essential Music Publishing LLC)}
+#orig key: Bb
 
 {soh}Verse 1:{eoh}
 We've [A]waited for this day we're gathered in Your Name [D2]calling out to You

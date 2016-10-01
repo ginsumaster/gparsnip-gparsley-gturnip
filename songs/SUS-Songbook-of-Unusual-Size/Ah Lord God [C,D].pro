@@ -1,5 +1,6 @@
 {title: Ah Lord God}
 {key: C,D}
+{time: 4/4}
 {ccli: 17896}
 {author: Kay Chance}
 {copyright: (C) 1976 Kay Chance}

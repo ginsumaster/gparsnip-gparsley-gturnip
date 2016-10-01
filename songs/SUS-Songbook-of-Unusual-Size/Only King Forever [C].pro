@@ -1,10 +1,10 @@
 {title: Only King Forever}
 {key: G}
-#Original Key: C}
 {time: 4/4}
 {ccli: 7011438}
 {author: Chris Brown; Mack Brock; Steven Furtick; Wade Joye}
 {copyright: (C) 2013 Be Essential Songs; (Admin. by Essential Music Publishing LLC); Elevation Worship Publishing (Admin. by Essential Music Publishing LLC)}
+#org key: C
 
 {soh}Verse 1:{eoh}
 [C] Our God and firm foundation our Rock the only solid ground
