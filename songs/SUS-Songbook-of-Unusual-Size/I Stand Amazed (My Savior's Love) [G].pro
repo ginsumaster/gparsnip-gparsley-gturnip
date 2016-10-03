@@ -1,5 +1,6 @@
 {title: I Stand Amazed (My Savior's Love)}
 {key: G}
+{time: 4/4}
 {ccli: 25297}
 {author: Charles H. Gabriel}
 {copyright: Public Domain}
