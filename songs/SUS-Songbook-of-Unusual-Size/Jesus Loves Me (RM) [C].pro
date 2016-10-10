@@ -1,4 +1,4 @@
-{title: Jesus Loves Me}
+{title: Jesus Loves Me (RM)}
 {key: C}
 {time: 4/4}
 {ccli: 7028829}
