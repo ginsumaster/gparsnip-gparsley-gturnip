@@ -10,7 +10,7 @@
 [C]Little ones [G]to [C]Him belong. [F]They are [C]weak but [GaddE]He [G]is [C]strong
 
 {soh}Chorus:{eoh}
-       [C]Yes Jesus [F]loves me,     [C]yes Jesus [GaddE]loves [G]me
+       [C]Yes Jesus [F]loves me,      [C]yes Jesus [GaddE]loves [G]me
 {gc:Intro: }[C]Yes Jesus [F]loves me, [D/F#] the [C]Bible [GaddE]tells [G]me [C]so
 
 {soh}Verse 2:{eoh}
