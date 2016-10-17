@@ -1,5 +1,6 @@
 {title: Holy Love}
 {key: E}
+{time: 4/4}
 {ccli: 1774073}
 {author: Andy Park}
 {copyright: (C) 1995 Mercy/Vineyard Publ}

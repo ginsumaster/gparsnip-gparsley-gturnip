@@ -1,5 +1,6 @@
 {title: I Lift Up My Hands}
 {key: F-G}
+{time: 4/4}
 {ccli: 2462370}
 {author: Israel Houghton, Ricardo Sanchez}
 {copyright: (C) 2001 Integrity's Hosanna! Music}
